@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Onboarding v2 — Build Base Digitally</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B2545;
+  --blue:#1B4079;
+  --paper:#F4F6F8;
+  --amber:#E8A33D;
+  --amber-dark:#C9821F;
+  --green:#2E8B57;
+  --rust:#A83232;
+  --ink:#14213D;
+  --grid-line:rgba(27,64,121,0.09);
+
+  --brand:var(--blue);--brand-light:var(--grid-line);--brand-dark:var(--navy);
+  --success:var(--green);--warn:var(--amber);--danger:var(--rust);
+  --bg:var(--paper);--card:#fff;--text:var(--ink);--muted:#5B6B84;
+  --border:rgba(11,37,69,0.12);--radius:14px;--shadow:0 6px 18px rgba(11,37,69,0.07);
+}
+body{
+  font-family:'Hind',sans-serif;
+  color:var(--text);
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:28px 28px;
+  min-height:100vh;padding-bottom:80px;
+}
+h1,h2,h3,.hdr-logo, .step-pill { font-family:'Baloo 2',sans-serif; }
+.code, pre { font-family:'IBM Plex Mono',monospace; }
+
+/* HEADER */
+.hdr{
+  background:var(--navy);
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size:26px 26px;
+  color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.hdr-logo{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;letter-spacing:-.5px}
+.hdr-logo span{opacity:.6}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.step-pill{background:rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;font-size:.75rem;font-weight:700}
+.workflow-pill{background:rgba(255,255,255,.12);border-radius:20px;padding:4px 13px;font-size:.7rem;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:5px}
+.wf-arrow{opacity:.5}
+
+/* PROGRESS */
+.prog-wrap{background:#fff;border-bottom:1px solid var(--border);padding:0 20px}
+.prog-steps{display:flex;max-width:760px;margin:0 auto}
+.p-step{flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 4px;gap:5px;position:relative}
+.p-step::after{content:'';position:absolute;top:20px;right:-50%;width:100%;height:2px;background:var(--border);z-index:0}
+.p-step:last-child::after{display:none}
+.p-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:var(--muted);z-index:1;transition:all .25s}
+.p-step.active .p-dot{border-color:var(--brand);background:var(--brand);color:#fff}
+.p-step.done .p-dot{border-color:var(--success);background:var(--success);color:#fff}
+.p-step.done .p-dot::after{content:'✓';font-size:.72rem}
+.p-step.done .p-dot span{display:none}
+.p-label{font-size:.62rem;font-weight:700;color:var(--muted);text-align:center;white-space:nowrap;text-transform:uppercase;letter-spacing:.3px}
+.p-step.active .p-label{color:var(--brand)}
+.p-step.done .p-label{color:var(--success)}
+
+/* MAIN */
+.main{max-width:760px;margin:28px auto;padding:0 16px}
+.step-panel{display:none}
+.step-panel.active{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARDS */
+.card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);padding:26px;margin-bottom:18px}
+.card-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.card-sub{font-size:.8rem;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.card-divider{border:none;border-top:1px solid var(--border);margin:18px 0}
+
+/* FORM */
+.fr{display:grid;gap:12px;margin-bottom:12px}
+.fr.c2{grid-template-columns:1fr 1fr}
+.fr.c3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:560px){.fr.c2,.fr.c3{grid-template-columns:1fr}.card{padding:18px 14px}}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:.75rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.req{color:var(--brand)}
+.hint{font-weight:400;color:var(--muted);font-size:.7rem}
+.field input,.field textarea,.field select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:.83rem;color:var(--text);background:#fff;transition:border .2s,box-shadow .2s;outline:none}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(91,79,232,.1)}
+.field textarea{resize:vertical;min-height:76px}
+
+/* COLOR */
+.color-row{display:flex;gap:8px;align-items:center}
+.color-row input[type=color]{width:42px;height:36px;padding:2px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;flex-shrink:0}
+.color-row input[type=text]{flex:1}
+
+/* TAG INPUT */
+.tag-wrap{display:flex;flex-wrap:wrap;gap:5px;padding:7px 9px;border:1.5px solid var(--border);border-radius:9px;min-height:42px;background:#fff;cursor:text;transition:border .2s,box-shadow .2s}
+.tag-wrap:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(91,79,232,.1)}
+.tag{background:var(--brand-light);color:var(--brand);border-radius:5px;padding:2px 7px;font-size:.75rem;font-weight:600;display:flex;align-items:center;gap:3px}
+.tag button{background:none;border:none;cursor:pointer;color:var(--brand);font-size:.85rem;line-height:1;padding:0}
+.tag-wrap input{border:none;outline:none;flex:1;min-width:110px;font-size:.83rem;font-family:'Inter',sans-serif;background:transparent;padding:1px 3px}
+
+/* TOGGLE GROUP */
+.toggle-group{display:flex;gap:0;border:1.5px solid var(--border);border-radius:9px;overflow:hidden}
+.toggle-group input[type=radio]{display:none}
+.toggle-group label{flex:1;text-align:center;padding:8px 6px;font-size:.75rem;font-weight:600;color:var(--muted);cursor:pointer;border-right:1px solid var(--border);transition:all .2s;background:#fff}
+.toggle-group label:last-of-type{border-right:none}
+.toggle-group input[type=radio]:checked+label{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* SWITCH */
+.sw-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.sw-row:last-child{border-bottom:none}
+.sw-info{}
+.sw-info strong{font-size:.82rem;font-weight:700;color:var(--text);display:block}
+.sw-info span{font-size:.73rem;color:var(--muted);line-height:1.4}
+.sw{position:relative;width:42px;height:24px;flex-shrink:0}
+.sw input{opacity:0;width:0;height:0}
+.sw-track{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--border);border-radius:24px;transition:.3s}
+.sw-track::before{position:absolute;content:'';height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.sw input:checked+.sw-track{background:var(--brand)}
+.sw input:checked+.sw-track::before{transform:translateX(18px)}
+
+/* RADIO CARDS */
+.radio-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.radio-cards.c3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:560px){.radio-cards,.radio-cards.c3{grid-template-columns:1fr}}
+.rc input[type=radio]{display:none}
+.rc label{display:block;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;background:#fff}
+.rc input:checked+label{border-color:var(--brand);background:var(--brand-light)}
+.rc-title{font-size:.8rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.rc-desc{font-size:.7rem;color:var(--muted);line-height:1.4}
+.badge-free{background:var(--success);color:#fff;border-radius:4px;padding:1px 5px;font-size:.62rem;font-weight:700}
+.badge-pro{background:var(--brand);color:#fff;border-radius:4px;padding:1px 5px;font-size:.62rem;font-weight:700}
+.badge-rec{background:#8B5CF6;color:#fff;border-radius:4px;padding:1px 5px;font-size:.62rem;font-weight:700}
+
+/* INFO / WARN BOXES */
+.info-box{background:var(--brand-light);border-left:3px solid var(--brand);border-radius:0 9px 9px 0;padding:11px 13px;margin-bottom:12px;font-size:.78rem;color:#3730A3;line-height:1.5}
+.warn-box{background:#FFFBEB;border-left:3px solid var(--warn);border-radius:0 9px 9px 0;padding:11px 13px;margin-bottom:12px;font-size:.78rem;color:#92400E;line-height:1.5}
+.tip-box{background:#F0FDF4;border-left:3px solid var(--success);border-radius:0 9px 9px 0;padding:11px 13px;margin-bottom:12px;font-size:.78rem;color:#166534;line-height:1.5}
+
+/* SECTION LABEL */
+.section-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--brand);margin:18px 0 10px;display:flex;align-items:center;gap:6px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* NAV */
+.nav-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:6px}
+.btn{padding:10px 24px;border-radius:9px;font-family:'Inter',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;gap:6px}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-dark);transform:translateY(-1px)}
+.btn-ghost{background:#fff;color:var(--muted);border:1.5px solid var(--border)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-success{background:var(--success);color:#fff}
+.btn-success:hover{background:#16A34A}
+@media(max-width:560px){.nav-row{flex-direction:column-reverse}.btn{width:100%;justify-content:center}}
+
+/* OUTPUT */
+.out-card{background:#0F0F1A;border-radius:var(--radius);padding:22px;margin-bottom:18px;position:relative}
+.out-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap}
+.out-title{color:#E2E8F0;font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem}
+.out-actions{display:flex;gap:8px}
+.copy-btn{background:var(--brand);color:#fff;border:none;border-radius:7px;padding:6px 14px;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.copy-btn:hover{background:var(--brand-dark)}
+.copy-btn.done{background:var(--success)}
+.tab-btns{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);border-radius:6px;padding:5px 12px;font-size:.72rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.tab-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.prompt-out{color:#A5B4FC;font-family:'Courier New',monospace;font-size:.75rem;line-height:1.75;white-space:pre-wrap;max-height:500px;overflow-y:auto}
+.prompt-out::-webkit-scrollbar{width:5px}
+.prompt-out::-webkit-scrollbar-track{background:#1E1E2E}
+.prompt-out::-webkit-scrollbar-thumb{background:var(--brand);border-radius:3px}
+
+/* SUMMARY */
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+@media(max-width:560px){.sum-grid{grid-template-columns:1fr 1fr}}
+.sum-item{background:var(--bg);border-radius:8px;padding:9px 11px;border:1px solid var(--border)}
+.sum-label{font-size:.65rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.sum-value{font-size:.8rem;font-weight:700;color:var(--text);margin-top:2px;word-break:break-word}
+.chip{display:inline-block;width:13px;height:13px;border-radius:3px;vertical-align:middle;margin-right:4px;border:1px solid var(--border)}
+
+/* CHECKLIST */
+.chk-list{list-style:none}
+.chk-list li{padding:9px 0;border-bottom:1px solid var(--border);font-size:.8rem;display:flex;align-items:flex-start;gap:9px;line-height:1.4}
+.chk-list li:last-child{border-bottom:none}
+.chk-num{min-width:22px;height:22px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.65rem;font-weight:800;flex-shrink:0;margin-top:1px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-logo">Build Base <span>Digitally</span></div>
+  <div class="hdr-right">
+    <div class="workflow-pill">Stitch <span class="wf-arrow">→</span> Antigravity <span class="wf-arrow">→</span> Novamira <span class="wf-arrow">→</span> WordPress</div>
+    <div class="step-pill" id="stepPill">Step 1 / 6</div>
+  </div>
+</div>
+
+<div class="prog-wrap">
+  <div class="prog-steps">
+    <div class="p-step active" id="ps1"><div class="p-dot"><span>1</span></div><div class="p-label">Business</div></div>
+    <div class="p-step" id="ps2"><div class="p-dot"><span>2</span></div><div class="p-label">Design</div></div>
+    <div class="p-step" id="ps3"><div class="p-dot"><span>3</span></div><div class="p-label">Content</div></div>
+    <div class="p-step" id="ps4"><div class="p-dot"><span>4</span></div><div class="p-label">Pages</div></div>
+    <div class="p-step" id="ps5"><div class="p-dot"><span>5</span></div><div class="p-label">Tech Setup</div></div>
+    <div class="p-step" id="ps6"><div class="p-dot"><span>6</span></div><div class="p-label">Prompt</div></div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ═══════════════════════════════════════════════════
+     STEP 1 — BUSINESS INFO
+═══════════════════════════════════════════════════ -->
+<div class="step-panel active" id="step1">
+  <div class="card">
+    <div class="card-title">🏢 Business Information</div>
+    <div class="card-sub">Client ke basic details — yeh sab Stitch ko context deta hai taaki realistic copy aur structure generate ho</div>
+
+    <div class="fr c2">
+      <div class="field"><label>Business Name <span class="req">*</span></label><input type="text" id="bizName" placeholder="e.g., Aman Health & Fitness"></div>
+      <div class="field"><label>Business Type <span class="req">*</span></label>
+        <select id="bizType">
+          <option value="">— Select —</option>
+          <option>Gym / Fitness Center</option><option>Restaurant / Dhaba</option>
+          <option>Medical Clinic / Hospital</option><option>Salon / Beauty Parlour</option>
+          <option>Boutique / Clothing Store</option><option>Digital Agency</option>
+          <option>Real Estate</option><option>Education / Coaching</option>
+          <option>Automobile / Garage</option><option>Hotel / Guest House</option>
+          <option>Pharmacy / Chemist</option><option>Manufacturing / Industry</option>
+          <option>CA / Legal / Consultancy</option><option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>Tagline <span class="req">*</span> <span class="hint">One punchy line describing the business</span></label><input type="text" id="tagline" placeholder="e.g., Strength Built Here. Results Delivered."></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>City / Location <span class="req">*</span></label><input type="text" id="location" placeholder="Baddi, Himachal Pradesh"></div>
+      <div class="field"><label>Full Address</label><input type="text" id="address" placeholder="Shop No. 5, Main Market, Baddi, HP 173205"></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Phone Number <span class="req">*</span></label><input type="tel" id="phone" placeholder="+91 98765 43210"></div>
+      <div class="field"><label>WhatsApp Number <span class="hint">(if different from phone)</span></label><input type="tel" id="whatsapp" placeholder="+91 98765 43210"></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Email Address</label><input type="email" id="email" placeholder="contact@business.com"></div>
+      <div class="field"><label>Website Domain</label><input type="text" id="domain" placeholder="www.business.com"></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Working Hours</label><input type="text" id="hours" placeholder="Mon–Sat, 6 AM – 10 PM"></div>
+      <div class="field"><label>Owner / Contact Person</label><input type="text" id="ownerName" placeholder="Aman Sharma"></div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>Target Audience <span class="hint">Who is the customer?</span></label><input type="text" id="audience" placeholder="e.g., Working professionals & college students aged 18–40 in Baddi & nearby areas"></div>
+    </div>
+  </div>
+  <div class="nav-row"><div></div><button class="btn btn-primary" onclick="goTo(2)">Next — Design →</button></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     STEP 2 — DESIGN & BRANDING
+═══════════════════════════════════════════════════ -->
+<div class="step-panel" id="step2">
+  <div class="card">
+    <div class="card-title">🎨 Design & Branding</div>
+    <div class="card-sub">Visual identity — yeh colors aur style directly Stitch ke design decisions ko guide karenge</div>
+
+    <div class="section-label" style="display:flex; justify-content:space-between; align-items:center;">
+      Color Palette
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:0.75rem;font-weight:600;color:var(--text);text-transform:none;letter-spacing:normal;">Let AI decide best colors</span>
+        <label class="sw" style="margin:0;">
+          <input type="checkbox" id="aiColors" onchange="toggleColorPickers(this.checked)">
+          <span class="sw-track"></span>
+        </label>
+      </div>
+    </div>
+    <div id="colorPickersContainer">
+    <div class="fr c2">
+      <div class="field"><label>Primary Color <span class="req">*</span> <span class="hint">Main brand / CTA color</span></label>
+        <div class="color-row">
+          <input type="color" id="c1p" value="#E8272A" oninput="syncHex('c1p','c1h')">
+          <input type="text" id="c1h" placeholder="#E8272A" oninput="syncPicker('c1p','c1h')">
+        </div>
+      </div>
+      <div class="field"><label>Secondary Color <span class="req">*</span> <span class="hint">Dark / background color</span></label>
+        <div class="color-row">
+          <input type="color" id="c2p" value="#1A1A1A" oninput="syncHex('c2p','c2h')">
+          <input type="text" id="c2h" placeholder="#1A1A1A" oninput="syncPicker('c2p','c2h')">
+        </div>
+      </div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Accent / Highlight Color <span class="hint">Optional 3rd color</span></label>
+        <div class="color-row">
+          <input type="color" id="c3p" value="#FFFFFF" oninput="syncHex('c3p','c3h')">
+          <input type="text" id="c3h" placeholder="#FFFFFF or N/A" oninput="syncPicker('c3p','c3h')">
+        </div>
+      </div>
+      <div class="field"><label>Background / Section BG Color</label>
+        <div class="color-row">
+          <input type="color" id="c4p" value="#F8F8F8" oninput="syncHex('c4p','c4h')">
+          <input type="text" id="c4h" placeholder="#F8F8F8" oninput="syncPicker('c4p','c4h')">
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="section-label">Typography & Style</div>
+    <div class="fr c2">
+      <div class="field"><label>Design Style <span class="req">*</span></label>
+        <select id="designStyle">
+          <option value="">— Select —</option>
+          <option>Modern & Bold (Strong headings, high contrast)</option>
+          <option>Clean & Minimal (White space, simple layout)</option>
+          <option>Elegant & Luxury (Serif fonts, refined spacing)</option>
+          <option>Friendly & Playful (Rounded corners, warm tones)</option>
+          <option>Professional & Corporate (Grid-based, conservative)</option>
+          <option>Energetic & Sport (Dynamic angles, bold colors)</option>
+          <option>Traditional & Trust (Classic layout, muted palette)</option>
+        </select>
+      </div>
+      <div class="field"><label>Font Preference <span class="hint">Leave blank = AI chooses based on style</span></label>
+        <input type="text" id="fontPref" placeholder="e.g., Poppins + Inter, or 'bold sans-serif'">
+      </div>
+    </div>
+
+    <div class="section-label">Logo</div>
+    <div class="fr c2">
+      <div class="field"><label>Logo Type</label>
+        <select id="logoType">
+          <option value="Text-based logo using business name only">Text-based (name only)</option>
+          <option value="Client will provide image logo file">Image logo (client provides)</option>
+          <option value="Icon combined with business name text">Icon + Text combo</option>
+        </select>
+      </div>
+      <div class="field"><label>Logo Description <span class="hint">Describe if image/icon</span></label>
+        <input type="text" id="logoDesc" placeholder="e.g., Dumbbell icon in primary color, white text">
+      </div>
+    </div>
+
+    <div class="section-label">Social Media & Map</div>
+    <div class="fr c2">
+      <div class="field"><label>Instagram</label><input type="text" id="insta" placeholder="@handle or full URL"></div>
+      <div class="field"><label>Facebook</label><input type="text" id="fb" placeholder="@handle or full URL"></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>YouTube</label><input type="text" id="yt" placeholder="Channel URL or N/A"></div>
+      <div class="field"><label>Google Maps Embed URL</label><input type="text" id="maps" placeholder="Paste embed src URL or N/A"></div>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-ghost" onclick="goTo(1)">← Back</button><button class="btn btn-primary" onclick="goTo(3)">Next — Content →</button></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     STEP 3 — CONTENT
+═══════════════════════════════════════════════════ -->
+<div class="step-panel" id="step3">
+  <div class="card">
+    <div class="card-title">📝 Website Content</div>
+    <div class="card-sub">Actual content jo website pe jayega — jitna detail doge utna better Stitch ka output hoga</div>
+
+    <div class="section-label">Services</div>
+    <div class="fr">
+      <div class="field">
+        <label>Services / Products <span class="req">*</span> <span class="hint">Type karo → Enter dabao to add as tag</span></label>
+        <div class="tag-wrap" id="svcWrap" onclick="document.getElementById('svcInput').focus()">
+          <input type="text" id="svcInput" placeholder="e.g., Weight Training  →  Enter" onkeydown="addTag(event,'svcInput',svcTags,'svcWrap')">
+        </div>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>USP — Why Choose This Business? <span class="req">*</span></label><textarea id="usp" placeholder="e.g., Only gym in Baddi with AI-based personalized diet planning, 24/7 WhatsApp trainer support, and 500+ successful transformations since 2018"></textarea></div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>Business Story / About <span class="hint">2–3 sentences</span></label><textarea id="about" placeholder="e.g., Founded in 2018, Aman Health & Fitness was started with a mission to bring world-class fitness to Baddi. In 6 years we have helped 500+ members transform their bodies and lifestyle..."></textarea></div>
+    </div>
+
+    <div class="section-label">Testimonials</div>
+    <div class="fr">
+      <div class="field"><label>Testimonial 1 <span class="hint">Quote — Customer Name, City</span></label><input type="text" id="t1" placeholder='"Lost 12kg in 3 months, best gym in Baddi!" — Rohit S., Baddi'></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Testimonial 2</label><input type="text" id="t2" placeholder='"Very professional trainers." — Priya K., Nalagarh'></div>
+      <div class="field"><label>Testimonial 3</label><input type="text" id="t3" placeholder='"Great diet guidance." — Vikas M., Solan'></div>
+    </div>
+
+    <div class="section-label">Offers & Extra</div>
+    <div class="fr c2">
+      <div class="field"><label>Special Offer / Announcement <span class="hint">Optional</span></label><input type="text" id="offer" placeholder="3 months @ ₹2999 — Limited slots!"></div>
+      <div class="field"><label>Pricing / Membership Plans <span class="hint">Optional</span></label><input type="text" id="pricing" placeholder="Monthly ₹1200 / 3M ₹2999 / 6M ₹4999"></div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>Any Additional Content Notes <span class="hint">Special sections, Hindi text, before-after gallery, FAQ, etc.</span></label><textarea id="extraContent" placeholder="e.g., Add FAQ section with 5 questions about gym membership. Add before-after transformation gallery. Some section headings in Hindi."></textarea></div>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-ghost" onclick="goTo(2)">← Back</button><button class="btn btn-primary" onclick="goTo(4)">Next — Pages →</button></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     STEP 4 — PAGES SELECTION
+═══════════════════════════════════════════════════ -->
+<div class="step-panel" id="step4">
+  <div class="card">
+    <div class="card-title">📄 Pages to Build</div>
+    <div class="card-sub">Select karo konse pages chahiye — OFF karo jo is client ke liye zaroori nahi</div>
+
+    <div class="sw-row"><div class="sw-info"><strong>🏠 Home Page</strong><span>Hero, services overview, testimonials, CTA — always required</span></div><label class="sw"><input type="checkbox" id="pg_home" checked disabled><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>👤 About Page</strong><span>Business story, owner intro, milestones, mission & vision</span></div><label class="sw"><input type="checkbox" id="pg_about" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>🛠 Services Page</strong><span>Dedicated full section per service with benefits</span></div><label class="sw"><input type="checkbox" id="pg_services" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>🖼 Gallery Page</strong><span>Photo grid with lightbox — great for gyms, salons, restaurants</span></div><label class="sw"><input type="checkbox" id="pg_gallery" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>⭐ Testimonials Page</strong><span>Full reviews page with star ratings</span></div><label class="sw"><input type="checkbox" id="pg_testimonials" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>💰 Pricing / Membership Page</strong><span>Pricing cards — good for gyms, coaching, SaaS</span></div><label class="sw"><input type="checkbox" id="pg_pricing"><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>❓ FAQ Page</strong><span>Accordion-style frequently asked questions</span></div><label class="sw"><input type="checkbox" id="pg_faq"><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>📞 Contact Page</strong><span>Form, map, business details — always required</span></div><label class="sw"><input type="checkbox" id="pg_contact" checked disabled><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>🔒 Privacy Policy</strong><span>Auto-generated standard Indian business policy</span></div><label class="sw"><input type="checkbox" id="pg_privacy" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>📋 Terms & Conditions</strong><span>Auto-generated T&C for Indian small business</span></div><label class="sw"><input type="checkbox" id="pg_terms" checked><span class="sw-track"></span></label></div>
+  </div>
+  <div class="nav-row"><button class="btn btn-ghost" onclick="goTo(3)">← Back</button><button class="btn btn-primary" onclick="goTo(5)">Next — Tech Setup →</button></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     STEP 5 — AGENCY TECH SETUP
+═══════════════════════════════════════════════════ -->
+<div class="step-panel" id="step5">
+  <div class="card">
+    <div class="card-title">⚙️ Agency Tech Setup</div>
+    <div class="card-sub">Tumhara WordPress stack define karo — yeh settings directly prompt mein jayenge taaki Antigravity exact compatible structure generate kare</div>
+
+    <div class="info-box">
+      ℹ️ Yeh settings <strong>tumhari agency ke liye</strong> hain, client ko nahi poochna. In choices ke basis par Stitch + Antigravity ko specific instructions milenge — jaise correct CSS class names, container structure, aur Elementor-compatible markup.
+    </div>
+
+    <!-- ELEMENTOR VERSION -->
+    <div class="section-label">Elementor Version</div>
+    <div class="radio-cards c2" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="elVersion" id="el_free" value="Elementor Free" checked><label for="el_free"><div class="rc-title"><span class="badge-free">FREE</span> Elementor Free</div><div class="rc-desc">Basic widgets, Section/Column layout. No Theme Builder. Use with XPro for extra widgets + footer builder.</div></label></div>
+      <div class="rc"><input type="radio" name="elVersion" id="el_pro" value="Elementor Pro"><label for="el_pro"><div class="rc-title"><span class="badge-pro">PRO</span> Elementor Pro</div><div class="rc-desc">Full Theme Builder, Header/Footer editor, Popup Builder, WooCommerce builder, Loop Grid. Best for full control.</div></label></div>
+    </div>
+
+    <!-- ELEMENTOR EDITOR MODE -->
+    <div class="section-label">Elementor Editor Mode (Atomic / Classic)</div>
+    <div class="warn-box">⚠️ <strong>Important:</strong> Elementor 3.x introduced Flexbox Container (Atomic mode). Antigravity must know this to generate correct structure. Wrong setting = layout broken in editor.</div>
+    <div class="radio-cards c2" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="editorMode" id="em_classic" value="Classic Section/Column (Flexbox Container OFF — Elementor Experiments disabled)" checked><label for="em_classic"><div class="rc-title">🔴 Classic Mode (Recommended)</div><div class="rc-desc">Section → Column → Widget. Stable, widely supported. Flexbox Container OFF in Elementor Experiments. Best for Antigravity compatibility.</div></label></div>
+      <div class="rc"><input type="radio" name="editorMode" id="em_atomic" value="Atomic/Flexbox Container Mode (Flexbox Container ON in Elementor Experiments — use Container instead of Section)"><label for="em_atomic"><div class="rc-title">🟡 Atomic/Flexbox Mode</div><div class="rc-desc">Container → Widget. Modern flex-based layout. Flexbox Container ON in Elementor Experiments. Newer but less stable with some addons.</div></label></div>
+    </div>
+
+    <!-- ASTRA THEME -->
+    <div class="section-label">Astra Theme Version</div>
+    <div class="radio-cards c2" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="astraVersion" id="astra_free" value="Astra Free theme" checked><label for="astra_free"><div class="rc-title"><span class="badge-free">FREE</span> Astra Free</div><div class="rc-desc">Lightweight base theme. Header/footer customization limited. Works with XPro or Elementor Pro for full control.</div></label></div>
+      <div class="rc"><input type="radio" name="astraVersion" id="astra_pro" value="Astra Pro theme"><label for="astra_pro"><div class="rc-title"><span class="badge-pro">PRO</span> Astra Pro</div><div class="rc-desc">Advanced header/footer builder built-in, custom layouts, white-label. Full design control without extra addons.</div></label></div>
+    </div>
+
+    <!-- XPRO ADDONS -->
+    <div class="section-label">XPro Addons (for Elementor Free users)</div>
+    <div class="radio-cards c2" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="xproVersion" id="xpro_free" value="XPro Elementor Addons Free" checked><label for="xpro_free"><div class="rc-title"><span class="badge-free">FREE</span> XPro Free</div><div class="rc-desc">Extra widgets for Elementor Free. Includes basic footer builder, nav menu, image comparison, countdown, etc.</div></label></div>
+      <div class="rc"><input type="radio" name="xproVersion" id="xpro_pro" value="XPro Elementor Addons Pro"><label for="xpro_pro"><div class="rc-title"><span class="badge-pro">PRO</span> XPro Pro</div><div class="rc-desc">Full footer/header builder via XPro Theme Builder, advanced mega menu, WooCommerce widgets, popup builder.</div></label></div>
+      <div class="rc"><input type="radio" name="xproVersion" id="xpro_none" value="No XPro addon — using Elementor Pro or Astra Pro instead"><label for="xpro_none"><div class="rc-title">❌ Not Using XPro</div><div class="rc-desc">Skip XPro if using Elementor Pro or Astra Pro which already handle header/footer.</div></label></div>
+    </div>
+
+    <!-- CONTACT FORM -->
+    <div class="section-label">Contact Form Plugin</div>
+    <div class="radio-cards" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="formPlugin" id="fp_wpforms" value="WPForms Lite (free) — use shortcode [wpforms id='1'] in Elementor Shortcode widget" checked><label for="fp_wpforms"><div class="rc-title"><span class="badge-rec">RECOMMENDED</span> WPForms Lite</div><div class="rc-desc">Free. Drag-drop builder. Add via Elementor Shortcode widget. Spam protection + email notifications.</div></label></div>
+      <div class="rc"><input type="radio" name="formPlugin" id="fp_cf7" value="Contact Form 7 (free) — use shortcode [contact-form-7 id='1'] in Elementor Shortcode widget"><label for="fp_cf7"><div class="rc-title"><span class="badge-free">FREE</span> Contact Form 7</div><div class="rc-desc">Lightweight. Add via Elementor Shortcode widget. Simple setup, widely used.</div></label></div>
+      <div class="rc"><input type="radio" name="formPlugin" id="fp_elform" value="Elementor Pro Form Widget (built-in to Elementor Pro — use Form widget directly in Elementor editor)"><label for="fp_elform"><div class="rc-title"><span class="badge-pro">PRO</span> Elementor Pro Form</div><div class="rc-desc">Built into Elementor Pro. No extra plugin. Best if you have Elementor Pro — drag it directly in editor.</div></label></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Form Leads Send to Email</label><input type="email" id="formEmail" placeholder="client@business.com"></div>
+      <div class="field"><label>WhatsApp Floating Button Plugin</label>
+        <select id="waPlugin">
+          <option value="Joinchat plugin (free) — install Joinchat, configure WhatsApp number and pre-filled message in plugin settings">Joinchat (Free) — Recommended</option>
+          <option value="WP Social Chat plugin (free) — install and configure in plugin settings">WP Social Chat (Free)</option>
+          <option value="Custom HTML floating WhatsApp button coded directly — fixed position bottom-right">Custom HTML Button (No plugin)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ELEMENTOR WIDGET SPECIFIC -->
+    <div class="section-label">Additional Elementor Widgets</div>
+    <div class="fr c2">
+      <div class="field"><label>Image Slider / Carousel Plugin</label>
+        <select id="sliderPlugin">
+          <option value="Smart Slider 3 Free — use Smart Slider widget in Elementor">Smart Slider 3 (Free)</option>
+          <option value="Elementor Pro Carousel widget (built-in)">Elementor Pro Carousel (built-in)</option>
+          <option value="XPro Image Comparison or Carousel widget">XPro Carousel Widget</option>
+          <option value="No slider needed">No Slider Needed</option>
+        </select>
+      </div>
+      <div class="field"><label>Gallery / Lightbox Plugin</label>
+        <select id="galleryPlugin">
+          <option value="Elementor Gallery widget (built-in, basic) with CSS lightbox">Elementor Gallery (built-in)</option>
+          <option value="Envira Gallery Free — use Envira Gallery shortcode in Elementor Shortcode widget">Envira Gallery (Free)</option>
+          <option value="FooGallery Free — use FooGallery shortcode in Elementor Shortcode widget">FooGallery (Free)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ANTIGRAVITY SPECIFIC SETTINGS -->
+    <div class="section-label">🤖 Antigravity / Stitch Output Settings</div>
+    <div class="tip-box">
+      ✅ These settings tell Antigravity exactly how to structure the design so every element is fully editable in Elementor editor — zero HTML code needed after import.
+    </div>
+
+    <div class="sw-row">
+      <div class="sw-info"><strong>Unique Container IDs</strong><span>Every Section/Column gets a unique CSS ID (e.g., #section-hero-001) — Elementor Advanced tab mein visible, easy to target</span></div>
+      <label class="sw"><input type="checkbox" id="uniqueIDs" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Unique CSS Classes per Element</strong><span>Every widget/element gets its own class (e.g., .btn-cta-hero, .card-service-1) — no shared classes that conflict</span></div>
+      <label class="sw"><input type="checkbox" id="uniqueClasses" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Named Sections / Elements</strong><span>Every section/widget labeled with descriptive name in Elementor panel (e.g., "Hero Section", "Services Grid") — easy to navigate</span></div>
+      <label class="sw"><input type="checkbox" id="namedSections" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>No Inline Styles — Use Elementor Style Tab Only</strong><span>All styling via Elementor Style/Advanced tabs, not hardcoded inline CSS — fully editable without code</span></div>
+      <label class="sw"><input type="checkbox" id="noInline" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Global Colors as CSS Variables</strong><span>Primary & secondary colors defined as CSS variables and Elementor Global Colors — change once, updates everywhere</span></div>
+      <label class="sw"><input type="checkbox" id="globalColors" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Responsive Breakpoints Set</strong><span>Mobile (375px), Tablet (768px), Desktop (1280px) — all sections must be tested responsive in Elementor editor</span></div>
+      <label class="sw"><input type="checkbox" id="responsive" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>WhatsApp Button via Plugin (not hardcoded)</strong><span>Use selected WhatsApp plugin instead of coding — so client can change number themselves from WP dashboard</span></div>
+      <label class="sw"><input type="checkbox" id="waViaPlugin" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Images as Elementor Dynamic / Placeholder</strong><span>All images use Elementor image widget placeholders — client can change from editor without touching code</span></div>
+      <label class="sw"><input type="checkbox" id="imgPlaceholder" checked><span class="sw-track"></span></label>
+    </div>
+
+    <div class="section-label">Extra Dev Notes for Antigravity</div>
+    <div class="fr">
+      <div class="field"><label>Additional Technical Instructions <span class="hint">Any special requirement for Antigravity/Stitch</span></label><textarea id="devNotes" placeholder="e.g., Use Poppins font loaded via Elementor Font settings not Google CDN link. Section padding should be 80px desktop, 40px mobile. All buttons should use Elementor button widget only."></textarea></div>
+    </div>
+
+    <div class="section-label">🔗 N8n AI Agent Connection</div>
+    <div class="tip-box">✅ N8n workflow se AI-enhanced prompts milenge — Gemini 3 agents parallel chalenge: Industry Research + Stitch Prompt Writer + Antigravity Expert. Pehle basic prompts generate ho jaate hain (Step 6), phir N8n se enhanced version milta hai.</div>
+    <div class="fr c2">
+      
+      <div class="field"><label>Stitch Output <span class="hint">Paste Google Stitch output here for Agent 3 analysis</span></label><textarea id="stitchOutputPaste" style="min-height:60px" placeholder="(Optional) After running Stitch, paste the generated design description here — Agent 3 will analyze it for better Antigravity instructions"></textarea></div>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-ghost" onclick="goTo(4)">← Back</button><button class="btn btn-success" onclick="generateAll()">✨ Generate Prompts →</button></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     STEP 6 — OUTPUT
+═══════════════════════════════════════════════════ -->
+
+<!-- ═══ STEP 6 — OUTPUT ═══ -->
+<div class="step-panel" id="step6">
+  <div class="card">
+    <div class="card-title">✅ Prompts Ready!</div>
+    <div class="card-sub">Basic prompts generate hue. N8n se AI-enhanced version bhi le sakte ho — Gemini 3 agents parallel chalenge.</div>
+    <div class="sum-grid" id="sumGrid"></div>
+  </div>
+
+  <!-- N8N AI PANEL -->
+  <div class="card" style="border:2px solid var(--brand);background:var(--brand-light)">
+    <div class="card-title" style="color:var(--brand)">🤖 N8n AI Enhancement</div>
+    <div class="card-sub" style="color:#3730A3;margin-bottom:12px">3 Gemini agents: Industry Research + Stitch Prompt Writer + Antigravity Expert — zyada detailed aur accurate output milega</div>
+    <div class="info-box" style="margin-bottom:12px">
+      <strong>2-Step Manual Flow:</strong><br>
+      1️⃣ Basic Stitch prompt (neeche) copy → Google Stitch mein paste → design generate karo<br>
+      2️⃣ Stitch output Step 5 ke field mein paste karo → "Send to N8n" → AI Enhanced Antigravity prompt lo
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-primary" id="sendN8nBtn" onclick="sendToN8n()">⚡ Send to N8n AI Agents</button>
+      <span id="n8nStatus" style="font-size:.8rem;font-weight:600;color:var(--muted)"></span>
+    </div>
+    <div id="n8nResultPanel" style="display:none;margin-top:16px">
+      <div class="tip-box" style="margin-bottom:10px">✅ N8n complete! Enhanced prompts ready — copy karo aur use karo.</div>
+      <div class="tab-btns">
+        <button class="tab-btn active" id="nt1" onclick="showN8nTab(1)">🎨 AI Stitch Prompt</button>
+        <button class="tab-btn" id="nt2" onclick="showN8nTab(2)">⚡ AI Antigravity Prompt</button>
+        <button class="tab-btn" id="nt3" onclick="showN8nTab(3)">🔍 Research Insights</button>
+      </div>
+      <div style="position:relative">
+        <button class="copy-btn" id="n8nCopyBtn" onclick="copyN8nActive()" style="position:absolute;top:10px;right:10px;z-index:10">Copy</button>
+        <div class="prompt-out" id="n8nStitchOut" style="padding-top:10px"></div>
+        <div class="prompt-out" id="n8nAntiOut" style="display:none;padding-top:10px"></div>
+        <div class="prompt-out" id="n8nResOut" style="display:none;padding-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BASIC PROMPTS -->
+  <div class="out-card">
+    <div class="out-hdr">
+      <div class="out-title">📋 Basic Prompts (Form-Generated)</div>
+      <div class="out-actions">
+        <button class="copy-btn" id="copyBtn" onclick="copyActive()">Copy</button>
+      </div>
+    </div>
+    <div class="tab-btns">
+      <button class="tab-btn active" id="tab1" onclick="showTab(1)">🎨 Stitch Prompt</button>
+      <button class="tab-btn" id="tab2" onclick="showTab(2)">⚡ Antigravity Prompt</button>
+    </div>
+    <div class="prompt-out" id="stitchOut"></div>
+    <div class="prompt-out" id="antigravityOut" style="display:none"></div>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="card">
+    <div class="card-title" style="font-size:1rem;margin-bottom:14px">🚀 Complete Workflow</div>
+    <ul class="chk-list">
+      <li><div class="chk-num">1</div>🎨 <strong>Stitch Prompt</strong> copy (upar tab) → <strong>Google Stitch</strong> mein paste → website design generate karo</li>
+      <li><div class="chk-num">2</div>Stitch ka output copy → Step 5 "Stitch Output" field mein paste → <strong>⚡ Send to N8n</strong> click karo</li>
+      <li><div class="chk-num">3</div>N8n 3 Gemini agents chalega (~30–45 sec) → <strong>AI Enhanced Antigravity Prompt</strong> upar N8n panel mein aayega</li>
+      <li><div class="chk-num">4</div>Enhanced Antigravity prompt copy → <strong>Antigravity</strong> mein paste → Elementor-compatible structure generate</li>
+      <li><div class="chk-num">5</div><strong>Novamira MCP</strong> → WordPress push → pages auto-create Elementor ke saath</li>
+      <li><div class="chk-num">6</div>Plugins install: <strong>WPForms Lite, Joinchat, Yoast SEO, Smush, Wordfence, UpdraftPlus</strong></li>
+      <li><div class="chk-num">7</div>Elementor mein open karo → <strong>Zero HTML</strong> → sab visual editable → photos replace → form test</li>
+      <li><div class="chk-num">8</div><strong>Deliver & payment lo 🎉</strong></li>
+    </ul>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-ghost" onclick="goTo(5)">← Edit</button>
+    <button class="btn btn-primary" onclick="window.print()">🖨 Save PDF</button>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ─── STATE ───────────────────────────────────────────
+let cur = 1;
+const svcTags = [];
+let activeTab = 1;
+let n8nActiveTab = 1;
+let cachedPayload = {};
+
+// ─── NAVIGATION ──────────────────────────────────────
+function goTo(n){
+    let missing = [];
+    if(cur === 1 && n > 1) {
+      if(!v('bizName')) missing.push('Business Name');
+      if(!v('bizType')) missing.push('Business Type');
+      if(!v('location')) missing.push('City / Location');
+      if(!v('address')) missing.push('Full Address');
+      if(!v('whatsapp') && !v('phone')) missing.push('WhatsApp Number');
+      if(!v('hours')) missing.push('Working Hours');
+      if(!v('ownerName')) missing.push('Owner / Contact Person');
+    } else if(cur === 3 && n > 3) {
+      if(svcTags.length === 0) missing.push('Services');
+    }
+    if(missing.length > 0) {
+      alert('Please fill the following mandatory fields:\n- ' + missing.join('\n- '));
+      return;
+    }
+  document.getElementById('step'+cur).classList.remove('active');
+  document.getElementById('ps'+cur).classList.remove('active');
+  if(n>cur) document.getElementById('ps'+cur).classList.add('done');
+  cur=n;
+  document.getElementById('step'+cur).classList.add('active');
+  for(let i=1;i<=6;i++){
+    const p=document.getElementById('ps'+i);
+    p.classList.remove('active','done');
+    if(i<cur) p.classList.add('done');
+    else if(i===cur) p.classList.add('active');
+  }
+  document.getElementById('stepPill').textContent='Step '+cur+' / 6';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── COLOR SYNC ──────────────────────────────────────
+function syncHex(pid,hid){document.getElementById(hid).value=document.getElementById(pid).value}
+function syncPicker(pid,hid){const h=document.getElementById(hid).value;if(/^#[0-9A-Fa-f]{6}$/.test(h))document.getElementById(pid).value=h}
+  function toggleColorPickers(c){document.getElementById('colorPickersContainer').style.display=c?'none':'block';}
+
+// ─── TAG INPUT ───────────────────────────────────────
+function addTag(e,inputId,arr,wrapId){
+  if(e.key==='Enter'||e.key===','){
+    e.preventDefault();
+    const inp=document.getElementById(inputId);
+    const val=inp.value.trim().replace(/,$/,'');
+    if(val&&!arr.includes(val)){arr.push(val);renderTags(arr,wrapId,inputId);}
+    inp.value='';
+  }
+  if(e.key==='Backspace'&&document.getElementById(inputId).value===''&&arr.length){arr.pop();renderTags(arr,wrapId,inputId);}
+}
+function renderTags(arr,wrapId,inputId){
+  const wrap=document.getElementById(wrapId);
+  const inp=document.getElementById(inputId);
+  wrap.querySelectorAll('.tag').forEach(t=>t.remove());
+  arr.forEach((tag,i)=>{
+    const el=document.createElement('div');el.className='tag';
+    el.innerHTML=tag+'<button type="button" onclick="rmTag('+i+',\''+wrapId+'\',\''+inputId+'\')">×</button>';
+    wrap.insertBefore(el,inp);
+  });
+}
+function rmTag(i,wrapId,inputId){svcTags.splice(i,1);renderTags(svcTags,wrapId,inputId);}
+
+// ─── GET VALUE HELPERS ────────────────────────────────
+function v(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function chk(id){const e=document.getElementById(id);return e?e.checked:false;}
+function radio(name){const e=document.querySelector('input[name="'+name+'"]:checked');return e?e.value:'';}
+function pgChk(id){const e=document.getElementById(id);return e?e.checked:false;}
+
+// ─── BUILD PAGES LIST ─────────────────────────────────
+function getPages(){
+  const pages=[];
+  if(pgChk('pg_home')) pages.push({slug:'index',title:'Home',desc:'Hero, services overview, USP, testimonials, CTA banner, offer strip'});
+  if(pgChk('pg_about')) pages.push({slug:'about',title:'About',desc:'Business story, mission/vision, owner intro, milestones/achievements'});
+  if(pgChk('pg_services')) pages.push({slug:'services',title:'Services',desc:'One full section per service with description + benefits + icon'});
+  if(pgChk('pg_gallery')) pages.push({slug:'gallery',title:'Gallery',desc:'Responsive image grid with lightbox'});
+  if(pgChk('pg_testimonials')) pages.push({slug:'testimonials',title:'Testimonials',desc:'Full reviews with star ratings and Google Reviews CTA'});
+  if(pgChk('pg_pricing')) pages.push({slug:'pricing',title:'Pricing',desc:'Pricing cards/membership plans comparison table'});
+  if(pgChk('pg_faq')) pages.push({slug:'faq',title:'FAQ',desc:'Accordion FAQ with 6–8 questions'});
+  if(pgChk('pg_contact')) pages.push({slug:'contact',title:'Contact',desc:'Contact form, map, business details card'});
+  if(pgChk('pg_privacy')) pages.push({slug:'privacy',title:'Privacy Policy',desc:'Auto-generated Indian small business privacy policy'});
+  if(pgChk('pg_terms')) pages.push({slug:'terms',title:'Terms & Conditions',desc:'Auto-generated T&C for Indian small business'});
+  return pages;
+}
+
+// ─── GENERATE ─────────────────────────────────────────
+function generateAll(){
+  const d={
+    bizName:    v('bizName')||'[BUSINESS NAME]',
+    bizType:    v('bizType')||'[TYPE]',
+    tagline:    v('tagline')||'[AI WILL GENERATE A PUNCHY TAGLINE BASED ON BUSINESS]',
+    location:   v('location')||'[LOCATION]',
+    address:    v('address')||'[ADDRESS]',
+    phone:      v('phone')||'[PHONE]',
+    whatsapp:   v('whatsapp')||v('phone')||'[WHATSAPP]',
+    email:      v('email')||'[EMAIL]',
+    domain:     v('domain')||'[DOMAIN]',
+    hours:      v('hours')||'[HOURS]',
+    ownerName:  v('ownerName')||'[OWNER]',
+    audience:   v('audience')||'general public',
+    primaryColor:   document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : (v('c1h')||'#E8272A'),
+    secondaryColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : (v('c2h')||'#1A1A1A'),
+    accentColor:    document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : (v('c3h')||'#FFFFFF'),
+    bgColor:        document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : (v('c4h')||'#F8F8F8'),
+    designStyle:    v('designStyle')||'[STYLE]',
+    fontPref:       v('fontPref')||'AI choose based on style',
+    logoType:       v('logoType')||'Text-based',
+    logoDesc:       v('logoDesc')||'',
+    insta:      v('insta')||'N/A',
+    fb:         v('fb')||'N/A',
+    yt:         v('yt')||'N/A',
+    maps:       v('maps')||'N/A',
+    services:   svcTags.length?svcTags.join(', '):'[SERVICES]',
+    usp:        v('usp')||'[USP]',
+    about:      v('about')||'[ABOUT]',
+    t1:         v('t1')||'"Great experience!" — Customer, City',
+    t2:         v('t2')||'"Highly recommended." — Customer, City',
+    t3:         v('t3')||'"Professional team." — Customer, City',
+    offer:      v('offer')||'',
+    pricing:    v('pricing')||'',
+    extraContent: v('extraContent')||'',
+    elVersion:  radio('elVersion')||'Elementor Free',
+    editorMode: radio('editorMode')||'Classic Section/Column',
+    astraVersion: radio('astraVersion')||'Astra Free theme',
+    xproVersion: radio('xproVersion')||'XPro Elementor Addons Free',
+    formPlugin: radio('formPlugin')||'WPForms Lite',
+    formEmail:  v('formEmail')||'[CLIENT EMAIL]',
+    waPlugin:   v('waPlugin')||'Joinchat plugin',
+    sliderPlugin: v('sliderPlugin')||'Smart Slider 3 Free',
+    galleryPlugin: v('galleryPlugin')||'Elementor Gallery widget',
+    devNotes:   v('devNotes')||'',
+    uniqueIDs:     chk('uniqueIDs'),
+    uniqueClasses: chk('uniqueClasses'),
+    namedSections: chk('namedSections'),
+    noInline:      chk('noInline'),
+    globalColors:  chk('globalColors'),
+    responsive:    chk('responsive'),
+    waViaPlugin:   chk('waViaPlugin'),
+    imgPlaceholder: chk('imgPlaceholder'),
+  };
+
+  const pages = getPages();
+  const pageList = pages.map(p=>`  • ${p.title} (${p.slug}) — ${p.desc}`).join('\n');
+  const waNum = d.whatsapp.replace(/\D/g,'');
+  const waLink = `https://wa.me/${waNum}?text=Hi%2C%20I%20found%20you%20online%20and%20want%20to%20know%20more.`;
+  const callLink = `tel:${d.phone.replace(/\s/g,'')}`;
+  const year = new Date().getFullYear();
+  const date = new Date().toLocaleDateString('en-IN');
+
+  // ── ANTIGRAVITY TECHNICAL RULES ──
+  const agRules = [];
+  if(d.uniqueIDs) agRules.push('• Assign a unique semantic CSS ID to every Section and Column/Container using pattern: #section-[name]-[3digit-number] (e.g., #section-hero-001, #section-services-002, #col-hero-left-001). Never reuse the same ID anywhere on the page.');
+  if(d.uniqueClasses) agRules.push('• Assign unique CSS classes to every widget/element using pattern: .[element-type]-[section-name]-[number] (e.g., .heading-hero-001, .btn-cta-hero-001, .card-service-001). No two elements share the same class. This prevents any CSS conflicts between sections.');
+  if(d.namedSections) agRules.push('• Label every Section, Column, and Widget with a descriptive human-readable name visible in the Elementor panel (e.g., Section: "Hero Section", Widget: "Hero Main Heading"). This makes the panel navigable without opening each element.');
+  if(d.noInline) agRules.push('• Zero inline styles allowed. All colors, fonts, padding, margins, and typography MUST be set through Elementor\'s Style tab and Advanced tab only. The design must be 100% editable through the Elementor visual editor without touching any code.');
+  if(d.globalColors) agRules.push(`• Register Primary Color (${d.primaryColor}), Secondary Color (${d.secondaryColor}), Accent Color (${d.accentColor}), and Background Color (${d.bgColor}) as Elementor Global Colors. Reference them by global color tokens throughout — never hardcode hex values in individual elements.`);
+  if(d.responsive) agRules.push('• All sections must have explicit responsive settings for: Desktop (1280px+), Tablet (768px–1279px), Mobile (375px–767px). Test that every section collapses correctly. Column stacking, font sizes, padding changes must all be set via Elementor\'s responsive controls.');
+  if(d.waViaPlugin) agRules.push(`• Do NOT hardcode a WhatsApp floating button in the design. Leave it for ${d.waPlugin} — this allows the client to update their WhatsApp number from the WordPress dashboard.`);
+  if(d.imgPlaceholder) agRules.push('• All images must use Elementor Image widget with placeholder source (1200x800 or appropriate aspect ratio). Never embed base64 images or external CDN image URLs that can break. Client must be able to replace images directly in Elementor editor by clicking the image widget.');
+
+  // ── ELEMENTOR STRUCTURE RULE ──
+  const editorModeShort = d.editorMode.includes('Classic') ? 'Classic Section/Column' : 'Atomic Flexbox Container';
+  const structureRule = d.editorMode.includes('Classic')
+    ? 'Use CLASSIC layout: Section → Column → Widget hierarchy ONLY. Do NOT use Flexbox Container or Div elements. Elementor Experiments → Flexbox Container must be OFF.'
+    : 'Use ATOMIC/FLEXBOX layout: Container → Widget hierarchy. Use Container (div) elements, NOT classic Section/Column. Elementor Experiments → Flexbox Container must be ON.';
+
+  // ─── STITCH PROMPT ─────────────────────────────────────────────────────────
+  const stitchPrompt =
+`Design a complete, professional, multi-page business website for the following business.
+This design will be imported into WordPress via Antigravity + Novamira MCP, then edited in Elementor.
+
+═══════════════════════════════════════════════════
+  BUSINESS DETAILS
+═══════════════════════════════════════════════════
+Business Name    : ${d.bizName}
+Tagline          : ${d.tagline}
+Business Type    : ${d.bizType}
+Target Audience  : ${d.audience}
+Location         : ${d.location}
+Address          : ${d.address}
+Phone            : ${d.phone}
+WhatsApp         : ${d.whatsapp}
+Email            : ${d.email}
+Website          : ${d.domain}
+Working Hours    : ${d.hours}
+Owner            : ${d.ownerName}
+
+═══════════════════════════════════════════════════
+  DESIGN SYSTEM
+═══════════════════════════════════════════════════
+Primary Color    : ${d.primaryColor}   → Use for: CTAs, buttons, headings accent, icons
+Secondary Color  : ${d.secondaryColor} → Use for: dark sections, navbar, footer background
+Accent Color     : ${d.accentColor}   → Use for: highlights, badges, hover states
+Background Color : ${d.bgColor}        → Use for: light section backgrounds, cards
+
+Design Style     : ${d.designStyle}
+Typography       : ${d.fontPref||'Choose 2 Google Fonts that best represent "'+d.designStyle+'" — display font for headings, body font for text'}
+Logo             : ${d.logoType}${d.logoDesc?' — '+d.logoDesc:''}
+
+Typography Scale to use:
+  H1 Hero: 52–64px desktop, 32px mobile, font-weight: 800
+  H2 Section: 36–42px desktop, 26px mobile, font-weight: 700
+  H3 Card/Sub: 20–24px, font-weight: 600
+  Body: 16px, line-height: 1.7, font-weight: 400
+  Caption/Label: 13–14px, font-weight: 600, letter-spacing: 0.5px
+
+═══════════════════════════════════════════════════
+  SERVICES
+═══════════════════════════════════════════════════
+${d.services}
+
+USP (Why choose us):
+${d.usp}${d.offer?'\n\nSpecial Offer: '+d.offer:''}${d.pricing?'\n\nPricing/Plans: '+d.pricing:''}
+
+═══════════════════════════════════════════════════
+  SOCIAL MEDIA
+═══════════════════════════════════════════════════
+Instagram : ${d.insta}
+Facebook  : ${d.fb}
+YouTube   : ${d.yt}
+
+═══════════════════════════════════════════════════
+  PAGES TO DESIGN (${pages.length} pages)
+═══════════════════════════════════════════════════
+${pageList}
+
+═══════════════════════════════════════════════════
+  PAGE-BY-PAGE DESIGN BRIEF
+═══════════════════════════════════════════════════
+${pages.map((p,idx)=>{
+  let detail='';
+  if(p.slug==='index') detail=`
+  SECTIONS (in order):
+  1. TOP BAR — Phone ${d.phone} | Email ${d.email} | Social icons (right side)
+  2. HERO — Full viewport, business name "${d.bizName}", tagline "${d.tagline}", subtext about audience "${d.audience}", two buttons: "📞 Call Now" + "💬 WhatsApp Us"
+  3. ABOUT STRIP — 2-column: left = short business intro text, right = 3–4 achievement stats (e.g., 500+ Members, 6 Years, 98% Satisfaction)${d.offer?'\n  4. OFFER BANNER — Full-width highlight strip: "'+d.offer+'"':'\n  4. USP STRIP — 3–4 icon boxes showing key USP points'}
+  5. SERVICES GRID — Heading "Our Services", card grid (3 cols desktop / 2 tablet / 1 mobile), one card per service from: ${d.services}
+  6. WHY CHOOSE US — 2-column layout: left = image placeholder, right = 4 bullet points from USP
+  7. TESTIMONIALS — Heading "What Our Clients Say", 3 review cards with quote, name, 5-star rating${d.pricing?'\n  8. PRICING — Pricing cards section: '+d.pricing:''}
+  8. CTA BANNER — "Ready to get started?" full-width colored section with "Contact Us Today" button
+  9. FOOTER — 4-column footer`;
+  else if(p.slug==='about') detail=`
+  SECTIONS:
+  1. PAGE HERO — Small hero banner with page title "About Us" and breadcrumb
+  2. STORY — 2-column: left = business story text "${d.about}", right = image placeholder
+  3. MISSION & VISION — 2 cards side by side with icons
+  4. OWNER — Card: ${d.ownerName}, photo placeholder (300x300), title, short bio
+  5. ACHIEVEMENTS — 4 milestone cards (number + label) appropriate for ${d.bizType}
+  6. CTA — Button linking to contact page`;
+  else if(p.slug==='services') detail=`
+  SECTIONS:
+  1. PAGE HERO — Banner with "Our Services" heading
+  ${svcTags.map((s,i)=>`${i+2}. SERVICE "${s.toUpperCase()}" — Icon (large), heading, 3-sentence description, 4 benefit bullet points, "Enquire Now" button`).join('\n  ')||'  2–6. One section per service with icon, heading, description, benefits, CTA button'}
+  Last. BOTTOM CTA — "Have a question? Contact us today" full-width banner`;
+  else if(p.slug==='gallery') detail=`
+  SECTIONS:
+  1. PAGE HERO — "Our Gallery" heading banner
+  2. FILTER TABS — Optional: All / Facility / Events / Results
+  3. PHOTO GRID — Responsive masonry/grid: 3 cols desktop, 2 tablet, 1 mobile. 12 placeholder images (1200x800). Each image: hover overlay with view icon.`;
+  else if(p.slug==='testimonials') detail=`
+  SECTIONS:
+  1. PAGE HERO — "Client Testimonials" banner
+  2. FEATURED — Large card for best testimonial: "${d.t1}"
+  3. REVIEWS GRID — Card grid: "${d.t2}" / "${d.t3}" / 3 more auto-generated realistic reviews for ${d.bizType}
+  4. GOOGLE REVIEWS CTA — "See all reviews on Google" button`;
+  else if(p.slug==='pricing') detail=`
+  SECTIONS:
+  1. PAGE HERO — "Plans & Pricing" banner
+  2. PRICING CARDS — 3-column card layout with plans. Prices from: ${d.pricing||'generate realistic pricing for '+d.bizType}. Middle card = highlighted as "Most Popular"
+  3. FEATURES TABLE — Comparison of what's included in each plan
+  4. CTA — "Still have questions?" with contact button`;
+  else if(p.slug==='faq') detail=`
+  SECTIONS:
+  1. PAGE HERO — "Frequently Asked Questions" banner
+  2. FAQ ACCORDION — 8 realistic Q&A pairs for ${d.bizType} business. Each item has question + expandable answer
+  3. STILL HAVE QUESTIONS — CTA card with contact button + WhatsApp link`;
+  else if(p.slug==='contact') detail=`
+  SECTIONS:
+  1. PAGE HERO — "Contact Us" banner
+  2. CONTACT GRID — 2 column: Left = Contact form (Name, Phone, Email, Message, Submit), Right = Info card (phone, email, address, hours)
+  3. MAP — Full width Google Maps embed (${d.maps!=='N/A'?d.maps:'placeholder with business address text'})
+  4. FOOTER`;
+  else if(p.slug==='privacy') detail=`
+  Generate complete standard Indian small business Privacy Policy for ${d.bizName}
+  Cover: data collection, usage, cookies, third parties, user rights, contact info (${d.email})`;
+  else if(p.slug==='terms') detail=`
+  Generate complete standard Terms & Conditions for ${d.bizType} business in India
+  Business: ${d.bizName}, Location: ${d.location}
+  Cover: service terms, payments, cancellation, liability, governing law (Himachal Pradesh, India)`;
+  return `PAGE ${idx+1} — ${p.title.toUpperCase()} (${p.slug}.html)\n${detail}`;
+}).join('\n\n')}
+
+═══════════════════════════════════════════════════
+  GLOBAL ELEMENTS (on ALL pages)
+═══════════════════════════════════════════════════
+NAVBAR (sticky top, fixed on scroll):
+• Logo left: "${d.bizName}" (${d.logoType})
+• Top bar: "📞 ${d.phone}" visible desktop
+• Menu: ${pages.map(p=>p.title).join(' | ')}
+• Mobile: Hamburger toggle
+• Active page: highlighted in ${d.primaryColor}
+• Background: ${d.secondaryColor} (dark) or white (light variant — your call based on style)
+
+FOOTER (4-column):
+• Col 1: Logo + "${d.tagline}" + short about
+• Col 2: Quick Links — all page names
+• Col 3: 📞 ${d.phone} | ✉️ ${d.email} | 📍 ${d.address} | ⏰ ${d.hours}
+• Col 4: Social — Instagram: ${d.insta} | Facebook: ${d.fb} | WhatsApp: ${d.whatsapp} | YouTube: ${d.yt}
+• Bottom bar: "© ${year} ${d.bizName}. All rights reserved. | Designed by Build Base Digitally"
+
+═══════════════════════════════════════════════════
+  DESIGN QUALITY RULES
+═══════════════════════════════════════════════════
+• Consistent spacing system: 8px base unit — sections 80px padding desktop, 40px mobile
+• Every CTA button: primary color background, white text, hover = darken 10%
+• Section alternating backgrounds: white → ${d.bgColor} → white pattern
+• Card shadows: 0 4px 20px rgba(0,0,0,0.08) — subtle, professional
+• Border radius: 12px cards, 8px buttons, 6px inputs — consistent throughout
+• Image aspect ratios: Hero 16:9, Team/Owner 1:1, Service icon 1:1, Gallery 4:3
+• Hover transitions: 0.3s ease on all interactive elements
+• All text must meet WCAG AA contrast ratio on their backgrounds
+
+---
+Prompt generated by Build Base Digitally — ${date}
+Workflow: Google Stitch → Antigravity → Novamira MCP → WordPress (${d.elVersion} + ${d.astraVersion})`;
+
+  // ─── ANTIGRAVITY PROMPT ─────────────────────────────────────────────────────
+  const antigravityPrompt =
+`Convert the Google Stitch design into a fully WordPress + Elementor compatible structure.
+This will be pushed to WordPress via Novamira MCP. The result must be 100% editable in Elementor visual editor — zero HTML code editing after import.
+
+═══════════════════════════════════════════════════
+  TARGET WORDPRESS STACK
+═══════════════════════════════════════════════════
+Theme            : ${d.astraVersion}
+Page Builder     : ${d.elVersion}
+Editor Mode      : ${editorModeShort}
+Extra Addons     : ${d.xproVersion}
+Contact Form     : ${d.formPlugin}${d.formEmail?' → send to: '+d.formEmail:''}
+WhatsApp Button  : ${d.waPlugin}
+Slider           : ${d.sliderPlugin}
+Gallery          : ${d.galleryPlugin}
+
+═══════════════════════════════════════════════════
+  ELEMENTOR STRUCTURE RULE (CRITICAL)
+═══════════════════════════════════════════════════
+${structureRule}
+
+NEVER mix Classic and Atomic structures on the same page.
+NEVER use custom HTML widget to replicate design elements — use native Elementor widgets only.
+NEVER hardcode styles in HTML attributes — use Elementor Style tab for all visual styling.
+
+═══════════════════════════════════════════════════
+  GLOBAL COLOR SETUP
+═══════════════════════════════════════════════════
+Register these as Elementor Global Colors (Elementor → Site Settings → Global Colors):
+  --e-global-color-primary   : ${d.primaryColor}   (name: "Brand Primary")
+  --e-global-color-secondary : ${d.secondaryColor} (name: "Brand Dark")
+  --e-global-color-accent    : ${d.accentColor}   (name: "Brand Accent")
+  --e-global-color-background: ${d.bgColor}        (name: "Section Background")
+  --e-global-color-text      : #333333              (name: "Body Text")
+  --e-global-color-muted     : #6B7280              (name: "Muted Text")
+
+Add to Elementor → Site Settings → Custom CSS:
+:root {
+  --color-primary: ${d.primaryColor};
+  --color-secondary: ${d.secondaryColor};
+  --color-accent: ${d.accentColor};
+  --color-bg: ${d.bgColor};
+}
+
+Reference ALL colors in elements via Global Color token — never hardcode hex in individual widgets.
+
+═══════════════════════════════════════════════════
+  ANTIGRAVITY ELEMENT STRUCTURE RULES
+═══════════════════════════════════════════════════
+${agRules.join('\n\n')}
+
+═══════════════════════════════════════════════════
+  WIDGET MAPPING — USE THESE ELEMENTOR WIDGETS ONLY
+═══════════════════════════════════════════════════
+Text/Copy        → Elementor Heading widget (H1/H2/H3) + Text Editor widget
+Buttons          → Elementor Button widget (NOT custom HTML)
+Images           → Elementor Image widget with placeholder (editable by client)
+Icons            → Elementor Icon widget (Font Awesome set)
+Icon + Text cards→ Elementor Icon Box widget
+Image + Text     → Elementor Image Box widget or 2-column section
+Columns/Cards    → Elementor Inner Section (classic) OR nested Container (atomic)
+Testimonials     → Elementor Testimonial widget or Icon Box widget
+Video embed      → Elementor Video widget
+Dividers         → Elementor Divider widget
+Spacers          → Elementor Spacer widget (NOT margin padding hacks)
+Contact Form     → ${d.formPlugin.includes('WPForms')?'Elementor Shortcode widget with WPForms shortcode':d.formPlugin.includes('CF7')?'Elementor Shortcode widget with CF7 shortcode':d.formPlugin.includes('Elementor Pro Form')?'Elementor Form widget (Pro)':'Elementor Shortcode widget with form shortcode'}
+Google Maps      → Elementor Google Maps widget (${d.maps!=='N/A'?'use embed URL: '+d.maps:'set address: '+d.address})
+Social Icons     → Elementor Social Icons widget
+Navigation Menu  → Elementor Nav Menu widget
+Counters/Stats   → Elementor Counter widget
+Accordion/FAQ    → Elementor Accordion widget
+Image gallery    → ${d.galleryPlugin.includes('Elementor')?'Elementor Gallery widget':'Elementor Shortcode widget with '+d.galleryPlugin+' shortcode'}
+Slider/Carousel  → ${d.sliderPlugin.includes('Smart')?'Elementor Shortcode widget with Smart Slider 3 shortcode':d.sliderPlugin.includes('XPro')?'XPro Carousel widget':d.sliderPlugin.includes('Pro')?'Elementor Carousel widget (Pro)':'Elementor Shortcode widget'}
+Tabs             → Elementor Tabs widget
+Toggle           → Elementor Toggle widget
+Progress bars    → Elementor Progress Bar widget
+Star Rating      → Elementor Star Rating widget
+
+DO NOT USE: HTML widget for layout, Text widget with raw HTML, custom HTML blocks
+
+═══════════════════════════════════════════════════
+  PAGES TO GENERATE (${pages.length} pages)
+═══════════════════════════════════════════════════
+Generate one Elementor page template per page below.
+Each page: WordPress page slug in brackets.
+
+${pages.map((p,i)=>`${i+1}. ${p.title} [/${p.slug==='index'?'':p.slug}]`).join('\n')}
+
+For each page, Novamira MCP will:
+  → Create WordPress page with correct slug
+  → Import Elementor template JSON
+  → Set page template to "Elementor Canvas" (full width, no theme header interference)
+  → Elementor header/footer handled separately via ${d.xproVersion.includes('None')||d.xproVersion.includes('not')?d.elVersion.includes('Pro')?'Elementor Pro Theme Builder':'Astra Theme Customizer':d.xproVersion+' Theme Builder'}
+
+═══════════════════════════════════════════════════
+  HEADER & FOOTER SETUP
+═══════════════════════════════════════════════════
+${d.elVersion.includes('Pro')||d.astraVersion.includes('Pro')||d.xproVersion.includes('Pro')?
+`Build Header template via ${d.elVersion.includes('Pro')?'Elementor Pro Theme Builder → Header':d.astraVersion.includes('Pro')?'Astra Pro Header Builder':d.xproVersion+' Theme Builder → Header'}:
+  • Logo widget (left) + Nav Menu widget (center/right) + Button widget "📞 Call" (right)
+  • Sticky behavior: ON
+  • Condition: Entire Site
+
+Build Footer template via ${d.elVersion.includes('Pro')?'Elementor Pro Theme Builder → Footer':d.astraVersion.includes('Pro')?'Astra Pro Footer Builder':d.xproVersion+' Theme Builder → Footer'}:
+  • 4-column layout: Logo+tagline | Quick Links | Contact | Social Icons
+  • Background: ${d.secondaryColor}
+  • Text color: white
+  • Bottom bar: copyright strip
+  • Condition: Entire Site`
+:
+`Using Astra Free theme header:
+  • Go to Appearance → Customize → Header Builder
+  • Set logo, primary menu, phone number in header
+  • Colors: background ${d.secondaryColor}, text white, hover ${d.primaryColor}
+
+Using XPro Footer Builder (Elementor Free + XPro):
+  • XPro → Theme Builder → Footer → Add New
+  • 4-column Elementor layout: Logo | Links | Contact | Social
+  • Background: ${d.secondaryColor}, text: white
+  • Set condition: Entire Site`}
+
+═══════════════════════════════════════════════════
+  RESPONSIVE SETTINGS (set in Elementor for each element)
+═══════════════════════════════════════════════════
+Desktop (1280px+):
+  • Section padding: top/bottom 80px
+  • H1 font-size: 52px | H2: 38px | H3: 22px | Body: 16px
+  • Columns: as designed (2–4 cols)
+
+Tablet (768px–1279px):
+  • Section padding: top/bottom 50px
+  • H1: 38px | H2: 28px | H3: 20px
+  • 3-col → 2-col, 4-col → 2-col
+
+Mobile (375px–767px):
+  • Section padding: top/bottom 36px
+  • H1: 28px | H2: 22px | H3: 18px
+  • All columns → single column (stack vertically)
+  • Button: full width
+  • Images: max-width 100%
+
+═══════════════════════════════════════════════════
+  NAMING CONVENTION (for Elementor panel)
+═══════════════════════════════════════════════════
+Sections  → "[PageName] — [Section Purpose]" e.g., "Home — Hero Section"
+Columns   → "[Purpose] Column [position]" e.g., "Services Card Column 1"
+Widgets   → "[Widget type] — [Content]" e.g., "Heading — Hero Title"
+           or "[Widget type] — [Section]" e.g., "Button — Hero CTA Primary"
+
+IDs       → #sec-[page]-[purpose]-[num]  e.g., #sec-home-hero-001
+Classes   → .[type]-[page]-[purpose]-[num] e.g., .heading-home-hero-001${d.devNotes?'\n\n═══════════════════════════════════════════════════\n  EXTRA TECHNICAL NOTES\n═══════════════════════════════════════════════════\n'+d.devNotes:''}
+
+═══════════════════════════════════════════════════
+  FINAL DELIVERY CHECKLIST (verify before Novamira push)
+═══════════════════════════════════════════════════
+[ ] ${pages.length} pages generated with correct slugs
+[ ] Editor mode confirmed: ${editorModeShort} — no mixed structure
+[ ] Global Colors registered in Elementor Site Settings
+[ ] Every element has unique ID + unique class
+[ ] Every section/widget labeled in Elementor panel
+[ ] Zero HTML widgets used for design (only for form shortcodes if needed)
+[ ] All images = Elementor Image widget (replaceable by client)
+[ ] Header & Footer set via ${d.elVersion.includes('Pro')?'Elementor Pro Theme Builder':d.astraVersion.includes('Pro')?'Astra Pro Builder':d.xproVersion+' Theme Builder'} with condition = Entire Site
+[ ] WhatsApp button = ${d.waPlugin} (NOT hardcoded)
+[ ] Responsive settings tested: Desktop / Tablet / Mobile
+[ ] Contact form widget added on Contact page (${d.formPlugin.split('(')[0].trim()})
+[ ] All internal nav links connected
+[ ] Footer copyright: "© ${year} ${d.bizName}. All rights reserved."
+
+---
+Prompt generated by Build Base Digitally — ${date}
+Stack: ${d.astraVersion} + ${d.elVersion} (${editorModeShort}) + ${d.xproVersion}
+Client: ${d.bizName} | Location: ${d.location}`;
+
+  document.getElementById('stitchOut').textContent = stitchPrompt;
+  document.getElementById('antigravityOut').textContent = antigravityPrompt;
+
+  // Summary
+  document.getElementById('sumGrid').innerHTML=`
+    <div class="sum-item"><div class="sum-label">Business</div><div class="sum-value">${d.bizName}</div></div>
+    <div class="sum-item"><div class="sum-label">Type</div><div class="sum-value">${d.bizType}</div></div>
+    <div class="sum-item"><div class="sum-label">Pages</div><div class="sum-value">${pages.length} pages</div></div>
+    <div class="sum-item"><div class="sum-label">Primary</div><div class="sum-value"><span class="chip" style="background:${d.primaryColor}"></span>${d.primaryColor}</div></div>
+    <div class="sum-item"><div class="sum-label">Secondary</div><div class="sum-value"><span class="chip" style="background:${d.secondaryColor}"></span>${d.secondaryColor}</div></div>
+    <div class="sum-item"><div class="sum-label">Style</div><div class="sum-value">${d.designStyle.split('(')[0].trim()}</div></div>
+    <div class="sum-item"><div class="sum-label">Elementor</div><div class="sum-value">${d.elVersion}</div></div>
+    <div class="sum-item"><div class="sum-label">Mode</div><div class="sum-value">${editorModeShort}</div></div>
+    <div class="sum-item"><div class="sum-label">Theme</div><div class="sum-value">${d.astraVersion}</div></div>
+  `;
+
+  goTo(6);
+}
+
+// ─── TABS ─────────────────────────────────────────────
+function showTab(n){
+  activeTab=n;
+  document.getElementById('stitchOut').style.display=n===1?'block':'none';
+  document.getElementById('antigravityOut').style.display=n===2?'block':'none';
+  document.getElementById('tab1').className='tab-btn'+(n===1?' active':'');
+  document.getElementById('tab2').className='tab-btn'+(n===2?' active':'');
+}
+
+function showN8nTab(n){
+  n8nActiveTab=n;
+  document.getElementById('n8nStitchOut').style.display=n===1?'block':'none';
+  document.getElementById('n8nAntiOut').style.display=n===2?'block':'none';
+  document.getElementById('n8nResOut').style.display=n===3?'block':'none';
+  document.getElementById('nt1').className='tab-btn'+(n===1?' active':'');
+  document.getElementById('nt2').className='tab-btn'+(n===2?' active':'');
+  document.getElementById('nt3').className='tab-btn'+(n===3?' active':'');
+}
+
+function copyActive(){
+  let txt=activeTab===1?document.getElementById('stitchOut').innerText:document.getElementById('antigravityOut').innerText;
+  txt = txt.replace(/Copy below prompt and run on Stitch:\n\n/g, '').replace(/Copy below prompt and run on Antigravity:\n\n/g, '');
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn=document.getElementById('copyBtn');
+    btn.textContent=activeTab===1?'✓ Stitch Copied!':'✓ Antigravity Copied!';
+    btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},2500);
+  });
+}
+
+function copyN8nActive(){
+  const ids={1:'n8nStitchOut',2:'n8nAntiOut',3:'n8nResOut'};
+  const text=document.getElementById(ids[n8nActiveTab]).textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.getElementById('n8nCopyBtn');
+    btn.textContent='✓ Copied!';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},2500);
+  });
+}
+
+// ─── GETSELECTEDPAGES (for N8n payload) ──────────────
+function getSelectedPages(){
+  const pages=[];
+  if(pgChk('pg_home')) pages.push('Home');
+  if(pgChk('pg_about')) pages.push('About');
+  if(pgChk('pg_services')) pages.push('Services');
+  if(pgChk('pg_gallery')) pages.push('Gallery');
+  if(pgChk('pg_testimonials')) pages.push('Testimonials');
+  if(pgChk('pg_pricing')) pages.push('Pricing');
+  if(pgChk('pg_faq')) pages.push('FAQ');
+  if(pgChk('pg_contact')) pages.push('Contact');
+  if(pgChk('pg_privacy')) pages.push('Privacy Policy');
+  if(pgChk('pg_terms')) pages.push('Terms & Conditions');
+  return pages;
+}
+
+// ─── SEND TO N8N ──────────────────────────────────────
+async function sendToN8n(){
+  const webhookUrl = 'https://automation.buildbasedigitally.com/webhook/bbd-onboarding';
+  if(!webhookUrl){
+    document.getElementById('n8nStatus').textContent='❌ N8n Webhook URL daalo Step 5 mein!';
+    document.getElementById('n8nStatus').style.color='var(--danger)';
+    return;
+  }
+  const btn=document.getElementById('sendN8nBtn');
+  const status=document.getElementById('n8nStatus');
+  btn.disabled=true; btn.textContent='⏳ Sending...';
+  status.textContent='3 Gemini agents chal rahe hain (~30–45 sec)...';
+  status.style.color='var(--brand)';
+
+  const payload={
+    bizName:v('bizName'), bizType:v('bizType'), tagline:v('tagline'),
+    location:v('location'), address:v('address'), phone:v('phone'),
+    whatsapp:v('whatsapp'), email:v('email'), domain:v('domain'),
+    hours:v('hours'), ownerName:v('ownerName'), audience:v('audience'),
+    primaryColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : v('c1h'),
+    secondaryColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : v('c2h'),
+    accentColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : v('c3h'),
+    bgColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : v('c4h'),
+    designStyle:v('designStyle'), fontPref:v('fontPref'),
+    logoType:v('logoType'), logoDesc:v('logoDesc'),
+    insta:v('insta'), fb:v('fb'), yt:v('yt'), maps:v('maps'),
+    services:svcTags,
+    usp:v('usp'), about:v('about'),
+    t1:v('t1'), t2:v('t2'), t3:v('t3'),
+    offer:v('offer'), pricing:v('pricing'), extraContent:v('extraContent'),
+    elVersion:radio('elVersion'), editorMode:radio('editorMode'),
+    astraVersion:radio('astraVersion'), xproVersion:radio('xproVersion'),
+    formPlugin:radio('formPlugin'), formEmail:v('formEmail'),
+    waPlugin:v('waPlugin'), sliderPlugin:v('sliderPlugin'),
+    galleryPlugin:v('galleryPlugin'), devNotes:v('devNotes'),
+    pages:getSelectedPages(),
+    stitchOutput:v('stitchOutputPaste'),
+  };
+  cachedPayload=payload;
+
+  try{
+    const res=await fetch(webhookUrl,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const result=await res.json();
+
+    // Show results
+    const sp=result.finalStitchPrompt||result.stitch_prompt||'(No Stitch prompt returned — check n8n execution log)';
+    const ap=result.finalAntigravityPrompt||result.antigravity_prompt||'(No Antigravity prompt returned — check n8n execution log)';
+    const ri=result.researchInsights||result.research||{};
+    const riText=typeof ri==='object'
+      ? '🔍 RESEARCH INSIGHTS\n\n'+
+        (ri.industry_design_trends?'📈 Industry Trends:\n'+ri.industry_design_trends+'\n\n':'')+
+        (ri.local_audience_insights?'👥 Local Audience:\n'+ri.local_audience_insights+'\n\n':'')+
+        (ri.font_recommendation?'🔤 Recommended Fonts:\n  Heading: '+ri.font_recommendation.display_font+'\n  Body: '+ri.font_recommendation.body_font+'\n  Reason: '+ri.font_recommendation.reason+'\n\n':'')+
+        (ri.seo_keywords?'🔑 SEO Keywords:\n'+ri.seo_keywords.join(', ')+'\n\n':'')+
+        (ri.cta_text_suggestions?'💬 CTA Suggestions:\n'+ri.cta_text_suggestions.join(' | ')+'\n\n':'')+
+        (ri.trust_signals?'✅ Trust Signals:\n'+ri.trust_signals.map(s=>'• '+s).join('\n'):'')+
+        (ri.hero_headline_suggestions?'\n\n💡 Hero Headline Options:\n'+ri.hero_headline_suggestions.map((h,i)=>(i+1)+'. "'+h+'"').join('\n'):'')
+      : JSON.stringify(ri,null,2);
+
+    document.getElementById('n8nStitchOut').textContent=sp;
+    document.getElementById('n8nAntiOut').textContent=ap;
+    document.getElementById('n8nResOut').textContent=riText;
+    document.getElementById('n8nResultPanel').style.display='block';
+    showN8nTab(1);
+    btn.textContent='✅ AI Prompts Ready!';
+    status.textContent='Scroll up — N8n panel mein enhanced prompts dekho!';
+    status.style.color='var(--success)';
+    // Auto scroll to n8n panel
+    document.getElementById('n8nResultPanel').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){
+    btn.disabled=false; btn.textContent='⚡ Send to N8n AI Agents';
+    status.textContent='❌ Error: '+e.message+' — N8n webhook URL check karo & workflow active hai?';
+    status.style.color='var(--danger)';
+    console.error('N8n error:',e);
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────
+document.getElementById('c1h').value='#E8272A';
+document.getElementById('c2h').value='#1A1A1A';
+document.getElementById('c3h').value='#FFFFFF';
+document.getElementById('c4h').value='#F8F8F8';
+</script>
+</body>
+</html>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Base Digitally — Package Selector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545;
+    --blue:#1B4079;
+    --paper:#F4F6F8;
+    --amber:#E8A33D;
+    --amber-dark:#C9821F;
+    --green:#2E8B57;
+    --rust:#A83232;
+    --ink:#14213D;
+    --grid-line:rgba(27,64,121,0.09);
+    --card-bg:#FFFFFF;
+    --muted:#5B6B84;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Hind',sans-serif;
+    color:var(--ink);
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:28px 28px;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{ font-family:'Baloo 2',sans-serif; }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+  button{ font-family:inherit; cursor:pointer; }
+  :focus-visible{ outline:3px solid var(--amber); outline-offset:2px; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 20px 24px; transition:padding-bottom .15s ease; }
+
+  /* ---------- HEADER ---------- */
+  header.site-header{
+    background:var(--navy);
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:26px 26px;
+    color:#fff;
+    padding:28px 20px 44px;
+  }
+  .header-inner{ max-width:1180px; margin:0 auto; }
+  .brand-row{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:34px; flex-wrap:wrap; gap:14px;
+  }
+  .brand{
+    font-family:'Baloo 2',sans-serif; font-weight:800; letter-spacing:0.5px;
+    font-size:18px; color:#fff;
+  }
+  .brand span{ color:var(--amber); }
+  .lang-toggle{
+    display:inline-flex; background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.25); border-radius:999px; padding:4px;
+  }
+  .lang-btn{
+    border:none; background:transparent; color:#cfd8e6;
+    padding:7px 18px; border-radius:999px; font-weight:600; font-size:14px;
+    transition:background .2s ease, color .2s ease;
+  }
+  .lang-btn.active{ background:var(--amber); color:var(--navy); }
+
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:2.5px; font-size:12px;
+    color:var(--amber); font-weight:600; margin:0 0 10px;
+  }
+  h1.hero-title{
+    font-size:clamp(28px,4.2vw,44px); line-height:1.15; margin:0 0 14px; max-width:16ch;
+    font-weight:800;
+  }
+  p.hero-sub{
+    font-size:16px; color:#c9d3e2; max-width:56ch; line-height:1.6; margin:0 0 26px;
+  }
+
+  .block-preview{ display:flex; gap:14px; flex-wrap:wrap; }
+  .preview-chip{
+    display:flex; align-items:center; gap:9px;
+    border:1.5px dashed rgba(255,255,255,0.35); border-radius:10px;
+    padding:9px 14px; font-size:13px; color:#dbe3ef; font-weight:500;
+  }
+  .preview-chip .dot{ width:9px; height:9px; border-radius:3px; }
+
+  /* ---------- TEASER BANNER ---------- */
+  .teaser-banner{
+    margin:-24px auto 34px; max-width:1180px;
+    background:#fff; border:1.5px solid var(--amber);
+    border-radius:var(--radius); padding:16px 20px;
+    display:flex; align-items:center; gap:12px;
+    box-shadow:0 8px 24px rgba(11,37,69,0.08);
+    font-size:14.5px; color:var(--ink); font-weight:500;
+  }
+  .teaser-banner .badge{
+    flex-shrink:0; background:var(--amber); color:var(--navy);
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:12px;
+    padding:6px 10px; border-radius:8px; letter-spacing:0.4px; white-space:nowrap;
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials-section{ margin-bottom:34px; }
+  .testimonials-heading{
+    font-size:13px; text-transform:uppercase; letter-spacing:1.5px; font-weight:700;
+    color:var(--muted); text-align:center; margin:0 0 16px;
+  }
+  .testimonials-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; }
+  .testi-card{
+    background:#fff; border:1.5px solid rgba(11,37,69,0.1); border-radius:var(--radius);
+    padding:20px; box-shadow:0 4px 12px rgba(11,37,69,0.05);
+  }
+  .testi-stars{ color:var(--amber); font-size:15px; margin-bottom:10px; letter-spacing:2px; }
+  .testi-quote{ font-size:14px; color:var(--ink); line-height:1.6; margin:0 0 14px; }
+  .testi-author{ display:flex; align-items:center; gap:10px; }
+  .testi-avatar{
+    width:38px; height:38px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-family:'Baloo 2',sans-serif;
+    flex-shrink:0;
+  }
+  .testi-name{ font-weight:700; font-size:13.5px; color:var(--navy); }
+  .testi-business{ font-size:12px; color:var(--muted); }
+
+  /* ---------- PACKAGE GRID ---------- */
+  .packages-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-bottom:36px;
+  }
+  @media (max-width:900px){ .packages-grid{ grid-template-columns:1fr; } }
+
+  .pkg-card{
+    position:relative; background:var(--card-bg); border-radius:var(--radius);
+    border:1.5px solid rgba(11,37,69,0.12);
+    padding:26px 22px 22px; display:flex; flex-direction:column;
+    box-shadow:0 4px 14px rgba(11,37,69,0.05);
+    transition:box-shadow .25s ease, transform .25s ease;
+  }
+  .pkg-card.is-selected{ box-shadow:0 14px 30px rgba(11,37,69,0.14); transform:translateY(-3px); }
+  .pkg-card::before,.pkg-card::after{
+    content:''; position:absolute; width:16px; height:16px; border-color:var(--accent); border-style:solid;
+  }
+  .pkg-card::before{ top:-1px; left:-1px; border-width:2.5px 0 0 2.5px; border-top-left-radius:4px; }
+  .pkg-card::after{ bottom:-1px; right:-1px; border-width:0 2.5px 2.5px 0; border-bottom-right-radius:4px; }
+
+  .pkg-icon{
+    width:46px; height:46px; border-radius:11px; background:color-mix(in srgb, var(--accent) 12%, white);
+    color:var(--accent); display:flex; align-items:center; justify-content:center; padding:10px; margin-bottom:14px;
+  }
+  .pkg-icon svg{ width:100%; height:100%; }
+
+  .pkg-name{ font-size:20px; font-weight:700; margin:0 0 4px; color:var(--navy); }
+  .pkg-tagline{ font-size:13.5px; color:var(--muted); margin:0 0 16px; font-style:italic; }
+
+  .pkg-price-row{ display:flex; align-items:baseline; gap:8px; margin-bottom:18px; }
+  .pkg-price{ font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:26px; color:var(--navy); }
+  .pkg-price-label{ font-size:12px; color:var(--muted); }
+
+  .pkg-section-label{
+    text-transform:uppercase; font-size:11px; letter-spacing:1.2px; font-weight:700;
+    color:var(--accent); margin:0 0 10px;
+  }
+  .pkg-services{ list-style:none; margin:0 0 16px; padding:0; display:flex; flex-direction:column; gap:11px; }
+  .pkg-services li{ display:flex; gap:9px; align-items:flex-start; }
+  .svc-tick{
+    flex-shrink:0; width:18px; height:18px; border-radius:50%; background:var(--green);
+    color:#fff; display:flex; align-items:center; justify-content:center; font-size:11px; margin-top:2px;
+  }
+  .svc-name{ font-weight:600; font-size:14.5px; color:var(--ink); display:block; }
+  .svc-benefit{ font-size:13px; color:var(--muted); display:block; margin-top:2px; line-height:1.45; }
+
+  .pkg-bonus{
+    background:color-mix(in srgb, var(--amber) 14%, white); border-left:3px solid var(--amber);
+    border-radius:8px; padding:11px 13px; font-size:13px; color:#5a4210; margin-bottom:16px; line-height:1.5;
+  }
+  .pkg-bonus b{ color:var(--amber-dark); }
+
+  .pkg-outcome{
+    background:color-mix(in srgb, var(--green) 9%, white); border-radius:8px;
+    padding:12px 13px; font-size:13.3px; color:#204d36; line-height:1.55; margin-top:auto;
+  }
+  .pkg-outcome b{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--green); margin-bottom:4px; }
+
+  /* stamp toggle */
+  .stamp-btn{
+    position:absolute; top:18px; right:18px; width:64px; height:64px; border-radius:50%;
+    background:#fff; border:2px dashed rgba(11,37,69,0.3); color:var(--muted);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-size:10px; font-weight:700; letter-spacing:0.5px; line-height:1.2;
+    transition:all .2s ease; padding:4px;
+  }
+  .stamp-btn:hover{ border-color:var(--accent); color:var(--accent); }
+  .stamp-btn.active{
+    background:var(--amber); border:2.5px solid var(--amber-dark); color:var(--navy);
+    transform:rotate(-9deg) scale(1.04);
+  }
+
+  /* ---------- SUMMARY / STICKY BAR ---------- */
+  .summary-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:40;
+    background:#fff; border-top:1.5px solid rgba(11,37,69,0.15);
+    box-shadow:0 -8px 24px rgba(11,37,69,0.12);
+    pointer-events:none;
+  }
+  .summary-bar *{ pointer-events:auto; }
+  .summary-inner{ max-width:1180px; margin:0 auto; padding:14px 20px; }
+
+  .combo-strip{
+    display:flex; align-items:flex-start; gap:10px; background:color-mix(in srgb, var(--amber) 12%, white);
+    border-radius:10px; padding:10px 14px; margin-bottom:12px; font-size:13.5px; color:#4a3300; line-height:1.5;
+  }
+  .combo-strip b{ color:var(--amber-dark); }
+
+  .summary-main{ display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+  .summary-left{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+
+  .blocks-indicator{ display:flex; gap:6px; }
+  .block-sq{
+    width:34px; height:34px; border-radius:8px; border:2px solid rgba(11,37,69,0.2);
+    display:flex; align-items:center; justify-content:center; color:rgba(11,37,69,0.25);
+    transition:all .2s ease;
+  }
+  .block-sq svg{ width:18px; height:18px; }
+  .block-sq.filled{ background:var(--accent); border-color:var(--accent); color:#fff; transform:scale(1.08); }
+
+  .summary-text{ font-size:13.5px; color:var(--muted); }
+  .summary-text strong{ color:var(--navy); }
+
+  .summary-right{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .total-price{ text-align:right; }
+  .total-price .amt{ font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:28px; color:var(--navy); }
+  .total-price .lbl{ font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); }
+
+  .cta-btn{
+    background:var(--green); color:#fff; border:none; border-radius:10px;
+    padding:14px 24px; font-weight:700; font-size:14.5px; white-space:nowrap;
+    box-shadow:0 6px 16px rgba(46,139,87,0.35); transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cta-btn:hover{ transform:translateY(-2px); box-shadow:0 10px 20px rgba(46,139,87,0.4); }
+  .cta-btn:disabled{ background:#c7cdd6; box-shadow:none; cursor:not-allowed; transform:none; }
+  .cta-sub{ font-size:11.5px; color:var(--muted); margin-top:4px; text-align:right; }
+
+  .empty-msg{ font-size:14px; color:var(--muted); text-align:center; padding:6px 0; }
+
+  .prepared-for-row{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    background:#fff; border:1.5px solid rgba(11,37,69,0.12); border-radius:10px;
+    padding:10px 16px; margin-bottom:22px; font-size:13.5px;
+  }
+  .prepared-for-row label{ font-weight:600; color:var(--navy); white-space:nowrap; }
+  .prepared-for-row input{
+    flex:1; min-width:160px; border:1.5px solid rgba(11,37,69,0.18); border-radius:7px;
+    padding:7px 10px; font-family:'Hind',sans-serif; font-size:13.5px; color:var(--ink);
+  }
+  .prepared-for-row input:focus{ border-color:var(--amber); }
+
+  .cta-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .print-btn{
+    background:#fff; color:var(--navy); border:1.5px solid rgba(11,37,69,0.3);
+    border-radius:10px; padding:14px 18px; font-weight:700; font-size:14.5px; white-space:nowrap;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .print-btn:hover{ border-color:var(--navy); background:rgba(11,37,69,0.05); }
+
+  .disclaimer{ font-size:11px; color:var(--muted); margin-top:8px; line-height:1.5; }
+
+  /* ---------- PRINT-ONLY SUMMARY ---------- */
+  .print-only{ display:none; }
+  #printSummary{ padding:30px; font-family:'Hind',sans-serif; color:#111; }
+  #printSummary h2{ font-family:'Baloo 2',sans-serif; margin:0 0 2px; }
+  #printSummary .ps-meta{ font-size:13px; color:#444; margin-bottom:18px; }
+  #printSummary table{ width:100%; border-collapse:collapse; margin-bottom:16px; }
+  #printSummary th,#printSummary td{ border:1px solid #ccc; padding:8px 10px; text-align:left; font-size:13.5px; }
+  #printSummary .ps-total-row td{ font-weight:700; font-family:'IBM Plex Mono',monospace; }
+  #printSummary .ps-bonus-list{ font-size:12.5px; margin:0 0 18px; padding-left:18px; }
+  #printSummary .ps-disclaimer{ font-size:11px; color:#555; border-top:1px solid #ccc; padding-top:10px; }
+
+  @media print{
+    body{ background:none; }
+    body > *:not(#printSummary){ display:none !important; }
+    .print-only{ display:block !important; }
+  }
+
+  footer{ text-align:center; padding:26px 20px 10px; font-size:12px; color:var(--muted); }
+
+  @media (max-width:760px){
+    .summary-main{ flex-direction:column; align-items:stretch; }
+    .summary-right{ justify-content:space-between; width:100%; }
+    .total-price{ text-align:left; }
+    .cta-sub{ text-align:left; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand-row">
+      <div class="brand">BUILD BASE <span>DIGITALLY</span></div>
+      <div class="lang-toggle" role="group" aria-label="Language toggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="hi">हिं</button>
+      </div>
+    </div>
+    <p class="eyebrow" id="eyebrow">Digital Ecosystem Builder</p>
+    <h1 class="hero-title" id="heroTitle"></h1>
+    <p class="hero-sub" id="heroSub"></p>
+    <div class="block-preview" id="blockPreview"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="teaser-banner" id="teaserBanner"></div>
+
+  <div class="testimonials-section">
+    <p class="testimonials-heading" id="testimonialsHeading"></p>
+    <div class="testimonials-grid" id="testimonialsGrid"></div>
+  </div>
+
+  <div class="prepared-for-row">
+    <label id="preparedForLabel" for="clientNameInput"></label>
+    <input type="text" id="clientNameInput">
+  </div>
+
+  <div class="packages-grid" id="packagesGrid"></div>
+
+  <div style="text-align:center;">
+    <p style="font-size:12px;color:var(--muted);" id="footerNote"></p>
+  </div>
+</div>
+
+<div class="summary-bar">
+  <div class="summary-inner" id="summaryInner"></div>
+</div>
+
+<div class="print-only" id="printSummary"></div>
+
+<script>
+/* ============================================================
+   CONFIG — replace with your real WhatsApp Business number
+   (with country code, no + or spaces, e.g. 919876543210)
+   ============================================================ */
+const WHATSAPP_NUMBER = "918219259229";
+
+/* ---------------- ICONS ---------------- */
+const ICONS = {
+  layers: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="30" width="30" height="7" rx="2"/><rect x="13" y="20" width="22" height="7" rx="2"/><rect x="17" y="10" width="14" height="7" rx="2"/></svg>',
+  target: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="22" cy="26" r="15"/><path d="M14 29 L20 22 L25 26 L33 15"/><path d="M26 15 H33 V22"/></svg>',
+  cycle: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M36 16 A16 16 0 1 1 32 10"/><path d="M36 8 L36 16 L28 16"/></svg>'
+};
+
+/* ---------------- STATIC UI TEXT ---------------- */
+const UI = {
+  en:{
+    eyebrow:"Digital Ecosystem Builder",
+    heroTitle:"Pick your blocks. Build your Digital Ecosystem.",
+    heroSub:"Every package is ₹10,000. Choose what you need — the price adds up exactly as you'd expect. No hidden cost, no confusion.",
+    teaser:'<span class="badge">UNLOCK ALL 3</span> Select every Block and get the Complete Ecosystem Bonus — free extras worth ₹15,000+.',
+    priceLabel:"One-time",
+    servicesLabel:"What's Included",
+    bonusPrefix:"Bonus:",
+    outcomeLabel:"What You'll Achieve",
+    stampDefault:"SELECT",
+    stampActive:"ADDED ✓",
+    summaryEmpty:"Select at least one Block above to build your custom plan.",
+    packagesSelected:n=>`${n} Block${n>1?'s':''} selected`,
+    totalLabel:"Total",
+    ctaBtn:"Book Free Consultation on WhatsApp",
+    ctaSub:"Free 15-minute call. No pressure, no obligation.",
+    footerNote:"* All prices in INR. Each Block is priced individually — your total is simply the sum of what you choose.",
+    combo2:names=>`<b>Combo unlocked:</b> you're combining ${names}. Together they connect — one brings people in, the other makes sure you capture and follow up with them. <b>+ FREE extra Google Review Automation setup (₹1,500 value)</b>`,
+    combo3:`<b>🎉 Complete Digital Ecosystem unlocked!</b> Presence, leads and automation now work together, so your business keeps running and growing even when you're not actively working on it. <b>+ FREE 3 months Automation Maintenance + FREE Competitor Analysis Report (₹15,000+ combined value)</b>`,
+    preparedForLabel:"Prepared For:",
+    clientNamePlaceholder:"Client / business name (optional)",
+    printBtn:"🖨️ Save / Print My Plan",
+    disclaimer:"This is a summary for your reference — final scope is confirmed on your free consultation call. Not a final invoice.",
+    psTitle:"Your Digital Ecosystem — Plan Summary",
+    psPreparedFor:"Prepared For",
+    psDate:"Date",
+    psPackage:"Package",
+    psPrice:"Price",
+    psTotal:"Total",
+    psBonusHeading:"Bonuses Included",
+    psValued:"Valued Client",
+    testimonialsHeading:"What Our Clients Say"
+  },
+  hi:{
+    eyebrow:"Digital Ecosystem Builder",
+    heroTitle:"अपने Blocks चुनें। अपना Digital Ecosystem बनाएं।",
+    heroSub:"हर Package सिर्फ ₹10,000 का है। जो चाहिए वही चुनें — Price बिल्कुल वैसे ही जुड़ेगी जैसे आप सोचते हैं। कोई Hidden Cost नहीं, कोई Confusion नहीं।",
+    teaser:'<span class="badge">सभी 3 UNLOCK करें</span> हर Block चुनें और पाएं Complete Ecosystem Bonus — ₹15,000+ की Free Extras।',
+    priceLabel:"एकबारगी",
+    servicesLabel:"इसमें क्या शामिल है",
+    bonusPrefix:"Bonus:",
+    outcomeLabel:"आपको क्या मिलेगा",
+    stampDefault:"चुनें",
+    stampActive:"जुड़ गया ✓",
+    summaryEmpty:"अपना Custom Plan बनाने के लिए ऊपर से कम से कम एक Block चुनें।",
+    packagesSelected:n=>`${n} Block Selected`,
+    totalLabel:"Total",
+    ctaBtn:"WhatsApp पर Free Consultation Book करें",
+    ctaSub:"Free 15-Minute Call। कोई Pressure नहीं, कोई Obligation नहीं।",
+    footerNote:"* सभी Prices INR में हैं। हर Block अलग से Price किया गया है — आपका Total बस उतना ही है जो आप चुनते हैं।",
+    combo2:names=>`<b>Combo Unlock हो गया:</b> आप ${names} को Combine कर रहे हैं। दोनों साथ में काम करते हैं — एक Customers लाता है, दूसरा उन्हें Capture और Follow-up करना Confirm करता है। <b>+ FREE Extra Google Review Automation Setup (₹1,500 Value)</b>`,
+    combo3:`<b>🎉 Complete Digital Ecosystem Unlock हो गया!</b> अब Presence, Leads, और Automation साथ में काम करते हैं, ताकि आपका Business चलता रहे और Grow करे — भले आप Active काम ना भी कर रहे हों। <b>+ FREE 3 Months Automation Maintenance + FREE Competitor Analysis Report (₹15,000+ Combined Value)</b>`,
+    preparedForLabel:"किसके लिए:",
+    clientNamePlaceholder:"Client / Business का नाम (Optional)",
+    printBtn:"🖨️ अपना Plan Save/Print करें",
+    disclaimer:"यह सिर्फ आपकी जानकारी के लिए एक Summary है — Final Scope आपकी Free Consultation Call पर Confirm होगा। यह कोई Final Invoice नहीं है।",
+    psTitle:"आपका Digital Ecosystem — Plan Summary",
+    psPreparedFor:"किसके लिए",
+    psDate:"Date",
+    psPackage:"Package",
+    psPrice:"Price",
+    psTotal:"Total",
+    psBonusHeading:"Bonuses Included",
+    psValued:"आदरणीय Client",
+    testimonialsHeading:"हमारे Clients क्या कहते हैं"
+  }
+};
+
+/* ---------------- PACKAGE DATA ---------------- */
+const PACKAGES = [
+  {
+    id:"foundation", accent:"#1B4079", icon:"layers",
+    en:{
+      name:"Foundation Block", tagline:"Your business, online and credible",
+      services:[
+        {name:"5-Page WordPress Website", benefit:"A professional, mobile-friendly site that represents your brand properly."},
+        {name:"Business Profile Setup — Google, Instagram, Facebook", benefit:"A consistent, findable presence everywhere customers look for you."},
+        {name:"Enhanced Security Setup", benefit:"SSL and protection so your site and customer data stay safe."}
+      ],
+      bonus:"FREE Google Business Profile optimization + review link setup — ₹2,000 value",
+      outcome:"A real, credible online address for your business — the ground floor everything else stands on."
+    },
+    hi:{
+      name:"फाउंडेशन ब्लॉक", tagline:"आपका Business, Online और Credible",
+      services:[
+        {name:"5-Page WordPress Website", benefit:"एक Professional, Mobile-Friendly Site जो आपके Brand को सही तरीके से Represent करे।"},
+        {name:"Business Profile Setup — Google, Instagram, Facebook", benefit:"हर जगह एक जैसी, आसानी से मिलने वाली Presence।"},
+        {name:"Enhanced Security Setup", benefit:"SSL और Protection — आपकी Site और Customer Data सुरक्षित रहें।"}
+      ],
+      bonus:"FREE Google Business Profile Optimization + Review Link Setup — ₹2,000 Value",
+      outcome:"आपके Business की एक असली, Credible Online पहचान — बाकी सब इसी नींव पर खड़ा होता है।"
+    }
+  },
+  {
+    id:"leadengine", accent:"#A83232", icon:"target",
+    en:{
+      name:"Lead Engine Block", tagline:"Turn visitors into conversations",
+      services:[
+        {name:"Professional Landing Page for Lead Generation", benefit:"A focused page built to convert visitors into enquiries, not just inform them."},
+        {name:"Meta Pixel Installed", benefit:"Every ad click is tracked, so your Meta ads get smarter and retargeting becomes possible."},
+        {name:"WhatsApp Button Installed", benefit:"One tap for any visitor to message you directly — no forms, no friction."},
+        {name:"Google Reviews Automation Setup", benefit:"Happy customers get an automatic nudge to leave you a review."}
+      ],
+      bonus:"FREE ready-to-use Meta ad copy template pack for your first campaign — ₹3,000 value",
+      outcome:"Every visitor gets an easy path to reach you, and your ad spend finally becomes measurable."
+    },
+    hi:{
+      name:"लीड इंजन ब्लॉक", tagline:"Visitors को Conversations में बदलें",
+      services:[
+        {name:"Professional Landing Page for Lead Generation", benefit:"एक Focused Page जो Visitors को सिर्फ जानकारी नहीं, Enquiry में बदले।"},
+        {name:"Meta Pixel Installed", benefit:"हर Ad Click Track होता है — आपके Meta Ads Smart बनते हैं, Retargeting Possible होती है।"},
+        {name:"WhatsApp Button Installed", benefit:"किसी भी Visitor के लिए सीधा Message करने का एक Tap — कोई Form नहीं, कोई Friction नहीं।"},
+        {name:"Google Reviews Automation Setup", benefit:"खुश Customers को Automatically Review देने का Reminder मिलता है।"}
+      ],
+      bonus:"FREE Ready-to-Use Meta Ad Copy Template Pack — पहली Campaign के लिए — ₹3,000 Value",
+      outcome:"हर Visitor को आप तक पहुंचने का आसान रास्ता मिलता है, और आपका Ad Spend आखिरकार Measurable बन जाता है।"
+    }
+  },
+  {
+    id:"automation", accent:"#2E8B57", icon:"cycle",
+    en:{
+      name:"Automation & Insight Block", tagline:"Your business works even when you're not",
+      services:[
+        {name:"ClientAssist Chatbot", benefit:"Answers common customer questions on your website, 24/7 — even while you sleep."},
+        {name:"1 Automated WhatsApp Follow-up Sequence", benefit:"Leads get followed up automatically, so nobody falls through the cracks."},
+        {name:"Monthly Performance Report", benefit:"A clear, plain-language summary of what's working — no guessing."}
+      ],
+      bonus:"FREE 30-day post-launch priority WhatsApp support — ₹2,500 value",
+      outcome:"Your business responds and follows up automatically, and you always know exactly what's working."
+    },
+    hi:{
+      name:"ऑटोमेशन और इनसाइट ब्लॉक", tagline:"आपका Business चलता रहे, भले आप Active ना हों",
+      services:[
+        {name:"ClientAssist Chatbot", benefit:"आपकी Website पर Common Customer Questions का जवाब देता है, 24/7 — आपके सोते समय भी।"},
+        {name:"1 Automated WhatsApp Follow-up Sequence", benefit:"Leads Automatically Follow-up होते हैं, कोई भी Miss नहीं होता।"},
+        {name:"Monthly Performance Report", benefit:"क्या काम कर रहा है इसका एक Clear, Simple Summary — कोई Guessing नहीं।"}
+      ],
+      bonus:"FREE 30-दिन Post-Launch Priority WhatsApp Support — ₹2,500 Value",
+      outcome:"आपका Business खुद Respond और Follow-up करता है, और आपको हमेशा पता रहता है क्या काम कर रहा है।"
+    }
+  }
+];
+
+const PRICE_PER_BLOCK = 10000;
+
+/* ---------------- REAL CLIENT TESTIMONIALS ---------------- */
+/* Add new entries here as more testimonials come in — same shape. */
+const TESTIMONIALS = [
+  {
+    name:"Rahul", business:"Shakti Gym",
+    en:"Before Build Base Digitally, I was constantly stressed — no leads coming in, and rent was a monthly worry. Now that stress is gone. My leads are consistent, rent isn't a concern anymore, and I'm actually planning to expand.",
+    hi:"Build Base Digitally से पहले, हमेशा Tension रहती थी — Leads नहीं आ रहे थे, Rent निकालना मुश्किल था। अब वो Tension खत्म हो गई है। Leads Consistent हैं, Rent की चिंता नहीं है, और अब मैं Expansion के बारे में सोच रहा हूं।"
+  },
+  {
+    name:"Vikram", business:"VK Gym",
+    en:"My business now gets consistent leads every month. For the first time, I actually have time for my family instead of constantly worrying about where the next customer will come from.",
+    hi:"अब मेरे Business में हर महीने Consistent Leads आते हैं। पहली बार, मुझे अपनी Family के लिए Time मिल रहा है — Customers की चिंता में लगे रहने के बजाय।"
+  }
+];
+
+/* ---------------- STATE ---------------- */
+let currentLang = "en";
+const selected = new Set();
+
+/* ---------------- HELPERS ---------------- */
+function fmtINR(n){ return "₹" + n.toLocaleString("en-IN"); }
+
+/* ---------------- RENDER: HEADER ---------------- */
+function renderHeader(){
+  const t = UI[currentLang];
+  document.getElementById("eyebrow").textContent = t.eyebrow;
+  document.getElementById("heroTitle").textContent = t.heroTitle;
+  document.getElementById("heroSub").textContent = t.heroSub;
+  document.getElementById("teaserBanner").innerHTML = t.teaser;
+  document.getElementById("footerNote").textContent = t.footerNote;
+
+  const preview = document.getElementById("blockPreview");
+  preview.innerHTML = PACKAGES.map(p=>`
+    <div class="preview-chip"><span class="dot" style="background:${p.accent}"></span>${p[currentLang].name}</div>
+  `).join("");
+
+  document.querySelectorAll(".lang-btn").forEach(btn=>{
+    btn.classList.toggle("active", btn.dataset.lang === currentLang);
+  });
+
+  document.getElementById("preparedForLabel").textContent = t.preparedForLabel;
+  document.getElementById("clientNameInput").placeholder = t.clientNamePlaceholder;
+
+  renderTestimonials();
+}
+
+/* ---------------- RENDER: TESTIMONIALS ---------------- */
+function renderTestimonials(){
+  const t = UI[currentLang];
+  document.getElementById("testimonialsHeading").textContent = t.testimonialsHeading;
+  document.getElementById("testimonialsGrid").innerHTML = TESTIMONIALS.map(item=>`
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"${item[currentLang]}"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">${item.name.charAt(0)}</div>
+        <div>
+          <div class="testi-name">${item.name}</div>
+          <div class="testi-business">${item.business}</div>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ---------------- RENDER: PACKAGE CARDS ---------------- */
+function renderCards(){
+  const t = UI[currentLang];
+  const grid = document.getElementById("packagesGrid");
+  grid.innerHTML = PACKAGES.map(p=>{
+    const d = p[currentLang];
+    const isSel = selected.has(p.id);
+    return `
+    <div class="pkg-card ${isSel?'is-selected':''}" style="--accent:${p.accent}">
+      <button class="stamp-btn ${isSel?'active':''}" data-toggle="${p.id}" aria-pressed="${isSel}">
+        ${isSel? t.stampActive : t.stampDefault}
+      </button>
+      <div class="pkg-icon">${ICONS[p.icon]}</div>
+      <h3 class="pkg-name">${d.name}</h3>
+      <p class="pkg-tagline">${d.tagline}</p>
+      <div class="pkg-price-row">
+        <span class="pkg-price">${fmtINR(PRICE_PER_BLOCK)}</span>
+        <span class="pkg-price-label">${t.priceLabel}</span>
+      </div>
+      <p class="pkg-section-label">${t.servicesLabel}</p>
+      <ul class="pkg-services">
+        ${d.services.map(s=>`
+          <li>
+            <span class="svc-tick">✓</span>
+            <span>
+              <span class="svc-name">${s.name}</span>
+              <span class="svc-benefit">${s.benefit}</span>
+            </span>
+          </li>
+        `).join("")}
+      </ul>
+      <div class="pkg-bonus"><b>${t.bonusPrefix}</b> ${d.bonus}</div>
+      <div class="pkg-outcome"><b>${t.outcomeLabel}</b>${d.outcome}</div>
+    </div>`;
+  }).join("");
+
+  grid.querySelectorAll("[data-toggle]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.dataset.toggle;
+      if(selected.has(id)) selected.delete(id); else selected.add(id);
+      renderAll();
+    });
+  });
+}
+
+/* ---------------- RENDER: SUMMARY BAR ---------------- */
+function renderSummary(){
+  const t = UI[currentLang];
+  const n = selected.size;
+  const total = n * PRICE_PER_BLOCK;
+  const container = document.getElementById("summaryInner");
+
+  const blocksIndicator = PACKAGES.map(p=>{
+    const isSel = selected.has(p.id);
+    return `<div class="block-sq ${isSel?'filled':''}" style="${isSel?`background:${p.accent};border-color:${p.accent}`:''}">${ICONS[p.icon]}</div>`;
+  }).join("");
+
+  let comboHtml = "";
+  if(n === 2){
+    const names = PACKAGES.filter(p=>selected.has(p.id)).map(p=>p[currentLang].name).join(" + ");
+    comboHtml = `<div class="combo-strip">${t.combo2(names)}</div>`;
+  } else if(n === 3){
+    comboHtml = `<div class="combo-strip">${t.combo3}</div>`;
+  }
+
+  if(n === 0){
+    container.innerHTML = `<p class="empty-msg">${t.summaryEmpty}</p>`;
+    renderPrintSummary();
+    return;
+  }
+
+  const waLink = buildWhatsAppLink();
+
+  container.innerHTML = `
+    ${comboHtml}
+    <div class="summary-main">
+      <div class="summary-left">
+        <div class="blocks-indicator">${blocksIndicator}</div>
+        <div class="summary-text"><strong>${t.packagesSelected(n)}</strong></div>
+      </div>
+      <div class="summary-right">
+        <div class="total-price">
+          <div class="amt">${fmtINR(total)}</div>
+          <div class="lbl">${t.totalLabel}</div>
+        </div>
+        <div>
+          <div class="cta-row">
+            <a href="${waLink}" target="_blank" rel="noopener">
+              <button class="cta-btn">${t.ctaBtn}</button>
+            </a>
+            <button class="print-btn" onclick="window.print()">${t.printBtn}</button>
+          </div>
+          <div class="cta-sub">${t.ctaSub}</div>
+          <div class="disclaimer">${t.disclaimer}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  renderPrintSummary();
+}
+
+/* ---------------- RENDER: PRINT-ONLY SUMMARY ---------------- */
+function renderPrintSummary(){
+  const t = UI[currentLang];
+  const chosen = PACKAGES.filter(p=>selected.has(p.id));
+  const el = document.getElementById("printSummary");
+  if(chosen.length === 0){ el.innerHTML = ""; return; }
+
+  const name = document.getElementById("clientNameInput").value.trim() || t.psValued;
+  const today = new Date().toLocaleDateString(currentLang === "hi" ? "hi-IN" : "en-IN", {day:"numeric", month:"long", year:"numeric"});
+  const total = chosen.length * PRICE_PER_BLOCK;
+
+  const rows = chosen.map(p=>`
+    <tr><td>${p[currentLang].name}</td><td>${fmtINR(PRICE_PER_BLOCK)}</td></tr>
+  `).join("");
+
+  const bonuses = chosen.map(p=>`<li>${p[currentLang].name}: ${p[currentLang].bonus}</li>`).join("");
+
+  el.innerHTML = `
+    <h2>BUILD BASE DIGITALLY</h2>
+    <p class="ps-meta">${t.psTitle}</p>
+    <p class="ps-meta"><strong>${t.psPreparedFor}:</strong> ${name} &nbsp;|&nbsp; <strong>${t.psDate}:</strong> ${today}</p>
+    <table>
+      <thead><tr><th>${t.psPackage}</th><th>${t.psPrice}</th></tr></thead>
+      <tbody>
+        ${rows}
+        <tr class="ps-total-row"><td>${t.psTotal}</td><td>${fmtINR(total)}</td></tr>
+      </tbody>
+    </table>
+    <p class="ps-meta"><strong>${t.psBonusHeading}:</strong></p>
+    <ul class="ps-bonus-list">${bonuses}</ul>
+    <p class="ps-disclaimer">${t.disclaimer}</p>
+  `;
+}
+
+function buildWhatsAppLink(){
+  const chosen = PACKAGES.filter(p=>selected.has(p.id));
+  const total = chosen.length * PRICE_PER_BLOCK;
+  const names = chosen.map(p=>p[currentLang].name).join(", ");
+  const text = currentLang === "hi"
+    ? `Namaste! Mujhe yeh Package chahiye: ${names}. Total: ${fmtINR(total)}. Please free consultation book kar dein.`
+    : `Hi! I'd like these package(s): ${names}. Total: ${fmtINR(total)}. Please help me book a free consultation.`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
+/* ---------------- MASTER RENDER ---------------- */
+function renderAll(){
+  renderHeader();
+  renderCards();
+  renderSummary();
+  fixSpacing();
+}
+
+/* Ensures the fixed bottom bar never covers card content, no matter
+   how tall it grows (combo messages, wrapped text on small screens, etc.) */
+function fixSpacing(){
+  const bar = document.querySelector(".summary-bar");
+  const wrap = document.querySelector(".wrap");
+  const h = bar.offsetHeight;
+  wrap.style.paddingBottom = (h + 28) + "px";
+}
+
+window.addEventListener("resize", fixSpacing);
+
+document.querySelectorAll(".lang-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    currentLang = btn.dataset.lang;
+    renderAll();
+  });
+});
+
+document.getElementById("clientNameInput").addEventListener("input", renderPrintSummary);
+
+renderAll();
+</script>
+</body>
+</html>
