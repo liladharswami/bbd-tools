@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Client Onboarding v2 &mdash; Build Base Digitally</title>
+<title>Client Onboarding v2 â€” Build Base Digitally</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -62,7 +62,7 @@ h1,h2,h3,.hdr-logo, .step-pill { font-family:'Baloo 2',sans-serif; }
 .p-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:var(--muted);z-index:1;transition:all .25s}
 .p-step.active .p-dot{border-color:var(--brand);background:var(--brand);color:#fff}
 .p-step.done .p-dot{border-color:var(--success);background:var(--success);color:#fff}
-.p-step.done .p-dot::after{content:'✓';font-size:.72rem}
+.p-step.done .p-dot::after{content:'âœ“';font-size:.72rem}
 .p-step.done .p-dot span{display:none}
 .p-label{font-size:.62rem;font-weight:700;color:var(--muted);text-align:center;white-space:nowrap;text-transform:uppercase;letter-spacing:.3px}
 .p-step.active .p-label{color:var(--brand)}
@@ -194,7 +194,7 @@ h1,h2,h3,.hdr-logo, .step-pill { font-family:'Baloo 2',sans-serif; }
 <div class="hdr">
   <div class="hdr-logo">Build Base <span>Digitally</span></div>
   <div class="hdr-right">
-    <div class="workflow-pill">Stitch <span class="wf-arrow">&rarr;</span> Antigravity <span class="wf-arrow">&rarr;</span> Novamira <span class="wf-arrow">&rarr;</span> WordPress</div>
+    <div class="workflow-pill">Stitch <span class="wf-arrow">â†’</span> Antigravity <span class="wf-arrow">â†’</span> Novamira <span class="wf-arrow">â†’</span> WordPress</div>
     <div class="step-pill" id="stepPill">Step 1 / 6</div>
   </div>
 </div>
@@ -213,13 +213,1099 @@ h1,h2,h3,.hdr-logo, .step-pill { font-family:'Baloo 2',sans-serif; }
 <div class="main">
 
 <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     STEP 1 &mdash; BUSINESS INFO
+     STEP 1 â€” BUSINESS INFO
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div class="step-panel active" id="step1">
   <div class="card">
-    <div class="card-title">📝 Website Content</div>
-    <div class="card-sub">Actual content jo website pe jayega &mdash; jitna detail doge utna better Stitch ka output hoga</div>
+    <div class="card-title">💼 Business Information</div>
+    <div class="card-sub">Client ke basic details â€” yeh sab Stitch ko context deta hai taaki realistic copy aur structure generate ho</div>
+
+    <div class="fr c2">
+      <div class="field"><label>Business Name <span class="req">*</span></label><input type="text" id="bizName" placeholder="e.g., Aman Health & Fitness"></div>
+      <div class="field"><label>Business Type <span class="req">*</span></label>
+        <select id="bizType">
+          <option value="">â€” Select â€”</option>
+          <option>Gym / Fitness Center</option><option>Restaurant / Dhaba</option>
+          <option>Medical Clinic / Hospital</option><option>Salon / Beauty Parlour</option>
+          <option>Boutique / Clothing Store</option><option>Digital Agency</option>
+          <option>Real Estate</option><option>Education / Coaching</option>
+          <option>Automobile / Garage</option><option>Hotel / Guest House</option>
+          <option>Pharmacy / Chemist</option><option>Manufacturing / Industry</option>
+          <option>CA / Legal / Consultancy</option><option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>Tagline <span class="req">*</span> <span class="hint">One punchy line describing the business</span></label><input type="text" id="tagline" placeholder="e.g., Strength Built Here. Results Delivered."></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>City / Location <span class="req">*</span></label><input type="text" id="location" placeholder="Baddi, Himachal Pradesh"></div>
+      <div class="field"><label>Full Address</label><input type="text" id="address" placeholder="Shop No. 5, Main Market, Baddi, HP 173205"></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Phone Number <span class="req">*</span></label><input type="tel" id="phone" placeholder="+91 98765 43210"></div>
+      <div class="field"><label>WhatsApp Number <span class="hint">(if different from phone)</span></label><input type="tel" id="whatsapp" placeholder="+91 98765 43210"></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Email Address</label><input type="email" id="email" placeholder="contact@business.com"></div>
+      <div class="field"><label>Website Domain</label><input type="text" id="domain" placeholder="www.business.com"></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Working Hours</label><input type="text" id="hours" placeholder="Monâ€“Sat, 6 AM â€“ 10 PM"></div>
+      <div class="field"><label>Owner / Contact Person</label><input type="text" id="ownerName" placeholder="Aman Sharma"></div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>Target Audience <span class="hint">Who is the customer?</span></label><input type="text" id="audience" placeholder="e.g., Working professionals & college students aged 18â€“40 in Baddi & nearby areas"></div>
+    </div>
+  </div>
+  <div class="nav-row"><div></div><button class="btn btn-primary" onclick="goTo(2)">Next â€” Design â†’</button></div>
+</div>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     STEP 2 â€” DESIGN & BRANDING
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<div class="step-panel" id="step2">
+  <div class="card">
+    <div class="card-title">ðŸŽ¨ Design & Branding</div>
+    <div class="card-sub">Visual identity â€” yeh colors aur style directly Stitch ke design decisions ko guide karenge</div>
+
+    <div class="section-label" style="display:flex; justify-content:space-between; align-items:center;">
+      Color Palette
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:0.75rem;font-weight:600;color:var(--text);text-transform:none;letter-spacing:normal;">Let AI decide best colors</span>
+        <label class="sw" style="margin:0;">
+          <input type="checkbox" id="aiColors" onchange="toggleColorPickers(this.checked)">
+          <span class="sw-track"></span>
+        </label>
+      </div>
+    </div>
+    <div id="colorPickersContainer">
+    <div class="fr c2">
+      <div class="field"><label>Primary Color <span class="req">*</span> <span class="hint">Main brand / CTA color</span></label>
+        <div class="color-row">
+          <input type="color" id="c1p" value="#E8272A" oninput="syncHex('c1p','c1h')">
+          <input type="text" id="c1h" placeholder="#E8272A" oninput="syncPicker('c1p','c1h')">
+        </div>
+      </div>
+      <div class="field"><label>Secondary Color <span class="req">*</span> <span class="hint">Dark / background color</span></label>
+        <div class="color-row">
+          <input type="color" id="c2p" value="#1A1A1A" oninput="syncHex('c2p','c2h')">
+          <input type="text" id="c2h" placeholder="#1A1A1A" oninput="syncPicker('c2p','c2h')">
+        </div>
+      </div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Accent / Highlight Color <span class="hint">Optional 3rd color</span></label>
+        <div class="color-row">
+          <input type="color" id="c3p" value="#FFFFFF" oninput="syncHex('c3p','c3h')">
+          <input type="text" id="c3h" placeholder="#FFFFFF or N/A" oninput="syncPicker('c3p','c3h')">
+        </div>
+      </div>
+      <div class="field"><label>Background / Section BG Color</label>
+        <div class="color-row">
+          <input type="color" id="c4p" value="#F8F8F8" oninput="syncHex('c4p','c4h')">
+          <input type="text" id="c4h" placeholder="#F8F8F8" oninput="syncPicker('c4p','c4h')">
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="section-label">Typography & Style</div>
+    <div class="fr c2">
+      <div class="field"><label>Design Style <span class="req">*</span></label>
+        <select id="designStyle">
+          <option value="">â€” Select â€”</option>
+          <option>Modern & Bold (Strong headings, high contrast)</option>
+          <option>Clean & Minimal (White space, simple layout)</option>
+          <option>Elegant & Luxury (Serif fonts, refined spacing)</option>
+          <option>Friendly & Playful (Rounded corners, warm tones)</option>
+          <option>Professional & Corporate (Grid-based, conservative)</option>
+          <option>Energetic & Sport (Dynamic angles, bold colors)</option>
+          <option>Traditional & Trust (Classic layout, muted palette)</option>
+        </select>
+      </div>
+      <div class="field"><label>Font Preference <span class="hint">Leave blank = AI chooses based on style</span></label>
+        <input type="text" id="fontPref" placeholder="e.g., Poppins + Inter, or 'bold sans-serif'">
+      </div>
+    </div>
+
+    <div class="section-label">Logo</div>
+    <div class="fr c2">
+      <div class="field"><label>Logo Type</label>
+        <select id="logoType">
+          <option value="Text-based logo using business name only">Text-based (name only)</option>
+          <option value="Client will provide image logo file">Image logo (client provides)</option>
+          <option value="Icon combined with business name text">Icon + Text combo</option>
+        </select>
+      </div>
+      <div class="field"><label>Logo Description <span class="hint">Describe if image/icon</span></label>
+        <input type="text" id="logoDesc" placeholder="e.g., Dumbbell icon in primary color, white text">
+      </div>
+    </div>
+
+    <div class="section-label">Social Media & Map</div>
+    <div class="fr c2">
+      <div class="field"><label>Instagram</label><input type="text" id="insta" placeholder="@handle or full URL"></div>
+      <div class="field"><label>Facebook</label><input type="text" id="fb" placeholder="@handle or full URL"></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>YouTube</label><input type="text" id="yt" placeholder="Channel URL or N/A"></div>
+      <div class="field"><label>Google Maps Embed URL</label><input type="text" id="maps" placeholder="Paste embed src URL or N/A"></div>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-ghost" onclick="goTo(1)">â† Back</button><button class="btn btn-primary" onclick="goTo(3)">Next â€” Content â†’</button></div>
+</div>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     STEP 3 â€” CONTENT
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<div class="step-panel" id="step3">
+  <div class="card">
+    <div class="card-title">ðŸ“ Website Content</div>
+    <div class="card-sub">Actual content jo website pe jayega â€” jitna detail doge utna better Stitch ka output hoga</div>
 
     <div class="section-label">Services</div>
+    <div class="fr">
+      <div class="field">
+        <label>Services / Products <span class="req">*</span> <span class="hint">Type karo â†’ Enter dabao to add as tag</span></label>
+        <div class="tag-wrap" id="svcWrap" onclick="document.getElementById('svcInput').focus()">
+          <input type="text" id="svcInput" placeholder="e.g., Weight Training  â†’  Enter" onkeydown="addTag(event,'svcInput',svcTags,'svcWrap')">
+        </div>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>USP â€” Why Choose This Business? <span class="req">*</span></label><textarea id="usp" placeholder="e.g., Only gym in Baddi with AI-based personalized diet planning, 24/7 WhatsApp trainer support, and 500+ successful transformations since 2018"></textarea></div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>Business Story / About <span class="hint">2â€“3 sentences</span></label><textarea id="about" placeholder="e.g., Founded in 2018, Aman Health & Fitness was started with a mission to bring world-class fitness to Baddi. In 6 years we have helped 500+ members transform their bodies and lifestyle..."></textarea></div>
+    </div>
 
+    <div class="section-label">Testimonials</div>
+    <div class="fr">
+      <div class="field"><label>Testimonial 1 <span class="hint">Quote â€” Customer Name, City</span></label><input type="text" id="t1" placeholder='"Lost 12kg in 3 months, best gym in Baddi!" â€” Rohit S., Baddi'></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Testimonial 2</label><input type="text" id="t2" placeholder='"Very professional trainers." â€” Priya K., Nalagarh'></div>
+      <div class="field"><label>Testimonial 3</label><input type="text" id="t3" placeholder='"Great diet guidance." â€” Vikas M., Solan'></div>
+    </div>
 
+    <div class="section-label">Offers & Extra</div>
+    <div class="fr c2">
+      <div class="field"><label>Special Offer / Announcement <span class="hint">Optional</span></label><input type="text" id="offer" placeholder="3 months @ â‚¹2999 â€” Limited slots!"></div>
+      <div class="field"><label>Pricing / Membership Plans <span class="hint">Optional</span></label><input type="text" id="pricing" placeholder="Monthly â‚¹1200 / 3M â‚¹2999 / 6M â‚¹4999"></div>
+    </div>
+    <div class="fr">
+      <div class="field"><label>Any Additional Content Notes <span class="hint">Special sections, Hindi text, before-after gallery, FAQ, etc.</span></label><textarea id="extraContent" placeholder="e.g., Add FAQ section with 5 questions about gym membership. Add before-after transformation gallery. Some section headings in Hindi."></textarea></div>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-ghost" onclick="goTo(2)">â† Back</button><button class="btn btn-primary" onclick="goTo(4)">Next â€” Pages â†’</button></div>
+</div>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     STEP 4 â€” PAGES SELECTION
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<div class="step-panel" id="step4">
+  <div class="card">
+    <div class="card-title">ðŸ“„ Pages to Build</div>
+    <div class="card-sub">Select karo konse pages chahiye â€” OFF karo jo is client ke liye zaroori nahi</div>
+
+    <div class="sw-row"><div class="sw-info"><strong>ðŸ  Home Page</strong><span>Hero, services overview, testimonials, CTA â€” always required</span></div><label class="sw"><input type="checkbox" id="pg_home" checked disabled><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>ðŸ‘¤ About Page</strong><span>Business story, owner intro, milestones, mission & vision</span></div><label class="sw"><input type="checkbox" id="pg_about" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>ðŸ›  Services Page</strong><span>Dedicated full section per service with benefits</span></div><label class="sw"><input type="checkbox" id="pg_services" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>ðŸ–¼ Gallery Page</strong><span>Photo grid with lightbox â€” great for gyms, salons, restaurants</span></div><label class="sw"><input type="checkbox" id="pg_gallery" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>â­ Testimonials Page</strong><span>Full reviews page with star ratings</span></div><label class="sw"><input type="checkbox" id="pg_testimonials" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>ðŸ’° Pricing / Membership Page</strong><span>Pricing cards â€” good for gyms, coaching, SaaS</span></div><label class="sw"><input type="checkbox" id="pg_pricing"><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>â“ FAQ Page</strong><span>Accordion-style frequently asked questions</span></div><label class="sw"><input type="checkbox" id="pg_faq"><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>ðŸ“ž Contact Page</strong><span>Form, map, business details â€” always required</span></div><label class="sw"><input type="checkbox" id="pg_contact" checked disabled><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>ðŸ”’ Privacy Policy</strong><span>Auto-generated standard Indian business policy</span></div><label class="sw"><input type="checkbox" id="pg_privacy" checked><span class="sw-track"></span></label></div>
+    <div class="sw-row"><div class="sw-info"><strong>ðŸ“‹ Terms & Conditions</strong><span>Auto-generated T&C for Indian small business</span></div><label class="sw"><input type="checkbox" id="pg_terms" checked><span class="sw-track"></span></label></div>
+  </div>
+  <div class="nav-row"><button class="btn btn-ghost" onclick="goTo(3)">â† Back</button><button class="btn btn-primary" onclick="goTo(5)">Next â€” Tech Setup â†’</button></div>
+</div>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     STEP 5 â€” AGENCY TECH SETUP
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<div class="step-panel" id="step5">
+  <div class="card">
+    <div class="card-title">âš™ï¸ Agency Tech Setup</div>
+    <div class="card-sub">Tumhara WordPress stack define karo â€” yeh settings directly prompt mein jayenge taaki Antigravity exact compatible structure generate kare</div>
+
+    <div class="info-box">
+      â„¹ï¸ Yeh settings <strong>tumhari agency ke liye</strong> hain, client ko nahi poochna. In choices ke basis par Stitch + Antigravity ko specific instructions milenge â€” jaise correct CSS class names, container structure, aur Elementor-compatible markup.
+    </div>
+
+    <!-- ELEMENTOR VERSION -->
+    <div class="section-label">Elementor Version</div>
+    <div class="radio-cards c2" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="elVersion" id="el_free" value="Elementor Free" checked><label for="el_free"><div class="rc-title"><span class="badge-free">FREE</span> Elementor Free</div><div class="rc-desc">Basic widgets, Section/Column layout. No Theme Builder. Use with XPro for extra widgets + footer builder.</div></label></div>
+      <div class="rc"><input type="radio" name="elVersion" id="el_pro" value="Elementor Pro"><label for="el_pro"><div class="rc-title"><span class="badge-pro">PRO</span> Elementor Pro</div><div class="rc-desc">Full Theme Builder, Header/Footer editor, Popup Builder, WooCommerce builder, Loop Grid. Best for full control.</div></label></div>
+    </div>
+
+    <!-- ELEMENTOR EDITOR MODE -->
+    <div class="section-label">Elementor Editor Mode (Atomic / Classic)</div>
+    <div class="warn-box">âš ï¸ <strong>Important:</strong> Elementor 3.x introduced Flexbox Container (Atomic mode). Antigravity must know this to generate correct structure. Wrong setting = layout broken in editor.</div>
+    <div class="radio-cards c2" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="editorMode" id="em_classic" value="Classic Section/Column (Flexbox Container OFF â€” Elementor Experiments disabled)" checked><label for="em_classic"><div class="rc-title">ðŸ”´ Classic Mode (Recommended)</div><div class="rc-desc">Section â†’ Column â†’ Widget. Stable, widely supported. Flexbox Container OFF in Elementor Experiments. Best for Antigravity compatibility.</div></label></div>
+      <div class="rc"><input type="radio" name="editorMode" id="em_atomic" value="Atomic/Flexbox Container Mode (Flexbox Container ON in Elementor Experiments â€” use Container instead of Section)"><label for="em_atomic"><div class="rc-title">ðŸŸ¡ Atomic/Flexbox Mode</div><div class="rc-desc">Container â†’ Widget. Modern flex-based layout. Flexbox Container ON in Elementor Experiments. Newer but less stable with some addons.</div></label></div>
+    </div>
+
+    <!-- ASTRA THEME -->
+    <div class="section-label">Astra Theme Version</div>
+    <div class="radio-cards c2" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="astraVersion" id="astra_free" value="Astra Free theme" checked><label for="astra_free"><div class="rc-title"><span class="badge-free">FREE</span> Astra Free</div><div class="rc-desc">Lightweight base theme. Header/footer customization limited. Works with XPro or Elementor Pro for full control.</div></label></div>
+      <div class="rc"><input type="radio" name="astraVersion" id="astra_pro" value="Astra Pro theme"><label for="astra_pro"><div class="rc-title"><span class="badge-pro">PRO</span> Astra Pro</div><div class="rc-desc">Advanced header/footer builder built-in, custom layouts, white-label. Full design control without extra addons.</div></label></div>
+    </div>
+
+    <!-- XPRO ADDONS -->
+    <div class="section-label">XPro Addons (for Elementor Free users)</div>
+    <div class="radio-cards c2" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="xproVersion" id="xpro_free" value="XPro Elementor Addons Free" checked><label for="xpro_free"><div class="rc-title"><span class="badge-free">FREE</span> XPro Free</div><div class="rc-desc">Extra widgets for Elementor Free. Includes basic footer builder, nav menu, image comparison, countdown, etc.</div></label></div>
+      <div class="rc"><input type="radio" name="xproVersion" id="xpro_pro" value="XPro Elementor Addons Pro"><label for="xpro_pro"><div class="rc-title"><span class="badge-pro">PRO</span> XPro Pro</div><div class="rc-desc">Full footer/header builder via XPro Theme Builder, advanced mega menu, WooCommerce widgets, popup builder.</div></label></div>
+      <div class="rc"><input type="radio" name="xproVersion" id="xpro_none" value="No XPro addon â€” using Elementor Pro or Astra Pro instead"><label for="xpro_none"><div class="rc-title">âŒ Not Using XPro</div><div class="rc-desc">Skip XPro if using Elementor Pro or Astra Pro which already handle header/footer.</div></label></div>
+    </div>
+
+    <!-- CONTACT FORM -->
+    <div class="section-label">Contact Form Plugin</div>
+    <div class="radio-cards" style="margin-bottom:14px">
+      <div class="rc"><input type="radio" name="formPlugin" id="fp_wpforms" value="WPForms Lite (free) â€” use shortcode [wpforms id='1'] in Elementor Shortcode widget" checked><label for="fp_wpforms"><div class="rc-title"><span class="badge-rec">RECOMMENDED</span> WPForms Lite</div><div class="rc-desc">Free. Drag-drop builder. Add via Elementor Shortcode widget. Spam protection + email notifications.</div></label></div>
+      <div class="rc"><input type="radio" name="formPlugin" id="fp_cf7" value="Contact Form 7 (free) â€” use shortcode [contact-form-7 id='1'] in Elementor Shortcode widget"><label for="fp_cf7"><div class="rc-title"><span class="badge-free">FREE</span> Contact Form 7</div><div class="rc-desc">Lightweight. Add via Elementor Shortcode widget. Simple setup, widely used.</div></label></div>
+      <div class="rc"><input type="radio" name="formPlugin" id="fp_elform" value="Elementor Pro Form Widget (built-in to Elementor Pro â€” use Form widget directly in Elementor editor)"><label for="fp_elform"><div class="rc-title"><span class="badge-pro">PRO</span> Elementor Pro Form</div><div class="rc-desc">Built into Elementor Pro. No extra plugin. Best if you have Elementor Pro â€” drag it directly in editor.</div></label></div>
+    </div>
+    <div class="fr c2">
+      <div class="field"><label>Form Leads Send to Email</label><input type="email" id="formEmail" placeholder="client@business.com"></div>
+      <div class="field"><label>WhatsApp Floating Button Plugin</label>
+        <select id="waPlugin">
+          <option value="Joinchat plugin (free) â€” install Joinchat, configure WhatsApp number and pre-filled message in plugin settings">Joinchat (Free) â€” Recommended</option>
+          <option value="WP Social Chat plugin (free) â€” install and configure in plugin settings">WP Social Chat (Free)</option>
+          <option value="Custom HTML floating WhatsApp button coded directly â€” fixed position bottom-right">Custom HTML Button (No plugin)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ELEMENTOR WIDGET SPECIFIC -->
+    <div class="section-label">Additional Elementor Widgets</div>
+    <div class="fr c2">
+      <div class="field"><label>Image Slider / Carousel Plugin</label>
+        <select id="sliderPlugin">
+          <option value="Smart Slider 3 Free â€” use Smart Slider widget in Elementor">Smart Slider 3 (Free)</option>
+          <option value="Elementor Pro Carousel widget (built-in)">Elementor Pro Carousel (built-in)</option>
+          <option value="XPro Image Comparison or Carousel widget">XPro Carousel Widget</option>
+          <option value="No slider needed">No Slider Needed</option>
+        </select>
+      </div>
+      <div class="field"><label>Gallery / Lightbox Plugin</label>
+        <select id="galleryPlugin">
+          <option value="Elementor Gallery widget (built-in, basic) with CSS lightbox">Elementor Gallery (built-in)</option>
+          <option value="Envira Gallery Free â€” use Envira Gallery shortcode in Elementor Shortcode widget">Envira Gallery (Free)</option>
+          <option value="FooGallery Free â€” use FooGallery shortcode in Elementor Shortcode widget">FooGallery (Free)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ANTIGRAVITY SPECIFIC SETTINGS -->
+    <div class="section-label">ðŸ¤– Antigravity / Stitch Output Settings</div>
+    <div class="tip-box">
+      âœ… These settings tell Antigravity exactly how to structure the design so every element is fully editable in Elementor editor â€” zero HTML code needed after import.
+    </div>
+
+    <div class="sw-row">
+      <div class="sw-info"><strong>Unique Container IDs</strong><span>Every Section/Column gets a unique CSS ID (e.g., #section-hero-001) â€” Elementor Advanced tab mein visible, easy to target</span></div>
+      <label class="sw"><input type="checkbox" id="uniqueIDs" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Unique CSS Classes per Element</strong><span>Every widget/element gets its own class (e.g., .btn-cta-hero, .card-service-1) â€” no shared classes that conflict</span></div>
+      <label class="sw"><input type="checkbox" id="uniqueClasses" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Named Sections / Elements</strong><span>Every section/widget labeled with descriptive name in Elementor panel (e.g., "Hero Section", "Services Grid") â€” easy to navigate</span></div>
+      <label class="sw"><input type="checkbox" id="namedSections" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>No Inline Styles â€” Use Elementor Style Tab Only</strong><span>All styling via Elementor Style/Advanced tabs, not hardcoded inline CSS â€” fully editable without code</span></div>
+      <label class="sw"><input type="checkbox" id="noInline" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Global Colors as CSS Variables</strong><span>Primary & secondary colors defined as CSS variables and Elementor Global Colors â€” change once, updates everywhere</span></div>
+      <label class="sw"><input type="checkbox" id="globalColors" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Responsive Breakpoints Set</strong><span>Mobile (375px), Tablet (768px), Desktop (1280px) â€” all sections must be tested responsive in Elementor editor</span></div>
+      <label class="sw"><input type="checkbox" id="responsive" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>WhatsApp Button via Plugin (not hardcoded)</strong><span>Use selected WhatsApp plugin instead of coding â€” so client can change number themselves from WP dashboard</span></div>
+      <label class="sw"><input type="checkbox" id="waViaPlugin" checked><span class="sw-track"></span></label>
+    </div>
+    <div class="sw-row">
+      <div class="sw-info"><strong>Images as Elementor Dynamic / Placeholder</strong><span>All images use Elementor image widget placeholders â€” client can change from editor without touching code</span></div>
+      <label class="sw"><input type="checkbox" id="imgPlaceholder" checked><span class="sw-track"></span></label>
+    </div>
+
+    <div class="section-label">Extra Dev Notes for Antigravity</div>
+    <div class="fr">
+      <div class="field"><label>Additional Technical Instructions <span class="hint">Any special requirement for Antigravity/Stitch</span></label><textarea id="devNotes" placeholder="e.g., Use Poppins font loaded via Elementor Font settings not Google CDN link. Section padding should be 80px desktop, 40px mobile. All buttons should use Elementor button widget only."></textarea></div>
+    </div>
+
+    <div class="section-label">ðŸ”— N8n AI Agent Connection</div>
+    <div class="tip-box">âœ… N8n workflow se AI-enhanced prompts milenge â€” Gemini 3 agents parallel chalenge: Industry Research + Stitch Prompt Writer + Antigravity Expert. Pehle basic prompts generate ho jaate hain (Step 6), phir N8n se enhanced version milta hai.</div>
+    <div class="fr c2">
+      
+      <div class="field"><label>Stitch Output <span class="hint">Paste Google Stitch output here for Agent 3 analysis</span></label><textarea id="stitchOutputPaste" style="min-height:60px" placeholder="(Optional) After running Stitch, paste the generated design description here â€” Agent 3 will analyze it for better Antigravity instructions"></textarea></div>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-ghost" onclick="goTo(4)">â† Back</button><button class="btn btn-success" onclick="generateAll()">âœ¨ Generate Prompts â†’</button></div>
+</div>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     STEP 6 â€” OUTPUT
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+
+<!-- â•â•â• STEP 6 â€” OUTPUT â•â•â• -->
+<div class="step-panel" id="step6">
+  <div class="card">
+    <div class="card-title">âœ… Prompts Ready!</div>
+    <div class="card-sub">Basic prompts generate hue. N8n se AI-enhanced version bhi le sakte ho â€” Gemini 3 agents parallel chalenge.</div>
+    <div class="sum-grid" id="sumGrid"></div>
+  </div>
+
+  <!-- N8N AI PANEL -->
+  <div class="card" style="border:2px solid var(--brand);background:var(--brand-light)">
+    <div class="card-title" style="color:var(--brand)">ðŸ¤– N8n AI Enhancement</div>
+    <div class="card-sub" style="color:#3730A3;margin-bottom:12px">3 Gemini agents: Industry Research + Stitch Prompt Writer + Antigravity Expert â€” zyada detailed aur accurate output milega</div>
+    <div class="info-box" style="margin-bottom:12px">
+      <strong>2-Step Manual Flow:</strong><br>
+      1ï¸âƒ£ Basic Stitch prompt (neeche) copy â†’ Google Stitch mein paste â†’ design generate karo<br>
+      2ï¸âƒ£ Stitch output Step 5 ke field mein paste karo â†’ "Send to N8n" â†’ AI Enhanced Antigravity prompt lo
+    </div>
+    <div class="field"><label>N8n Webhook URL <span class="hint">Self-hosted n8n production URL</span></label><input type="text" id="n8nWebhookUrl" placeholder="https://your-n8n.com/webhook/antigravity-prompt-generator"></div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-primary" id="sendN8nBtn" onclick="sendToN8n()">âš¡ Send to N8n AI Agents</button>
+      <span id="n8nStatus" style="font-size:.8rem;font-weight:600;color:var(--muted)"></span>
+    </div>
+    <div id="n8nResultPanel" style="display:none;margin-top:16px">
+      <div class="tip-box" style="margin-bottom:10px">âœ… N8n complete! Enhanced prompts ready â€” copy karo aur use karo.</div>
+      <div class="tab-btns">
+        <button class="tab-btn active" id="nt1" onclick="showN8nTab(1)">ðŸŽ¨ AI Stitch Prompt</button>
+        <button class="tab-btn" id="nt2" onclick="showN8nTab(2)">âš¡ AI Antigravity Prompt</button>
+        <button class="tab-btn" id="nt3" onclick="showN8nTab(3)">ðŸ” Research Insights</button>
+      </div>
+      <div style="position:relative">
+        <button class="copy-btn" id="n8nCopyBtn" onclick="copyN8nActive()" style="position:absolute;top:10px;right:10px;z-index:10">Copy</button>
+        <div class="prompt-out" id="n8nStitchOut" style="padding-top:10px"></div>
+        <div class="prompt-out" id="n8nAntiOut" style="display:none;padding-top:10px"></div>
+        <div class="prompt-out" id="n8nResOut" style="display:none;padding-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BASIC PROMPTS -->
+  <div class="out-card">
+    <div class="out-hdr">
+      <div class="out-title">ðŸ“‹ Basic Prompts (Form-Generated)</div>
+      <div class="out-actions">
+        <button class="copy-btn" id="copyBtn" onclick="copyActive()">Copy</button>
+      </div>
+    </div>
+    <div class="tab-btns">
+      <button class="tab-btn active" id="tab1" onclick="showTab(1)">ðŸŽ¨ Stitch Prompt</button>
+      <button class="tab-btn" id="tab2" onclick="showTab(2)">âš¡ Antigravity Prompt</button>
+    </div>
+    <div class="prompt-out" id="stitchOut"></div>
+    <div class="prompt-out" id="antigravityOut" style="display:none"></div>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="card">
+    <div class="card-title" style="font-size:1rem;margin-bottom:14px">ðŸš€ Complete Workflow</div>
+    <ul class="chk-list">
+      <li><div class="chk-num">1</div>ðŸŽ¨ <strong>Stitch Prompt</strong> copy (upar tab) â†’ <strong>Google Stitch</strong> mein paste â†’ website design generate karo</li>
+      <li><div class="chk-num">2</div>Stitch ka output copy â†’ Step 5 "Stitch Output" field mein paste â†’ <strong>âš¡ Send to N8n</strong> click karo</li>
+      <li><div class="chk-num">3</div>N8n 3 Gemini agents chalega (~30â€“45 sec) â†’ <strong>AI Enhanced Antigravity Prompt</strong> upar N8n panel mein aayega</li>
+      <li><div class="chk-num">4</div>Enhanced Antigravity prompt copy â†’ <strong>Antigravity</strong> mein paste â†’ Elementor-compatible structure generate</li>
+      <li><div class="chk-num">5</div><strong>Novamira MCP</strong> â†’ WordPress push â†’ pages auto-create Elementor ke saath</li>
+      <li><div class="chk-num">6</div>Plugins install: <strong>WPForms Lite, Joinchat, Yoast SEO, Smush, Wordfence, UpdraftPlus</strong></li>
+      <li><div class="chk-num">7</div>Elementor mein open karo â†’ <strong>Zero HTML</strong> â†’ sab visual editable â†’ photos replace â†’ form test</li>
+      <li><div class="chk-num">8</div><strong>Deliver & payment lo ðŸŽ‰</strong></li>
+    </ul>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-ghost" onclick="goTo(5)">â† Edit</button>
+    <button class="btn btn-primary" onclick="window.print()">ðŸ–¨ Save PDF</button>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// â”€â”€â”€ STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+let cur = 1;
+const svcTags = [];
+let activeTab = 1;
+let n8nActiveTab = 1;
+let cachedPayload = {};
+
+// â”€â”€â”€ NAVIGATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function goTo(n){
+    let missing = [];
+    if(cur === 1 && n > 1) {
+      if(!v('bizName')) missing.push('Business Name');
+      if(!v('bizType')) missing.push('Business Type');
+      if(!v('location')) missing.push('City / Location');
+      if(!v('address')) missing.push('Full Address');
+      if(!v('whatsapp') && !v('phone')) missing.push('WhatsApp Number');
+      if(!v('hours')) missing.push('Working Hours');
+      if(!v('ownerName')) missing.push('Owner / Contact Person');
+    } else if(cur === 3 && n > 3) {
+      if(svcTags.length === 0) missing.push('Services');
+    }
+    if(missing.length > 0) {
+      alert('Please fill the following mandatory fields:\n- ' + missing.join('\n- '));
+      return;
+    }
+  document.getElementById('step'+cur).classList.remove('active');
+  document.getElementById('ps'+cur).classList.remove('active');
+  if(n>cur) document.getElementById('ps'+cur).classList.add('done');
+  cur=n;
+  document.getElementById('step'+cur).classList.add('active');
+  for(let i=1;i<=6;i++){
+    const p=document.getElementById('ps'+i);
+    p.classList.remove('active','done');
+    if(i<cur) p.classList.add('done');
+    else if(i===cur) p.classList.add('active');
+  }
+  document.getElementById('stepPill').textContent='Step '+cur+' / 6';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// â”€â”€â”€ COLOR SYNC â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function syncHex(pid,hid){document.getElementById(hid).value=document.getElementById(pid).value}
+function syncPicker(pid,hid){const h=document.getElementById(hid).value;if(/^#[0-9A-Fa-f]{6}$/.test(h))document.getElementById(pid).value=h}
+  function toggleColorPickers(c){document.getElementById('colorPickersContainer').style.display=c?'none':'block';}
+
+// â”€â”€â”€ TAG INPUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function addTag(e,inputId,arr,wrapId){
+  if(e.key==='Enter'||e.key===','){
+    e.preventDefault();
+    const inp=document.getElementById(inputId);
+    const val=inp.value.trim().replace(/,$/,'');
+    if(val&&!arr.includes(val)){arr.push(val);renderTags(arr,wrapId,inputId);}
+    inp.value='';
+  }
+  if(e.key==='Backspace'&&document.getElementById(inputId).value===''&&arr.length){arr.pop();renderTags(arr,wrapId,inputId);}
+}
+function renderTags(arr,wrapId,inputId){
+  const wrap=document.getElementById(wrapId);
+  const inp=document.getElementById(inputId);
+  wrap.querySelectorAll('.tag').forEach(t=>t.remove());
+  arr.forEach((tag,i)=>{
+    const el=document.createElement('div');el.className='tag';
+    el.innerHTML=tag+'<button type="button" onclick="rmTag('+i+',\''+wrapId+'\',\''+inputId+'\')">Ã—</button>';
+    wrap.insertBefore(el,inp);
+  });
+}
+function rmTag(i,wrapId,inputId){svcTags.splice(i,1);renderTags(svcTags,wrapId,inputId);}
+
+// â”€â”€â”€ GET VALUE HELPERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function v(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function chk(id){const e=document.getElementById(id);return e?e.checked:false;}
+function radio(name){const e=document.querySelector('input[name="'+name+'"]:checked');return e?e.value:'';}
+function pgChk(id){const e=document.getElementById(id);return e?e.checked:false;}
+
+// â”€â”€â”€ BUILD PAGES LIST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function getPages(){
+  const pages=[];
+  if(pgChk('pg_home')) pages.push({slug:'index',title:'Home',desc:'Hero, services overview, USP, testimonials, CTA banner, offer strip'});
+  if(pgChk('pg_about')) pages.push({slug:'about',title:'About',desc:'Business story, mission/vision, owner intro, milestones/achievements'});
+  if(pgChk('pg_services')) pages.push({slug:'services',title:'Services',desc:'One full section per service with description + benefits + icon'});
+  if(pgChk('pg_gallery')) pages.push({slug:'gallery',title:'Gallery',desc:'Responsive image grid with lightbox'});
+  if(pgChk('pg_testimonials')) pages.push({slug:'testimonials',title:'Testimonials',desc:'Full reviews with star ratings and Google Reviews CTA'});
+  if(pgChk('pg_pricing')) pages.push({slug:'pricing',title:'Pricing',desc:'Pricing cards/membership plans comparison table'});
+  if(pgChk('pg_faq')) pages.push({slug:'faq',title:'FAQ',desc:'Accordion FAQ with 6â€“8 questions'});
+  if(pgChk('pg_contact')) pages.push({slug:'contact',title:'Contact',desc:'Contact form, map, business details card'});
+  if(pgChk('pg_privacy')) pages.push({slug:'privacy',title:'Privacy Policy',desc:'Auto-generated Indian small business privacy policy'});
+  if(pgChk('pg_terms')) pages.push({slug:'terms',title:'Terms & Conditions',desc:'Auto-generated T&C for Indian small business'});
+  return pages;
+}
+
+// â”€â”€â”€ GENERATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function generateAll(){
+  const d={
+    bizName:    v('bizName')||'[BUSINESS NAME]',
+    bizType:    v('bizType')||'[TYPE]',
+    tagline:    v('tagline')||'[AI WILL GENERATE A PUNCHY TAGLINE BASED ON BUSINESS]',
+    location:   v('location')||'[LOCATION]',
+    address:    v('address')||'[ADDRESS]',
+    phone:      v('phone')||'[PHONE]',
+    whatsapp:   v('whatsapp')||v('phone')||'[WHATSAPP]',
+    email:      v('email')||'[EMAIL]',
+    domain:     v('domain')||'[DOMAIN]',
+    hours:      v('hours')||'[HOURS]',
+    ownerName:  v('ownerName')||'[OWNER]',
+    audience:   v('audience')||'general public',
+    primaryColor:   document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : (v('c1h')||'#E8272A'),
+    secondaryColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : (v('c2h')||'#1A1A1A'),
+    accentColor:    document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : (v('c3h')||'#FFFFFF'),
+    bgColor:        document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : (v('c4h')||'#F8F8F8'),
+    designStyle:    v('designStyle')||'[STYLE]',
+    fontPref:       v('fontPref')||'AI choose based on style',
+    logoType:       v('logoType')||'Text-based',
+    logoDesc:       v('logoDesc')||'',
+    insta:      v('insta')||'N/A',
+    fb:         v('fb')||'N/A',
+    yt:         v('yt')||'N/A',
+    maps:       v('maps')||'N/A',
+    services:   svcTags.length?svcTags.join(', '):'[SERVICES]',
+    usp:        v('usp')||'[USP]',
+    about:      v('about')||'[ABOUT]',
+    t1:         v('t1')||'"Great experience!" â€” Customer, City',
+    t2:         v('t2')||'"Highly recommended." â€” Customer, City',
+    t3:         v('t3')||'"Professional team." â€” Customer, City',
+    offer:      v('offer')||'',
+    pricing:    v('pricing')||'',
+    extraContent: v('extraContent')||'',
+    elVersion:  radio('elVersion')||'Elementor Free',
+    editorMode: radio('editorMode')||'Classic Section/Column',
+    astraVersion: radio('astraVersion')||'Astra Free theme',
+    xproVersion: radio('xproVersion')||'XPro Elementor Addons Free',
+    formPlugin: radio('formPlugin')||'WPForms Lite',
+    formEmail:  v('formEmail')||'[CLIENT EMAIL]',
+    waPlugin:   v('waPlugin')||'Joinchat plugin',
+    sliderPlugin: v('sliderPlugin')||'Smart Slider 3 Free',
+    galleryPlugin: v('galleryPlugin')||'Elementor Gallery widget',
+    devNotes:   v('devNotes')||'',
+    uniqueIDs:     chk('uniqueIDs'),
+    uniqueClasses: chk('uniqueClasses'),
+    namedSections: chk('namedSections'),
+    noInline:      chk('noInline'),
+    globalColors:  chk('globalColors'),
+    responsive:    chk('responsive'),
+    waViaPlugin:   chk('waViaPlugin'),
+    imgPlaceholder: chk('imgPlaceholder'),
+  };
+
+  const pages = getPages();
+  const pageList = pages.map(p=>`  â€¢ ${p.title} (${p.slug}) â€” ${p.desc}`).join('\n');
+  const waNum = d.whatsapp.replace(/\D/g,'');
+  const waLink = `https://wa.me/${waNum}?text=Hi%2C%20I%20found%20you%20online%20and%20want%20to%20know%20more.`;
+  const callLink = `tel:${d.phone.replace(/\s/g,'')}`;
+  const year = new Date().getFullYear();
+  const date = new Date().toLocaleDateString('en-IN');
+
+  // â”€â”€ ANTIGRAVITY TECHNICAL RULES â”€â”€
+  const agRules = [];
+  if(d.uniqueIDs) agRules.push('â€¢ Assign a unique semantic CSS ID to every Section and Column/Container using pattern: #section-[name]-[3digit-number] (e.g., #section-hero-001, #section-services-002, #col-hero-left-001). Never reuse the same ID anywhere on the page.');
+  if(d.uniqueClasses) agRules.push('â€¢ Assign unique CSS classes to every widget/element using pattern: .[element-type]-[section-name]-[number] (e.g., .heading-hero-001, .btn-cta-hero-001, .card-service-001). No two elements share the same class. This prevents any CSS conflicts between sections.');
+  if(d.namedSections) agRules.push('â€¢ Label every Section, Column, and Widget with a descriptive human-readable name visible in the Elementor panel (e.g., Section: "Hero Section", Widget: "Hero Main Heading"). This makes the panel navigable without opening each element.');
+  if(d.noInline) agRules.push('â€¢ Zero inline styles allowed. All colors, fonts, padding, margins, and typography MUST be set through Elementor\'s Style tab and Advanced tab only. The design must be 100% editable through the Elementor visual editor without touching any code.');
+  if(d.globalColors) agRules.push(`â€¢ Register Primary Color (${d.primaryColor}), Secondary Color (${d.secondaryColor}), Accent Color (${d.accentColor}), and Background Color (${d.bgColor}) as Elementor Global Colors. Reference them by global color tokens throughout â€” never hardcode hex values in individual elements.`);
+  if(d.responsive) agRules.push('â€¢ All sections must have explicit responsive settings for: Desktop (1280px+), Tablet (768pxâ€“1279px), Mobile (375pxâ€“767px). Test that every section collapses correctly. Column stacking, font sizes, padding changes must all be set via Elementor\'s responsive controls.');
+  if(d.waViaPlugin) agRules.push(`â€¢ Do NOT hardcode a WhatsApp floating button in the design. Leave it for ${d.waPlugin} â€” this allows the client to update their WhatsApp number from the WordPress dashboard.`);
+  if(d.imgPlaceholder) agRules.push('â€¢ All images must use Elementor Image widget with placeholder source (1200x800 or appropriate aspect ratio). Never embed base64 images or external CDN image URLs that can break. Client must be able to replace images directly in Elementor editor by clicking the image widget.');
+
+  // â”€â”€ ELEMENTOR STRUCTURE RULE â”€â”€
+  const editorModeShort = d.editorMode.includes('Classic') ? 'Classic Section/Column' : 'Atomic Flexbox Container';
+  const structureRule = d.editorMode.includes('Classic')
+    ? 'Use CLASSIC layout: Section â†’ Column â†’ Widget hierarchy ONLY. Do NOT use Flexbox Container or Div elements. Elementor Experiments â†’ Flexbox Container must be OFF.'
+    : 'Use ATOMIC/FLEXBOX layout: Container â†’ Widget hierarchy. Use Container (div) elements, NOT classic Section/Column. Elementor Experiments â†’ Flexbox Container must be ON.';
+
+  // â”€â”€â”€ STITCH PROMPT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  const stitchPrompt =
+`Design a complete, professional, multi-page business website for the following business.
+This design will be imported into WordPress via Antigravity + Novamira MCP, then edited in Elementor.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  BUSINESS DETAILS
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Business Name    : ${d.bizName}
+Tagline          : ${d.tagline}
+Business Type    : ${d.bizType}
+Target Audience  : ${d.audience}
+Location         : ${d.location}
+Address          : ${d.address}
+Phone            : ${d.phone}
+WhatsApp         : ${d.whatsapp}
+Email            : ${d.email}
+Website          : ${d.domain}
+Working Hours    : ${d.hours}
+Owner            : ${d.ownerName}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  DESIGN SYSTEM
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Primary Color    : ${d.primaryColor}   â†’ Use for: CTAs, buttons, headings accent, icons
+Secondary Color  : ${d.secondaryColor} â†’ Use for: dark sections, navbar, footer background
+Accent Color     : ${d.accentColor}   â†’ Use for: highlights, badges, hover states
+Background Color : ${d.bgColor}        â†’ Use for: light section backgrounds, cards
+
+Design Style     : ${d.designStyle}
+Typography       : ${d.fontPref||'Choose 2 Google Fonts that best represent "'+d.designStyle+'" â€” display font for headings, body font for text'}
+Logo             : ${d.logoType}${d.logoDesc?' â€” '+d.logoDesc:''}
+
+Typography Scale to use:
+  H1 Hero: 52â€“64px desktop, 32px mobile, font-weight: 800
+  H2 Section: 36â€“42px desktop, 26px mobile, font-weight: 700
+  H3 Card/Sub: 20â€“24px, font-weight: 600
+  Body: 16px, line-height: 1.7, font-weight: 400
+  Caption/Label: 13â€“14px, font-weight: 600, letter-spacing: 0.5px
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  SERVICES
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+${d.services}
+
+USP (Why choose us):
+${d.usp}${d.offer?'\n\nSpecial Offer: '+d.offer:''}${d.pricing?'\n\nPricing/Plans: '+d.pricing:''}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  SOCIAL MEDIA
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Instagram : ${d.insta}
+Facebook  : ${d.fb}
+YouTube   : ${d.yt}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  PAGES TO DESIGN (${pages.length} pages)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+${pageList}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  PAGE-BY-PAGE DESIGN BRIEF
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+${pages.map((p,idx)=>{
+  let detail='';
+  if(p.slug==='index') detail=`
+  SECTIONS (in order):
+  1. TOP BAR â€” Phone ${d.phone} | Email ${d.email} | Social icons (right side)
+  2. HERO â€” Full viewport, business name "${d.bizName}", tagline "${d.tagline}", subtext about audience "${d.audience}", two buttons: "ðŸ“ž Call Now" + "ðŸ’¬ WhatsApp Us"
+  3. ABOUT STRIP â€” 2-column: left = short business intro text, right = 3â€“4 achievement stats (e.g., 500+ Members, 6 Years, 98% Satisfaction)${d.offer?'\n  4. OFFER BANNER â€” Full-width highlight strip: "'+d.offer+'"':'\n  4. USP STRIP â€” 3â€“4 icon boxes showing key USP points'}
+  5. SERVICES GRID â€” Heading "Our Services", card grid (3 cols desktop / 2 tablet / 1 mobile), one card per service from: ${d.services}
+  6. WHY CHOOSE US â€” 2-column layout: left = image placeholder, right = 4 bullet points from USP
+  7. TESTIMONIALS â€” Heading "What Our Clients Say", 3 review cards with quote, name, 5-star rating${d.pricing?'\n  8. PRICING â€” Pricing cards section: '+d.pricing:''}
+  8. CTA BANNER â€” "Ready to get started?" full-width colored section with "Contact Us Today" button
+  9. FOOTER â€” 4-column footer`;
+  else if(p.slug==='about') detail=`
+  SECTIONS:
+  1. PAGE HERO â€” Small hero banner with page title "About Us" and breadcrumb
+  2. STORY â€” 2-column: left = business story text "${d.about}", right = image placeholder
+  3. MISSION & VISION â€” 2 cards side by side with icons
+  4. OWNER â€” Card: ${d.ownerName}, photo placeholder (300x300), title, short bio
+  5. ACHIEVEMENTS â€” 4 milestone cards (number + label) appropriate for ${d.bizType}
+  6. CTA â€” Button linking to contact page`;
+  else if(p.slug==='services') detail=`
+  SECTIONS:
+  1. PAGE HERO â€” Banner with "Our Services" heading
+  ${svcTags.map((s,i)=>`${i+2}. SERVICE "${s.toUpperCase()}" â€” Icon (large), heading, 3-sentence description, 4 benefit bullet points, "Enquire Now" button`).join('\n  ')||'  2â€“6. One section per service with icon, heading, description, benefits, CTA button'}
+  Last. BOTTOM CTA â€” "Have a question? Contact us today" full-width banner`;
+  else if(p.slug==='gallery') detail=`
+  SECTIONS:
+  1. PAGE HERO â€” "Our Gallery" heading banner
+  2. FILTER TABS â€” Optional: All / Facility / Events / Results
+  3. PHOTO GRID â€” Responsive masonry/grid: 3 cols desktop, 2 tablet, 1 mobile. 12 placeholder images (1200x800). Each image: hover overlay with view icon.`;
+  else if(p.slug==='testimonials') detail=`
+  SECTIONS:
+  1. PAGE HERO â€” "Client Testimonials" banner
+  2. FEATURED â€” Large card for best testimonial: "${d.t1}"
+  3. REVIEWS GRID â€” Card grid: "${d.t2}" / "${d.t3}" / 3 more auto-generated realistic reviews for ${d.bizType}
+  4. GOOGLE REVIEWS CTA â€” "See all reviews on Google" button`;
+  else if(p.slug==='pricing') detail=`
+  SECTIONS:
+  1. PAGE HERO â€” "Plans & Pricing" banner
+  2. PRICING CARDS â€” 3-column card layout with plans. Prices from: ${d.pricing||'generate realistic pricing for '+d.bizType}. Middle card = highlighted as "Most Popular"
+  3. FEATURES TABLE â€” Comparison of what's included in each plan
+  4. CTA â€” "Still have questions?" with contact button`;
+  else if(p.slug==='faq') detail=`
+  SECTIONS:
+  1. PAGE HERO â€” "Frequently Asked Questions" banner
+  2. FAQ ACCORDION â€” 8 realistic Q&A pairs for ${d.bizType} business. Each item has question + expandable answer
+  3. STILL HAVE QUESTIONS â€” CTA card with contact button + WhatsApp link`;
+  else if(p.slug==='contact') detail=`
+  SECTIONS:
+  1. PAGE HERO â€” "Contact Us" banner
+  2. CONTACT GRID â€” 2 column: Left = Contact form (Name, Phone, Email, Message, Submit), Right = Info card (phone, email, address, hours)
+  3. MAP â€” Full width Google Maps embed (${d.maps!=='N/A'?d.maps:'placeholder with business address text'})
+  4. FOOTER`;
+  else if(p.slug==='privacy') detail=`
+  Generate complete standard Indian small business Privacy Policy for ${d.bizName}
+  Cover: data collection, usage, cookies, third parties, user rights, contact info (${d.email})`;
+  else if(p.slug==='terms') detail=`
+  Generate complete standard Terms & Conditions for ${d.bizType} business in India
+  Business: ${d.bizName}, Location: ${d.location}
+  Cover: service terms, payments, cancellation, liability, governing law (Himachal Pradesh, India)`;
+  return `PAGE ${idx+1} â€” ${p.title.toUpperCase()} (${p.slug}.html)\n${detail}`;
+}).join('\n\n')}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  GLOBAL ELEMENTS (on ALL pages)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+NAVBAR (sticky top, fixed on scroll):
+â€¢ Logo left: "${d.bizName}" (${d.logoType})
+â€¢ Top bar: "ðŸ“ž ${d.phone}" visible desktop
+â€¢ Menu: ${pages.map(p=>p.title).join(' | ')}
+â€¢ Mobile: Hamburger toggle
+â€¢ Active page: highlighted in ${d.primaryColor}
+â€¢ Background: ${d.secondaryColor} (dark) or white (light variant â€” your call based on style)
+
+FOOTER (4-column):
+â€¢ Col 1: Logo + "${d.tagline}" + short about
+â€¢ Col 2: Quick Links â€” all page names
+â€¢ Col 3: ðŸ“ž ${d.phone} | âœ‰ï¸ ${d.email} | ðŸ“ ${d.address} | â° ${d.hours}
+â€¢ Col 4: Social â€” Instagram: ${d.insta} | Facebook: ${d.fb} | WhatsApp: ${d.whatsapp} | YouTube: ${d.yt}
+â€¢ Bottom bar: "Â© ${year} ${d.bizName}. All rights reserved. | Designed by Build Base Digitally"
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  DESIGN QUALITY RULES
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+â€¢ Consistent spacing system: 8px base unit â€” sections 80px padding desktop, 40px mobile
+â€¢ Every CTA button: primary color background, white text, hover = darken 10%
+â€¢ Section alternating backgrounds: white â†’ ${d.bgColor} â†’ white pattern
+â€¢ Card shadows: 0 4px 20px rgba(0,0,0,0.08) â€” subtle, professional
+â€¢ Border radius: 12px cards, 8px buttons, 6px inputs â€” consistent throughout
+â€¢ Image aspect ratios: Hero 16:9, Team/Owner 1:1, Service icon 1:1, Gallery 4:3
+â€¢ Hover transitions: 0.3s ease on all interactive elements
+â€¢ All text must meet WCAG AA contrast ratio on their backgrounds
+
+---
+Prompt generated by Build Base Digitally â€” ${date}
+Workflow: Google Stitch â†’ Antigravity â†’ Novamira MCP â†’ WordPress (${d.elVersion} + ${d.astraVersion})`;
+
+  // â”€â”€â”€ ANTIGRAVITY PROMPT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  const antigravityPrompt =
+`Convert the Google Stitch design into a fully WordPress + Elementor compatible structure.
+This will be pushed to WordPress via Novamira MCP. The result must be 100% editable in Elementor visual editor â€” zero HTML code editing after import.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  TARGET WORDPRESS STACK
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Theme            : ${d.astraVersion}
+Page Builder     : ${d.elVersion}
+Editor Mode      : ${editorModeShort}
+Extra Addons     : ${d.xproVersion}
+Contact Form     : ${d.formPlugin}${d.formEmail?' â†’ send to: '+d.formEmail:''}
+WhatsApp Button  : ${d.waPlugin}
+Slider           : ${d.sliderPlugin}
+Gallery          : ${d.galleryPlugin}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  ELEMENTOR STRUCTURE RULE (CRITICAL)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+${structureRule}
+
+NEVER mix Classic and Atomic structures on the same page.
+NEVER use custom HTML widget to replicate design elements â€” use native Elementor widgets only.
+NEVER hardcode styles in HTML attributes â€” use Elementor Style tab for all visual styling.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  GLOBAL COLOR SETUP
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Register these as Elementor Global Colors (Elementor â†’ Site Settings â†’ Global Colors):
+  --e-global-color-primary   : ${d.primaryColor}   (name: "Brand Primary")
+  --e-global-color-secondary : ${d.secondaryColor} (name: "Brand Dark")
+  --e-global-color-accent    : ${d.accentColor}   (name: "Brand Accent")
+  --e-global-color-background: ${d.bgColor}        (name: "Section Background")
+  --e-global-color-text      : #333333              (name: "Body Text")
+  --e-global-color-muted     : #6B7280              (name: "Muted Text")
+
+Add to Elementor â†’ Site Settings â†’ Custom CSS:
+:root {
+  --color-primary: ${d.primaryColor};
+  --color-secondary: ${d.secondaryColor};
+  --color-accent: ${d.accentColor};
+  --color-bg: ${d.bgColor};
+}
+
+Reference ALL colors in elements via Global Color token â€” never hardcode hex in individual widgets.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  ANTIGRAVITY ELEMENT STRUCTURE RULES
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+${agRules.join('\n\n')}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  WIDGET MAPPING â€” USE THESE ELEMENTOR WIDGETS ONLY
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Text/Copy        â†’ Elementor Heading widget (H1/H2/H3) + Text Editor widget
+Buttons          â†’ Elementor Button widget (NOT custom HTML)
+Images           â†’ Elementor Image widget with placeholder (editable by client)
+Icons            â†’ Elementor Icon widget (Font Awesome set)
+Icon + Text cardsâ†’ Elementor Icon Box widget
+Image + Text     â†’ Elementor Image Box widget or 2-column section
+Columns/Cards    â†’ Elementor Inner Section (classic) OR nested Container (atomic)
+Testimonials     â†’ Elementor Testimonial widget or Icon Box widget
+Video embed      â†’ Elementor Video widget
+Dividers         â†’ Elementor Divider widget
+Spacers          â†’ Elementor Spacer widget (NOT margin padding hacks)
+Contact Form     â†’ ${d.formPlugin.includes('WPForms')?'Elementor Shortcode widget with WPForms shortcode':d.formPlugin.includes('CF7')?'Elementor Shortcode widget with CF7 shortcode':d.formPlugin.includes('Elementor Pro Form')?'Elementor Form widget (Pro)':'Elementor Shortcode widget with form shortcode'}
+Google Maps      â†’ Elementor Google Maps widget (${d.maps!=='N/A'?'use embed URL: '+d.maps:'set address: '+d.address})
+Social Icons     â†’ Elementor Social Icons widget
+Navigation Menu  â†’ Elementor Nav Menu widget
+Counters/Stats   â†’ Elementor Counter widget
+Accordion/FAQ    â†’ Elementor Accordion widget
+Image gallery    â†’ ${d.galleryPlugin.includes('Elementor')?'Elementor Gallery widget':'Elementor Shortcode widget with '+d.galleryPlugin+' shortcode'}
+Slider/Carousel  â†’ ${d.sliderPlugin.includes('Smart')?'Elementor Shortcode widget with Smart Slider 3 shortcode':d.sliderPlugin.includes('XPro')?'XPro Carousel widget':d.sliderPlugin.includes('Pro')?'Elementor Carousel widget (Pro)':'Elementor Shortcode widget'}
+Tabs             â†’ Elementor Tabs widget
+Toggle           â†’ Elementor Toggle widget
+Progress bars    â†’ Elementor Progress Bar widget
+Star Rating      â†’ Elementor Star Rating widget
+
+DO NOT USE: HTML widget for layout, Text widget with raw HTML, custom HTML blocks
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  PAGES TO GENERATE (${pages.length} pages)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Generate one Elementor page template per page below.
+Each page: WordPress page slug in brackets.
+
+${pages.map((p,i)=>`${i+1}. ${p.title} [/${p.slug==='index'?'':p.slug}]`).join('\n')}
+
+For each page, Novamira MCP will:
+  â†’ Create WordPress page with correct slug
+  â†’ Import Elementor template JSON
+  â†’ Set page template to "Elementor Canvas" (full width, no theme header interference)
+  â†’ Elementor header/footer handled separately via ${d.xproVersion.includes('None')||d.xproVersion.includes('not')?d.elVersion.includes('Pro')?'Elementor Pro Theme Builder':'Astra Theme Customizer':d.xproVersion+' Theme Builder'}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  HEADER & FOOTER SETUP
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+${d.elVersion.includes('Pro')||d.astraVersion.includes('Pro')||d.xproVersion.includes('Pro')?
+`Build Header template via ${d.elVersion.includes('Pro')?'Elementor Pro Theme Builder â†’ Header':d.astraVersion.includes('Pro')?'Astra Pro Header Builder':d.xproVersion+' Theme Builder â†’ Header'}:
+  â€¢ Logo widget (left) + Nav Menu widget (center/right) + Button widget "ðŸ“ž Call" (right)
+  â€¢ Sticky behavior: ON
+  â€¢ Condition: Entire Site
+
+Build Footer template via ${d.elVersion.includes('Pro')?'Elementor Pro Theme Builder â†’ Footer':d.astraVersion.includes('Pro')?'Astra Pro Footer Builder':d.xproVersion+' Theme Builder â†’ Footer'}:
+  â€¢ 4-column layout: Logo+tagline | Quick Links | Contact | Social Icons
+  â€¢ Background: ${d.secondaryColor}
+  â€¢ Text color: white
+  â€¢ Bottom bar: copyright strip
+  â€¢ Condition: Entire Site`
+:
+`Using Astra Free theme header:
+  â€¢ Go to Appearance â†’ Customize â†’ Header Builder
+  â€¢ Set logo, primary menu, phone number in header
+  â€¢ Colors: background ${d.secondaryColor}, text white, hover ${d.primaryColor}
+
+Using XPro Footer Builder (Elementor Free + XPro):
+  â€¢ XPro â†’ Theme Builder â†’ Footer â†’ Add New
+  â€¢ 4-column Elementor layout: Logo | Links | Contact | Social
+  â€¢ Background: ${d.secondaryColor}, text: white
+  â€¢ Set condition: Entire Site`}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  RESPONSIVE SETTINGS (set in Elementor for each element)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Desktop (1280px+):
+  â€¢ Section padding: top/bottom 80px
+  â€¢ H1 font-size: 52px | H2: 38px | H3: 22px | Body: 16px
+  â€¢ Columns: as designed (2â€“4 cols)
+
+Tablet (768pxâ€“1279px):
+  â€¢ Section padding: top/bottom 50px
+  â€¢ H1: 38px | H2: 28px | H3: 20px
+  â€¢ 3-col â†’ 2-col, 4-col â†’ 2-col
+
+Mobile (375pxâ€“767px):
+  â€¢ Section padding: top/bottom 36px
+  â€¢ H1: 28px | H2: 22px | H3: 18px
+  â€¢ All columns â†’ single column (stack vertically)
+  â€¢ Button: full width
+  â€¢ Images: max-width 100%
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  NAMING CONVENTION (for Elementor panel)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Sections  â†’ "[PageName] â€” [Section Purpose]" e.g., "Home â€” Hero Section"
+Columns   â†’ "[Purpose] Column [position]" e.g., "Services Card Column 1"
+Widgets   â†’ "[Widget type] â€” [Content]" e.g., "Heading â€” Hero Title"
+           or "[Widget type] â€” [Section]" e.g., "Button â€” Hero CTA Primary"
+
+IDs       â†’ #sec-[page]-[purpose]-[num]  e.g., #sec-home-hero-001
+Classes   â†’ .[type]-[page]-[purpose]-[num] e.g., .heading-home-hero-001${d.devNotes?'\n\nâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•\n  EXTRA TECHNICAL NOTES\nâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•\n'+d.devNotes:''}
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  FINAL DELIVERY CHECKLIST (verify before Novamira push)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+[ ] ${pages.length} pages generated with correct slugs
+[ ] Editor mode confirmed: ${editorModeShort} â€” no mixed structure
+[ ] Global Colors registered in Elementor Site Settings
+[ ] Every element has unique ID + unique class
+[ ] Every section/widget labeled in Elementor panel
+[ ] Zero HTML widgets used for design (only for form shortcodes if needed)
+[ ] All images = Elementor Image widget (replaceable by client)
+[ ] Header & Footer set via ${d.elVersion.includes('Pro')?'Elementor Pro Theme Builder':d.astraVersion.includes('Pro')?'Astra Pro Builder':d.xproVersion+' Theme Builder'} with condition = Entire Site
+[ ] WhatsApp button = ${d.waPlugin} (NOT hardcoded)
+[ ] Responsive settings tested: Desktop / Tablet / Mobile
+[ ] Contact form widget added on Contact page (${d.formPlugin.split('(')[0].trim()})
+[ ] All internal nav links connected
+[ ] Footer copyright: "Â© ${year} ${d.bizName}. All rights reserved."
+
+---
+Prompt generated by Build Base Digitally â€” ${date}
+Stack: ${d.astraVersion} + ${d.elVersion} (${editorModeShort}) + ${d.xproVersion}
+Client: ${d.bizName} | Location: ${d.location}`;
+
+  document.getElementById('stitchOut').textContent = stitchPrompt;
+  document.getElementById('antigravityOut').textContent = antigravityPrompt;
+
+  // Summary
+  document.getElementById('sumGrid').innerHTML=`
+    <div class="sum-item"><div class="sum-label">Business</div><div class="sum-value">${d.bizName}</div></div>
+    <div class="sum-item"><div class="sum-label">Type</div><div class="sum-value">${d.bizType}</div></div>
+    <div class="sum-item"><div class="sum-label">Pages</div><div class="sum-value">${pages.length} pages</div></div>
+    <div class="sum-item"><div class="sum-label">Primary</div><div class="sum-value"><span class="chip" style="background:${d.primaryColor}"></span>${d.primaryColor}</div></div>
+    <div class="sum-item"><div class="sum-label">Secondary</div><div class="sum-value"><span class="chip" style="background:${d.secondaryColor}"></span>${d.secondaryColor}</div></div>
+    <div class="sum-item"><div class="sum-label">Style</div><div class="sum-value">${d.designStyle.split('(')[0].trim()}</div></div>
+    <div class="sum-item"><div class="sum-label">Elementor</div><div class="sum-value">${d.elVersion}</div></div>
+    <div class="sum-item"><div class="sum-label">Mode</div><div class="sum-value">${editorModeShort}</div></div>
+    <div class="sum-item"><div class="sum-label">Theme</div><div class="sum-value">${d.astraVersion}</div></div>
+  `;
+
+  goTo(6);
+}
+
+// â”€â”€â”€ TABS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function showTab(n){
+  activeTab=n;
+  document.getElementById('stitchOut').style.display=n===1?'block':'none';
+  document.getElementById('antigravityOut').style.display=n===2?'block':'none';
+  document.getElementById('tab1').className='tab-btn'+(n===1?' active':'');
+  document.getElementById('tab2').className='tab-btn'+(n===2?' active':'');
+}
+
+function showN8nTab(n){
+  n8nActiveTab=n;
+  document.getElementById('n8nStitchOut').style.display=n===1?'block':'none';
+  document.getElementById('n8nAntiOut').style.display=n===2?'block':'none';
+  document.getElementById('n8nResOut').style.display=n===3?'block':'none';
+  document.getElementById('nt1').className='tab-btn'+(n===1?' active':'');
+  document.getElementById('nt2').className='tab-btn'+(n===2?' active':'');
+  document.getElementById('nt3').className='tab-btn'+(n===3?' active':'');
+}
+
+function copyActive(){
+  let txt=activeTab===1?document.getElementById('stitchOut').innerText:document.getElementById('antigravityOut').innerText;
+  txt = txt.replace(/Copy below prompt and run on Stitch:\n\n/g, '').replace(/Copy below prompt and run on Antigravity:\n\n/g, '');
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn=document.getElementById('copyBtn');
+    btn.textContent=activeTab===1?'âœ“ Stitch Copied!':'âœ“ Antigravity Copied!';
+    btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},2500);
+  });
+}
+
+function copyN8nActive(){
+  const ids={1:'n8nStitchOut',2:'n8nAntiOut',3:'n8nResOut'};
+  const text=document.getElementById(ids[n8nActiveTab]).textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.getElementById('n8nCopyBtn');
+    btn.textContent='âœ“ Copied!';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},2500);
+  });
+}
+
+// â”€â”€â”€ GETSELECTEDPAGES (for N8n payload) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function getSelectedPages(){
+  const pages=[];
+  if(pgChk('pg_home')) pages.push('Home');
+  if(pgChk('pg_about')) pages.push('About');
+  if(pgChk('pg_services')) pages.push('Services');
+  if(pgChk('pg_gallery')) pages.push('Gallery');
+  if(pgChk('pg_testimonials')) pages.push('Testimonials');
+  if(pgChk('pg_pricing')) pages.push('Pricing');
+  if(pgChk('pg_faq')) pages.push('FAQ');
+  if(pgChk('pg_contact')) pages.push('Contact');
+  if(pgChk('pg_privacy')) pages.push('Privacy Policy');
+  if(pgChk('pg_terms')) pages.push('Terms & Conditions');
+  return pages;
+}
+
+// â”€â”€â”€ SEND TO N8N â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+async function sendToN8n(){
+  const webhookUrl = v('n8nWebhookUrl');
+  if(!webhookUrl){
+    document.getElementById('n8nStatus').textContent='âŒ N8n Webhook URL daalo Step 5 mein!';
+    document.getElementById('n8nStatus').style.color='var(--danger)';
+    return;
+  }
+  const btn=document.getElementById('sendN8nBtn');
+  const status=document.getElementById('n8nStatus');
+  btn.disabled=true; btn.textContent='â³ Sending...';
+  status.textContent='3 Gemini agents chal rahe hain (~30â€“45 sec)...';
+  status.style.color='var(--brand)';
+
+  const payload={
+    bizName:v('bizName'), bizType:v('bizType'), tagline:v('tagline'),
+    location:v('location'), address:v('address'), phone:v('phone'),
+    whatsapp:v('whatsapp'), email:v('email'), domain:v('domain'),
+    hours:v('hours'), ownerName:v('ownerName'), audience:v('audience'),
+    primaryColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : v('c1h'),
+    secondaryColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : v('c2h'),
+    accentColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : v('c3h'),
+    bgColor: document.getElementById('aiColors') && document.getElementById('aiColors').checked ? '[AI SUGGESTS BEST COLOR]' : v('c4h'),
+    designStyle:v('designStyle'), fontPref:v('fontPref'),
+    logoType:v('logoType'), logoDesc:v('logoDesc'),
+    insta:v('insta'), fb:v('fb'), yt:v('yt'), maps:v('maps'),
+    services:svcTags,
+    usp:v('usp'), about:v('about'),
+    t1:v('t1'), t2:v('t2'), t3:v('t3'),
+    offer:v('offer'), pricing:v('pricing'), extraContent:v('extraContent'),
+    elVersion:radio('elVersion'), editorMode:radio('editorMode'),
+    astraVersion:radio('astraVersion'), xproVersion:radio('xproVersion'),
+    formPlugin:radio('formPlugin'), formEmail:v('formEmail'),
+    waPlugin:v('waPlugin'), sliderPlugin:v('sliderPlugin'),
+    galleryPlugin:v('galleryPlugin'), devNotes:v('devNotes'),
+    pages:getSelectedPages(),
+    stitchOutput:v('stitchOutputPaste'),
+  };
+  cachedPayload=payload;
+
+  try{
+    const res=await fetch(webhookUrl,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const result=await res.json();
+
+    // Show results
+    const sp=result.finalStitchPrompt||result.stitch_prompt||'(No Stitch prompt returned â€” check n8n execution log)';
+    const ap=result.finalAntigravityPrompt||result.antigravity_prompt||'(No Antigravity prompt returned â€” check n8n execution log)';
+    const ri=result.researchInsights||result.research||{};
+    const riText=typeof ri==='object'
+      ? 'ðŸ” RESEARCH INSIGHTS\n\n'+
+        (ri.industry_design_trends?'ðŸ“ˆ Industry Trends:\n'+ri.industry_design_trends+'\n\n':'')+
+        (ri.local_audience_insights?'ðŸ‘¥ Local Audience:\n'+ri.local_audience_insights+'\n\n':'')+
+        (ri.font_recommendation?'ðŸ”¤ Recommended Fonts:\n  Heading: '+ri.font_recommendation.display_font+'\n  Body: '+ri.font_recommendation.body_font+'\n  Reason: '+ri.font_recommendation.reason+'\n\n':'')+
+        (ri.seo_keywords?'ðŸ”‘ SEO Keywords:\n'+ri.seo_keywords.join(', ')+'\n\n':'')+
+        (ri.cta_text_suggestions?'ðŸ’¬ CTA Suggestions:\n'+ri.cta_text_suggestions.join(' | ')+'\n\n':'')+
+        (ri.trust_signals?'âœ… Trust Signals:\n'+ri.trust_signals.map(s=>'â€¢ '+s).join('\n'):'')+
+        (ri.hero_headline_suggestions?'\n\nðŸ’¡ Hero Headline Options:\n'+ri.hero_headline_suggestions.map((h,i)=>(i+1)+'. "'+h+'"').join('\n'):'')
+      : JSON.stringify(ri,null,2);
+
+    document.getElementById('n8nStitchOut').textContent=sp;
+    document.getElementById('n8nAntiOut').textContent=ap;
+    document.getElementById('n8nResOut').textContent=riText;
+    document.getElementById('n8nResultPanel').style.display='block';
+    showN8nTab(1);
+    btn.textContent='âœ… AI Prompts Ready!';
+    status.textContent='Scroll up â€” N8n panel mein enhanced prompts dekho!';
+    status.style.color='var(--success)';
+    // Auto scroll to n8n panel
+    document.getElementById('n8nResultPanel').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){
+    btn.disabled=false; btn.textContent='âš¡ Send to N8n AI Agents';
+    status.textContent='âŒ Error: '+e.message+' â€” N8n webhook URL check karo & workflow active hai?';
+    status.style.color='var(--danger)';
+    console.error('N8n error:',e);
+  }
+}
+
+// â”€â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+document.getElementById('c1h').value='#E8272A';
+document.getElementById('c2h').value='#1A1A1A';
+document.getElementById('c3h').value='#FFFFFF';
+document.getElementById('c4h').value='#F8F8F8';
+</script>
+</body>
+</html>
