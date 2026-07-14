@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handover Document Generator — Build Base Digitally</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545; --blue:#1B4079; --paper:#F4F6F8; --amber:#E8A33D; --amber-dark:#C9821F;
+    --green:#2E8B57; --rust:#A83232; --ink:#14213D; --grid-line:rgba(27,64,121,0.09);
+    --muted:#5B6B84; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Hind',sans-serif; color:var(--ink); background-color:var(--paper);
+    background-image:linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:28px 28px; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Baloo 2',sans-serif; }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+  button,input,textarea,select{ font-family:inherit; }
+  :focus-visible{ outline:3px solid var(--amber); outline-offset:2px; }
+
+  header{
+    background:var(--navy);
+    background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:26px 26px; color:#fff; padding:28px 20px 40px;
+  }
+  .header-inner{ max-width:1080px; margin:0 auto; }
+  .back-link{ color:#c9d3e2; font-size:13px; text-decoration:none; }
+  .brand{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:14px; color:var(--amber); text-transform:uppercase; letter-spacing:1px; margin:16px 0 8px; }
+  h1{ font-size:clamp(24px,3.6vw,32px); margin:0 0 8px; }
+  header p{ color:#c9d3e2; font-size:14.5px; max-width:60ch; margin:0; }
+
+  .wrap{ max-width:1080px; margin:26px auto 50px; padding:0 20px; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+  @media (max-width:860px){ .wrap{ grid-template-columns:1fr; } }
+
+  .panel{ background:#fff; border-radius:var(--radius); border:1.5px solid rgba(11,37,69,0.12); padding:24px; box-shadow:0 6px 18px rgba(11,37,69,0.07); }
+  .panel h2{ font-size:15px; text-transform:uppercase; letter-spacing:0.8px; color:var(--muted); margin:0 0 18px; }
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px; }
+  .field input, .field textarea, .field select{
+    width:100%; border:1.5px solid rgba(11,37,69,0.18); border-radius:8px; padding:10px 12px; font-size:14px; color:var(--ink);
+  }
+  .field textarea{ min-height:70px; resize:vertical; }
+  .field-hint{ font-size:11.5px; color:var(--muted); margin-top:4px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+  .checkbox-group{ display:flex; flex-direction:column; gap:8px; }
+  .checkbox-group label{ display:flex; align-items:center; gap:8px; font-size:14px; font-weight:400; color:var(--ink); }
+  .checkbox-group input{ width:auto; accent-color:var(--green); }
+
+  .security-note{
+    background:color-mix(in srgb, var(--amber) 14%, white); border-left:3px solid var(--amber);
+    border-radius:8px; padding:10px 13px; font-size:12.5px; color:#5a4210; margin-bottom:16px; line-height:1.5;
+  }
+
+  /* Preview / Output */
+  .preview-sticky{ position:sticky; top:20px; }
+  #docPreview{ background:#fff; border-radius:var(--radius); border:1.5px solid rgba(11,37,69,0.12); padding:28px; box-shadow:0 6px 18px rgba(11,37,69,0.07); }
+  #docPreview h2{ font-family:'Baloo 2',sans-serif; color:var(--navy); text-transform:none; letter-spacing:0; font-size:22px; margin:0 0 4px; }
+  #docPreview .doc-meta{ font-size:12.5px; color:var(--muted); margin-bottom:20px; }
+  #docPreview h3{ font-size:14px; color:var(--blue); text-transform:uppercase; letter-spacing:0.6px; margin:20px 0 8px; border-bottom:1.5px solid rgba(11,37,69,0.1); padding-bottom:6px; }
+  #docPreview p, #docPreview li{ font-size:13.5px; line-height:1.6; color:var(--ink); }
+  #docPreview ul{ margin:0; padding-left:20px; }
+  .doc-credential-row{ display:flex; justify-content:space-between; font-size:13.5px; padding:4px 0; border-bottom:1px dashed rgba(11,37,69,0.1); }
+  .doc-credential-row b{ color:var(--navy); }
+
+  .actions{ display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+  .btn{ border:none; border-radius:10px; padding:13px 18px; font-weight:700; font-size:13.5px; }
+  .btn-print{ background:var(--navy); color:#fff; }
+  .btn-wa{ background:var(--green); color:#fff; }
+
+  .print-only{ display:none; }
+  @media print{
+    body > *:not(#printDoc){ display:none !important; }
+    .print-only{ display:block !important; }
+    body{ background:none; }
+  }
+  #printDoc{ padding:30px; font-family:'Hind',sans-serif; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../" class="back-link">← Dashboard</a>
+    <div class="brand">Internal Tool</div>
+    <h1>Handover Document Generator</h1>
+    <p>Project complete hone ke baad, client ko dene ke liye ek professional Handover Document 2 minute mein banayein.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <!-- INPUT PANEL -->
+  <div class="panel">
+    <h2>Project Details</h2>
+
+    <div class="field-row">
+      <div class="field"><label>Client Name</label><input type="text" id="clientName" placeholder="Rahul Sharma"></div>
+      <div class="field"><label>Business Name</label><input type="text" id="businessName" placeholder="Shakti Gym"></div>
+    </div>
+
+    <div class="field"><label>Website URL</label><input type="text" id="websiteUrl" placeholder="https://shaktigym.com"></div>
+
+    <div class="field"><label>Services Delivered</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" class="svc" value="Foundation Block (Website + Business Profile + Security)" checked>Foundation Block</label>
+        <label><input type="checkbox" class="svc" value="Lead Engine Block (Landing Page + Meta Pixel + WhatsApp + Reviews)">Lead Engine Block</label>
+        <label><input type="checkbox" class="svc" value="Automation & Insight Block (Chatbot + Follow-up + Reports)">Automation & Insight Block</label>
+      </div>
+    </div>
+
+    <h2 style="margin-top:26px;">Access Details</h2>
+    <div class="security-note">⚠️ Password yahan mat likhein — isse alag se, WhatsApp voice note ya call se securely share karein. Yeh document forward ho sakta hai.</div>
+
+    <div class="field"><label>WordPress Admin URL</label><input type="text" id="adminUrl" placeholder="https://shaktigym.com/wp-admin"></div>
+    <div class="field"><label>Admin Username</label><input type="text" id="adminUser" placeholder="admin_shaktigym"></div>
+
+    <h2 style="margin-top:26px;">Support Terms</h2>
+    <div class="field-row">
+      <div class="field"><label>Free Support Window (Days)</label><input type="number" id="supportDays" value="30"></div>
+      <div class="field"><label>Handover Date</label><input type="date" id="handoverDate"></div>
+    </div>
+    <div class="field"><label>Additional Notes (Optional)</label><textarea id="extraNotes" placeholder="Koi bhi extra note jo client ko batana ho..."></textarea></div>
+  </div>
+
+  <!-- LIVE PREVIEW -->
+  <div class="preview-sticky">
+    <div id="docPreview"></div>
+    <div class="actions">
+      <button class="btn btn-print" onclick="window.print()">🖨️ Save / Print Document</button>
+      <a id="waShareLink" href="#" target="_blank" rel="noopener"><button class="btn btn-wa">💬 Share via WhatsApp</button></a>
+    </div>
+  </div>
+</div>
+
+<div class="print-only" id="printDoc"></div>
+
+<script>
+/* Replace with your WhatsApp Business number for the share button fallback (client's number is entered manually when sharing) */
+const inputs = ["clientName","businessName","websiteUrl","adminUrl","adminUser","supportDays","handoverDate","extraNotes"];
+
+function getData(){
+  const services = Array.from(document.querySelectorAll(".svc:checked")).map(cb=>cb.value);
+  const d = {};
+  inputs.forEach(id=> d[id] = document.getElementById(id).value.trim());
+  d.services = services;
+  return d;
+}
+
+function buildDocHTML(d, forPrint){
+  const today = new Date().toLocaleDateString("en-IN", {day:"numeric",month:"long",year:"numeric"});
+  const handoverDate = d.handoverDate ? new Date(d.handoverDate).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) : today;
+  const business = d.businessName || "Client Business";
+  const client = d.clientName || "Valued Client";
+
+  return `
+    <h2>${business} — Project Handover Document</h2>
+    <p class="doc-meta">Prepared for <strong>${client}</strong> &nbsp;|&nbsp; Handover Date: <strong>${handoverDate}</strong> &nbsp;|&nbsp; Build Base Digitally</p>
+
+    <h3>What's Delivered</h3>
+    <ul>${d.services.length ? d.services.map(s=>`<li>${s}</li>`).join("") : "<li>—</li>"}</ul>
+
+    <h3>Access Details</h3>
+    <div class="doc-credential-row"><span>Website</span><b>${d.websiteUrl || "—"}</b></div>
+    <div class="doc-credential-row"><span>Admin Panel</span><b>${d.adminUrl || "—"}</b></div>
+    <div class="doc-credential-row"><span>Admin Username</span><b>${d.adminUser || "—"}</b></div>
+    <p style="font-size:12px;color:#8a6d1f;margin-top:8px;">🔒 Password separately, secure channel se share ki gayi hai.</p>
+
+    <h3>How To Use Your Website</h3>
+    <ul>
+      <li>Naye Leads WhatsApp par automatically aayenge — koi login check karne ki zaroorat nahi</li>
+      <li>Content/text change karwana ho, to seedha humein WhatsApp par likh dein</li>
+      <li>Koi bhi issue/error dikhe, turant screenshot ke saath humein bhejein</li>
+    </ul>
+
+    <h3>Support & Warranty</h3>
+    <p>Agle <strong>${d.supportDays || 30} din</strong> tak koi bhi chhota fix ya sawaal — bilkul free support included hai. Isके baad bhi hum available rahenge, bas ongoing support ek chhoti maintenance fee ke saath continue hoga.</p>
+
+    ${d.extraNotes ? `<h3>Additional Notes</h3><p>${d.extraNotes}</p>` : ""}
+
+    <h3>Next Steps</h3>
+    <p>Jab bhi aap apna Digital Ecosystem aage badhana chahein (Automation, Chatbot, ya Reviews System), bas humein WhatsApp par bata dein — hum aapke liye next Block ready kar denge.</p>
+
+    <p style="margin-top:22px;">Dhanyawad aapka bharosa karne ke liye! 🙏<br><strong>— Sandeep, Build Base Digitally</strong></p>
+  `;
+}
+
+function render(){
+  const d = getData();
+  const html = buildDocHTML(d);
+  document.getElementById("docPreview").innerHTML = html;
+  document.getElementById("printDoc").innerHTML = html;
+
+  const waText = `Namaste ${d.clientName || ""}! Aapka Handover Document taiyaar hai — ${d.businessName || "aapke business"} ke liye. Ismein website access, support details, aur next steps hain. Koi bhi sawaal ho to batayein!`;
+  document.getElementById("waShareLink").href = `https://wa.me/?text=${encodeURIComponent(waText)}`;
+}
+
+document.querySelectorAll("input, textarea").forEach(el=> el.addEventListener("input", render));
+document.querySelectorAll(".svc").forEach(el=> el.addEventListener("change", render));
+
+render();
+</script>
+</body>
+</html>

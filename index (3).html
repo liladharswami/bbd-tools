@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Delivery QA Checklist — Build Base Digitally</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545; --blue:#1B4079; --paper:#F4F6F8; --amber:#E8A33D; --amber-dark:#C9821F;
+    --green:#2E8B57; --rust:#A83232; --ink:#14213D; --grid-line:rgba(27,64,121,0.09);
+    --muted:#5B6B84; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Hind',sans-serif; color:var(--ink); background-color:var(--paper);
+    background-image:linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:28px 28px; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Baloo 2',sans-serif; }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+  button{ font-family:inherit; cursor:pointer; }
+  :focus-visible{ outline:3px solid var(--amber); outline-offset:2px; }
+
+  .wrap{ max-width:820px; margin:0 auto; padding:0 20px 40px; }
+
+  header{
+    background:var(--navy);
+    background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:26px 26px; color:#fff; padding:28px 20px 70px; margin-bottom:-46px;
+  }
+  .header-inner{ max-width:820px; margin:0 auto; }
+  .back-link{ color:#c9d3e2; font-size:13px; text-decoration:none; }
+  .brand{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:14px; color:var(--amber); text-transform:uppercase; letter-spacing:1px; margin:16px 0 8px; }
+  h1{ font-size:clamp(24px,3.6vw,32px); margin:0 0 8px; }
+  header p{ color:#c9d3e2; font-size:14.5px; max-width:56ch; margin:0; }
+
+  .project-card{
+    background:#fff; border-radius:var(--radius); border:1.5px solid rgba(11,37,69,0.12);
+    padding:18px 20px; margin-bottom:20px; box-shadow:0 6px 18px rgba(11,37,69,0.07);
+    display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+  }
+  .project-card label{ font-size:13px; font-weight:600; color:var(--navy); white-space:nowrap; }
+  .project-card input{
+    flex:1; min-width:160px; border:1.5px solid rgba(11,37,69,0.18); border-radius:7px;
+    padding:9px 12px; font-family:'Hind',sans-serif; font-size:14px;
+  }
+
+  .progress-card{
+    background:#fff; border-radius:var(--radius); border:1.5px solid rgba(11,37,69,0.12);
+    padding:20px 22px; margin-bottom:24px; box-shadow:0 6px 18px rgba(11,37,69,0.07);
+  }
+  .progress-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; }
+  .progress-label{ font-size:13px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.6px; }
+  .progress-pct{ font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:22px; color:var(--navy); }
+  .progress-track{ width:100%; height:12px; background:rgba(11,37,69,0.08); border-radius:99px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--amber); border-radius:99px; transition:width .3s ease, background .3s ease; }
+  .ready-banner{
+    margin-top:14px; padding:12px 16px; border-radius:10px; font-size:14px; font-weight:600;
+    display:none; align-items:center; gap:8px;
+  }
+  .ready-banner.show{ display:flex; }
+  .ready-banner.ready{ background:color-mix(in srgb, var(--green) 12%, white); color:#1d5c3d; }
+
+  .category{
+    background:#fff; border-radius:var(--radius); border:1.5px solid rgba(11,37,69,0.12);
+    margin-bottom:16px; overflow:hidden; box-shadow:0 4px 12px rgba(11,37,69,0.05);
+  }
+  .category-header{
+    padding:16px 20px; display:flex; justify-content:space-between; align-items:center;
+    background:color-mix(in srgb, var(--accent) 6%, white); border-left:4px solid var(--accent);
+  }
+  .category-title{ font-size:16px; font-weight:700; color:var(--navy); margin:0; }
+  .category-count{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted); }
+  .item-list{ padding:6px 8px; }
+  .item{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:8px;
+    transition:background .15s ease; cursor:pointer;
+  }
+  .item:hover{ background:rgba(11,37,69,0.03); }
+  .item input{ margin-top:3px; width:18px; height:18px; accent-color:var(--green); flex-shrink:0; cursor:pointer; }
+  .item-text{ font-size:14.5px; line-height:1.5; color:var(--ink); }
+  .item.checked .item-text{ color:var(--muted); text-decoration:line-through; }
+
+  .actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+  .btn{ border:none; border-radius:10px; padding:13px 20px; font-weight:700; font-size:14px; }
+  .btn-print{ background:var(--navy); color:#fff; }
+  .btn-reset{ background:#fff; border:1.5px solid rgba(11,37,69,0.25); color:var(--navy); }
+
+  .print-only{ display:none; }
+  @media print{
+    body > *:not(#printArea){ display:none !important; }
+    .print-only{ display:block !important; }
+    body{ background:none; }
+  }
+  #printArea{ padding:20px; font-family:'Hind',sans-serif; }
+  #printArea h2{ font-family:'Baloo 2',sans-serif; margin-bottom:4px; }
+  #printArea .meta{ font-size:13px; color:#444; margin-bottom:16px; }
+  #printArea table{ width:100%; border-collapse:collapse; margin-bottom:14px; }
+  #printArea th,#printArea td{ border:1px solid #ccc; padding:6px 10px; font-size:13px; text-align:left; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../" class="back-link">← Dashboard</a>
+    <div class="brand">Internal Tool</div>
+    <h1>Pre-Delivery QA Checklist</h1>
+    <p>Client ko website/system handover karne se pehle, yeh poori list check kar lein — kuch bhi miss na ho.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="project-card">
+    <label for="projectName">Project / Client:</label>
+    <input type="text" id="projectName" placeholder="e.g. Shakti Gym — Foundation + Lead Engine">
+  </div>
+
+  <div class="progress-card">
+    <div class="progress-top">
+      <span class="progress-label">Completion</span>
+      <span class="progress-pct mono" id="progressPct">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="ready-banner ready" id="readyBanner">✅ Sab check ho gaya — ab handover ke liye ready hai!</div>
+  </div>
+
+  <div id="categoriesContainer"></div>
+
+  <div class="actions">
+    <button class="btn btn-print" onclick="window.print()">🖨️ Save / Print QA Record</button>
+    <button class="btn btn-reset" onclick="resetChecklist()">↺ Reset (Naye Project Ke Liye)</button>
+  </div>
+</div>
+
+<div class="print-only" id="printArea"></div>
+
+<script>
+const CATEGORIES = [
+  {
+    title:"Design & Responsiveness", accent:"#1B4079",
+    items:[
+      "Desktop, Tablet, aur Mobile — teeno pe check kiya (Elementor responsive preview se)",
+      "Koi bhi Elementor Pro widget use nahi hua (sirf Free-compatible widgets)",
+      "Har section ka unique CSS ID hai, har widget ki unique class hai",
+      "Saari images optimized/compressed hain (page bhaari nahi hai)",
+      "Kahin bhi layout overlap ya broken spacing nahi hai kisi bhi screen size par"
+    ]
+  },
+  {
+    title:"Functionality", accent:"#A83232",
+    items:[
+      "Saare navigation links kaam kar rahe hain (koi 404 nahi)",
+      "WPForms submit ho raha hai aur lead data sahi jagah (email/CRM) pahunch raha hai",
+      "WhatsApp button sahi number khol raha hai, sahi pre-filled message ke saath",
+      "ClientAssist Chatbot common questions ka sahi jawab de raha hai",
+      "Saare CTA buttons sahi destination pe le ja rahe hain"
+    ]
+  },
+  {
+    title:"Tracking & Automation", accent:"#2E8B57",
+    items:[
+      "Meta Pixel install hai aur fire ho raha hai (PageView + Lead, Test Events se confirm kiya)",
+      "Lead event mein Value + Currency (INR) parameters sahi se pass ho rahe hain",
+      "WhatsApp follow-up automation sequence end-to-end test kiya (n8n)",
+      "Google Business Profile website se linked hai, Name/Address/Phone match karta hai"
+    ]
+  },
+  {
+    title:"Security & Performance", accent:"#C9821F",
+    items:[
+      "SSL active hai (https, padlock dikh raha hai, koi mixed-content warning nahi)",
+      "Go-live se pehle ek backup le liya gaya hai",
+      "Page load speed reasonable hai (koi bahut bhaari unoptimized image nahi)",
+      "Admin password default se change kiya gaya hai, client ko securely (alag se) diya jayega"
+    ]
+  },
+  {
+    title:"SEO Basics", accent:"#1B4079",
+    items:[
+      "Har page ka Title aur Meta Description set hai",
+      "Saari images mein Alt Text daala gaya hai",
+      "Sitemap Google Search Console mein submit kiya gaya hai",
+      "Business Name/Address/Phone Website, GMB, aur Social sab jagah same hai"
+    ]
+  },
+  {
+    title:"Content Accuracy", accent:"#A83232",
+    items:[
+      "Client ka asli business naam/contact/address har jagah sahi hai",
+      "Kahin bhi placeholder ya Lorem Ipsum text reh nahi gaya",
+      "Live site ka content client se approved final content se match karta hai"
+    ]
+  }
+];
+
+let state = {};
+CATEGORIES.forEach((cat,ci)=> cat.items.forEach((_,ii)=> state[`${ci}-${ii}`] = false));
+
+function render(){
+  const container = document.getElementById("categoriesContainer");
+  container.innerHTML = CATEGORIES.map((cat,ci)=>{
+    const checkedCount = cat.items.filter((_,ii)=>state[`${ci}-${ii}`]).length;
+    return `
+    <div class="category">
+      <div class="category-header" style="--accent:${cat.accent}">
+        <h3 class="category-title">${cat.title}</h3>
+        <span class="category-count mono">${checkedCount}/${cat.items.length}</span>
+      </div>
+      <div class="item-list">
+        ${cat.items.map((item,ii)=>`
+          <label class="item ${state[`${ci}-${ii}`]?'checked':''}">
+            <input type="checkbox" data-key="${ci}-${ii}" ${state[`${ci}-${ii}`]?'checked':''}>
+            <span class="item-text">${item}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>`;
+  }).join("");
+
+  container.querySelectorAll("input[type=checkbox]").forEach(cb=>{
+    cb.addEventListener("change", ()=>{
+      state[cb.dataset.key] = cb.checked;
+      render();
+    });
+  });
+
+  updateProgress();
+  renderPrint();
+}
+
+function updateProgress(){
+  const total = Object.keys(state).length;
+  const done = Object.values(state).filter(Boolean).length;
+  const pct = Math.round((done/total)*100);
+  document.getElementById("progressPct").textContent = pct + "%";
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("readyBanner").classList.toggle("show", pct === 100);
+}
+
+function renderPrint(){
+  const name = document.getElementById("projectName").value.trim() || "Untitled Project";
+  const today = new Date().toLocaleDateString("en-IN", {day:"numeric",month:"long",year:"numeric"});
+  const rows = CATEGORIES.map((cat,ci)=>`
+    <tr><td colspan="2"><strong>${cat.title}</strong></td></tr>
+    ${cat.items.map((item,ii)=>`<tr><td style="width:30px;text-align:center;">${state[`${ci}-${ii}`]?'✅':'⬜'}</td><td>${item}</td></tr>`).join("")}
+  `).join("");
+  document.getElementById("printArea").innerHTML = `
+    <h2>Pre-Delivery QA Checklist</h2>
+    <p class="meta"><strong>Project:</strong> ${name} &nbsp;|&nbsp; <strong>Date:</strong> ${today}</p>
+    <table>${rows}</table>
+  `;
+}
+
+function resetChecklist(){
+  if(confirm("Naye project ke liye checklist reset karein? Current progress clear ho jayega.")){
+    Object.keys(state).forEach(k=> state[k]=false);
+    document.getElementById("projectName").value = "";
+    render();
+  }
+}
+
+document.getElementById("projectName").addEventListener("input", renderPrint);
+
+render();
+</script>
+</body>
+</html>
